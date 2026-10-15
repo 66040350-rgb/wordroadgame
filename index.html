@@ -367,12 +367,6 @@
     }
     .ribbon-btn:hover { background: #e0f2fe; border-color: #38bdf8; }
 
-    .doc-preview-box {
-      width: 240px; height: 90px; background: #ffffff;
-      border: 2px solid #cbd5e1; border-radius: 8px; padding: 10px;
-      display: flex; flex-direction: column; justify-content: center;
-    }
-
     .table-picker {
       display: grid; grid-template-columns: repeat(4, 38px); grid-template-rows: repeat(3, 38px); gap: 6px;
     }
@@ -381,12 +375,6 @@
     }
     .table-cell.selected { background: #38bdf8; border-color: #0284c7; }
 
-    .image-q-preview {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      background: #ffffff; border: 2px solid #cbd5e1; border-radius: 14px;
-      padding: 16px 20px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-      width: 100%; max-width: 420px;
-    }
     .image-choices-grid {
       display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%;
     }
@@ -463,7 +451,7 @@
     .kn-notice svg { width: 18px; height: 18px; fill: #f87171; flex-shrink: 0; }
   </style>
 </head>
-<body>
+<body onload="initHubMenu()">
 
   <div id="three-container"></div>
 
@@ -507,20 +495,21 @@
     </div>
   </div>
 
+  <!-- ปุ่มบังคับบนหน้าจอ (เชื่อมต่อฟังก์ชันเรียบร้อย) -->
   <div id="mobile-controls">
     <div class="pad-cluster">
-      <div class="v-btn" id="btn-left">
+      <div class="v-btn" id="btn-left" ontouchstart="setKey('left', true)" ontouchend="setKey('left', false)" onmousedown="setKey('left', true)" onmouseup="setKey('left', false)">
         <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
       </div>
-      <div class="v-btn" id="btn-right">
+      <div class="v-btn" id="btn-right" ontouchstart="setKey('right', true)" ontouchend="setKey('right', false)" onmousedown="setKey('right', true)" onmouseup="setKey('right', false)">
         <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
       </div>
     </div>
     <div class="pad-cluster">
-      <div class="v-btn" id="btn-down" style="border-color:#ef4444; background: rgba(239, 68, 68, 0.25);">
+      <div class="v-btn" id="btn-down" ontouchstart="setKey('down', true)" ontouchend="setKey('down', false)" onmousedown="setKey('down', true)" onmouseup="setKey('down', false)" style="border-color:#ef4444; background: rgba(239, 68, 68, 0.25);">
         <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
       </div>
-      <div class="v-btn" id="btn-up" style="border-color:#10b981; background: rgba(16, 185, 129, 0.35); width: 80px; height: 80px;">
+      <div class="v-btn" id="btn-up" ontouchstart="setKey('up', true)" ontouchend="setKey('up', false)" onmousedown="setKey('up', true)" onmouseup="setKey('up', false)" style="border-color:#10b981; background: rgba(16, 185, 129, 0.35); width: 80px; height: 80px;">
         <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
       </div>
     </div>
@@ -845,6 +834,7 @@
     function initHubMenu() {
       const grid = document.getElementById("chapter-select-grid");
       const studyGrid = document.getElementById("study-grid");
+      if(!grid || !studyGrid) return;
       grid.innerHTML = "";
       studyGrid.innerHTML = "";
 
@@ -1024,6 +1014,13 @@
     let spacedRepetitionQueue = [];
     let keys = { up: false, down: false, left: false, right: false };
 
+    // ฟังก์ชันเชื่อมต่อปุ่มกดบนหน้าจอ
+    function setKey(action, state) {
+      if (keys.hasOwnProperty(action)) {
+        keys[action] = state;
+      }
+    }
+
     let carPhysics = {
       x: 0, z: 0,
       angle: 0,
@@ -1195,4 +1192,352 @@
         const bGeo2 = new THREE.BoxGeometry(bW2, bH2, 28);
         const bMat2 = new THREE.MeshLambertMaterial({ color: colors[Math.floor(Math.random() * colors.length)] });
         const b2 = new THREE.Mesh(bGeo2, bMat2);
-        b2.position.set(
+        b2.position.set(32 + bW2 / 2, bH2 / 2, z);
+        scene.add(b2);
+      }
+    }
+
+    function buildSportsCar() {
+      carGroup = new THREE.Group();
+      const bodyMat = new THREE.MeshLambertMaterial({ color: 0x00a2ff });
+      const topMat = new THREE.MeshLambertMaterial({ color: 0x1e293b });
+      const wheelMat = new THREE.MeshLambertMaterial({ color: 0x0f172a });
+
+      const bodyGeo = new THREE.BoxGeometry(2.2, 0.8, 4.4);
+      const body = new THREE.Mesh(bodyGeo, bodyMat);
+      body.position.y = 0.6;
+      carGroup.add(body);
+
+      const topGeo = new THREE.BoxGeometry(1.6, 0.7, 2.2);
+      const top = new THREE.Mesh(topGeo, topMat);
+      top.position.set(0, 1.25, -0.2);
+      carGroup.add(top);
+
+      const wheelGeo = new THREE.CylinderGeometry(0.45, 0.45, 0.4, 16);
+      wheelGeo.rotateZ(Math.PI / 2);
+      
+      [-1.2, 1.2].forEach(x => {
+        [-1.4, 1.4].forEach(z => {
+          const wheel = new THREE.Mesh(wheelGeo, wheelMat);
+          wheel.position.set(x, 0.45, z);
+          carGroup.add(wheel);
+        });
+      });
+
+      carGroup.position.set(0, 0, 10);
+      scene.add(carGroup);
+      carPhysics.z = 10;
+    }
+
+    function buildCheckpointsAndBarriers() {
+      waypoints.forEach((wp, idx) => {
+        const cpGroup = new THREE.Group();
+        cpGroup.position.set(wp.x, 0, wp.z);
+
+        const postGeo = new THREE.BoxGeometry(0.8, 8, 0.8);
+        const postMat = new THREE.MeshLambertMaterial({ color: 0xfacc15 });
+        const leftPost = new THREE.Mesh(postGeo, postMat);
+        leftPost.position.set(-14, 4, 0);
+        cpGroup.add(leftPost);
+
+        const rightPost = leftPost.clone();
+        rightPost.position.x = 14;
+        cpGroup.add(rightPost);
+
+        const barGeo = new THREE.BoxGeometry(28, 0.8, 0.8);
+        const barMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+        const laserBar = new THREE.Mesh(barGeo, barMat);
+        laserBar.position.set(0, 4, 0);
+        cpGroup.add(laserBar);
+
+        scene.add(cpGroup);
+        checkpoints.push({ z: wp.z, stage: wp.stage, group: cpGroup, passed: false });
+      });
+    }
+
+    function buildObstacles() {
+      for (let z = -100; z > -2400; z -= 180) {
+        const obsGeo = new THREE.BoxGeometry(2.4, 1.4, 2.4);
+        const obsMat = new THREE.MeshLambertMaterial({ color: 0xf97316 });
+        const obs = new THREE.Mesh(obsGeo, obsMat);
+        const laneX = (Math.random() - 0.5) * 22;
+        obs.position.set(laneX, 0.7, z);
+        scene.add(obs);
+        obstacles.push(obs);
+      }
+    }
+
+    function setupInputListeners() {
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowUp" || e.key === "w" || e.key === "W") keys.up = true;
+        if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") keys.down = true;
+        if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") keys.left = true;
+        if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") keys.right = true;
+      });
+
+      window.addEventListener("keyup", (e) => {
+        if (e.key === "ArrowUp" || e.key === "w" || e.key === "W") keys.up = false;
+        if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") keys.down = false;
+        if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") keys.left = false;
+        if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") keys.right = false;
+      });
+    }
+
+    let currentActiveQuestion = null;
+
+    function triggerCheckpoint(stageNum) {
+      if (isModalOpen) return;
+      isModalOpen = true;
+      carPhysics.speed = 0;
+
+      let q = questionsPool.find(item => item.stage === stageNum);
+      if (!q) q = questionsPool[0];
+      currentActiveQuestion = q;
+
+      document.getElementById("cp-badge").innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> CHECKPOINT ${stageNum}`;
+      document.getElementById("cp-q").innerText = q.q;
+
+      const area = document.getElementById("cp-minigame-area");
+      area.innerHTML = "";
+
+      if (q.mode === "choice" || q.mode === "image_query") {
+        const opts = q.opts || [];
+        opts.forEach(opt => {
+          const btn = document.createElement("button");
+          btn.className = "ribbon-btn";
+          btn.style.width = "100%";
+          btn.innerText = opt;
+          btn.onclick = () => checkAnswer(opt, q.target);
+          area.appendChild(btn);
+        });
+      } else if (q.mode === "ribbon") {
+        const tabs = ["Home", "Insert", "Design", "Layout", "References"];
+        const bar = document.createElement("div");
+        bar.className = "ribbon-bar";
+        tabs.forEach(tab => {
+          const b = document.createElement("button");
+          b.className = "ribbon-btn";
+          b.innerText = tab;
+          b.onclick = () => checkAnswer(tab, q.target);
+          bar.appendChild(b);
+        });
+        area.appendChild(bar);
+      } else if (q.mode === "align") {
+        const aligns = [
+          { id: "left", label: "ชิดซ้าย (Left)" },
+          { id: "center", label: "กึ่งกลาง (Center)" },
+          { id: "right", label: "ชิดขวา (Right)" },
+          { id: "justify", label: "กระจายแนว (Justify)" }
+        ];
+        const bar = document.createElement("div");
+        bar.className = "ribbon-bar";
+        aligns.forEach(al => {
+          const b = document.createElement("button");
+          b.className = "ribbon-btn";
+          b.innerText = al.label;
+          b.onclick = () => checkAnswer(al.id, q.target);
+          bar.appendChild(b);
+        });
+        area.appendChild(bar);
+      } else if (q.mode === "image_choice") {
+        const grid = document.createElement("div");
+        grid.className = "image-choices-grid";
+        q.options.forEach(opt => {
+          const btn = document.createElement("button");
+          btn.className = "img-choice-btn";
+          btn.innerHTML = `${opt.svg}<span>${opt.label}</span>`;
+          btn.onclick = () => checkAnswer(opt.id, q.target);
+          grid.appendChild(btn);
+        });
+        area.appendChild(grid);
+      } else if (q.mode === "table_grid") {
+        const pBox = document.createElement("div");
+        pBox.style.textAlign = "center";
+        pBox.innerHTML = `<div style="font-size:0.9rem; font-weight:700; margin-bottom:8px;">คลิกเลือกตารางขนาด 3 คอลัมน์ x 2 แถว</div><div class="table-picker" id="tbl-picker"></div>`;
+        area.appendChild(pBox);
+
+        const picker = document.getElementById("tbl-picker");
+        for(let r=0; r<3; r++) {
+          for(let c=0; c<4; c++) {
+            const cell = document.createElement("div");
+            cell.className = "table-cell";
+            cell.dataset.row = r+1;
+            cell.dataset.col = c+1;
+            cell.onclick = () => {
+              document.querySelectorAll(".table-cell").forEach(cl => cl.classList.remove("selected"));
+              cell.classList.add("selected");
+              checkTableAnswer(r+1, c+1, q.targetCols, q.targetRows);
+            };
+            picker.appendChild(cell);
+          }
+        }
+      } else if (q.mode === "matching") {
+        area.innerHTML = `<div class="match-container"><div class="match-col" id="m-left"></div><div class="match-col" id="m-right"></div></div>`;
+        const mLeft = document.getElementById("m-left");
+        const mRight = document.getElementById("m-right");
+
+        let selectedActionCard = null;
+        let selectedKeyCard = null;
+        let correctMatches = 0;
+
+        q.pairs.forEach((pair, idx) => {
+          const actCard = document.createElement("div");
+          actCard.className = "match-card";
+          actCard.innerText = pair.action;
+          actCard.onclick = () => {
+            if(actCard.classList.contains("paired")) return;
+            document.querySelectorAll("#m-left .match-card").forEach(c => c.classList.remove("selected"));
+            actCard.classList.add("selected");
+            selectedActionCard = pair.action;
+            tryMatch();
+          };
+          mLeft.appendChild(actCard);
+
+          const keyCard = document.createElement("div");
+          keyCard.className = "match-card";
+          keyCard.innerText = pair.key;
+          keyCard.onclick = () => {
+            if(keyCard.classList.contains("paired")) return;
+            document.querySelectorAll("#m-right .match-card").forEach(c => c.classList.remove("selected"));
+            keyCard.classList.add("selected");
+            selectedKeyCard = pair.key;
+            tryMatch();
+          };
+          mRight.appendChild(keyCard);
+        });
+
+        function tryMatch() {
+          if (selectedActionCard && selectedKeyCard) {
+            const foundPair = q.pairs.find(p => p.action === selectedActionCard && p.key === selectedKeyCard);
+            if (foundPair) {
+              playSuccessSound();
+              document.querySelectorAll("#m-left .match-card, #m-right .match-card").forEach(card => {
+                if (card.innerText === selectedActionCard || card.innerText === selectedKeyCard) {
+                  card.classList.remove("selected");
+                  card.classList.add("paired");
+                }
+              });
+              correctMatches++;
+              selectedActionCard = null;
+              selectedKeyCard = null;
+              if (correctMatches === q.pairs.length) {
+                setTimeout(() => {
+                  solvedQuestionsCount++;
+                  score += q.pts;
+                  updateProgressHUD();
+                  document.getElementById("checkpoint-modal").style.display = "none";
+                  isModalOpen = false;
+                }, 600);
+              }
+            } else {
+              playWrongSound();
+              document.querySelectorAll("#m-left .match-card, #m-right .match-card").forEach(c => c.classList.remove("selected"));
+              selectedActionCard = null;
+              selectedKeyCard = null;
+            }
+          }
+        }
+      }
+
+      if (q.customHtml && q.mode !== "image_choice" && q.mode !== "matching") {
+        const customWrap = document.createElement("div");
+        customWrap.innerHTML = q.customHtml;
+        area.prepend(customWrap);
+      }
+
+      document.getElementById("checkpoint-modal").style.display = "flex";
+    }
+
+    function checkAnswer(userAns, targetAns) {
+      if (userAns === targetAns) {
+        playSuccessSound();
+        solvedQuestionsCount++;
+        score += currentActiveQuestion.pts;
+        updateProgressHUD();
+        document.getElementById("checkpoint-modal").style.display = "none";
+        isModalOpen = false;
+      } else {
+        playWrongSound();
+        document.getElementById("checkpoint-modal").style.display = "none";
+        showKnowledgeModal(currentActiveQuestion);
+      }
+    }
+
+    function checkTableAnswer(r, c, targetC, targetR) {
+      if (c === targetC && r === targetR) {
+        playSuccessSound();
+        solvedQuestionsCount++;
+        score += currentActiveQuestion.pts;
+        updateProgressHUD();
+        document.getElementById("checkpoint-modal").style.display = "none";
+        isModalOpen = false;
+      } else {
+        playWrongSound();
+        document.getElementById("checkpoint-modal").style.display = "none";
+        showKnowledgeModal(currentActiveQuestion);
+      }
+    }
+
+    function showKnowledgeModal(q) {
+      document.getElementById("kn-subject").innerText = q.knTitle;
+      document.getElementById("kn-text").innerHTML = q.knText;
+      document.getElementById("knowledge-modal").style.display = "flex";
+    }
+
+    function retryMission() {
+      document.getElementById("knowledge-modal").style.display = "none";
+      triggerCheckpoint(currentActiveQuestion.stage);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      if (!isModalOpen) {
+        if (keys.up) carPhysics.speed = Math.min(carPhysics.speed + carPhysics.accel, carPhysics.maxSpeed);
+        else if (keys.down) carPhysics.speed = Math.max(carPhysics.speed - carPhysics.accel, -carPhysics.maxSpeed * 0.4);
+        else {
+          if (carPhysics.speed > 0) carPhysics.speed = Math.max(0, carPhysics.speed - carPhysics.friction);
+          else if (carPhysics.speed < 0) carPhysics.speed = Math.min(0, carPhysics.speed + carPhysics.friction);
+        }
+
+        if (keys.left) carPhysics.x -= carPhysics.turnSpeed * (carPhysics.speed / carPhysics.maxSpeed || 0.5);
+        if (keys.right) carPhysics.x += carPhysics.turnSpeed * (carPhysics.speed / carPhysics.maxSpeed || 0.5);
+
+        carPhysics.x = Math.max(-15, Math.min(15, carPhysics.x));
+        carPhysics.z -= carPhysics.speed;
+
+        if (carGroup) {
+          carGroup.position.x = carPhysics.x;
+          carGroup.position.z = carPhysics.z;
+          carGroup.rotation.y = (keys.left ? 0.2 : (keys.right ? -0.2 : 0));
+        }
+
+        if (camera && carGroup) {
+          camera.position.x = carGroup.position.x * 0.3;
+          camera.position.y = carGroup.position.y + 7.5;
+          camera.position.z = carGroup.position.z + 14;
+          camera.lookAt(carGroup.position.x, carGroup.position.y + 1.2, carGroup.position.z - 4);
+        }
+
+        updateEngineSound(carPhysics.speed / carPhysics.maxSpeed);
+        document.getElementById("speed-val").innerText = Math.round(Math.abs(carPhysics.speed) * 85);
+        document.getElementById("gear-val").innerText = carPhysics.speed > 0 ? "D" : (carPhysics.speed < 0 ? "R" : "N");
+
+        checkpoints.forEach(cp => {
+          if (!cp.passed && Math.abs(carPhysics.z - cp.z) < 3.5) {
+            cp.passed = true;
+            triggerCheckpoint(cp.stage);
+          }
+        });
+
+        if (carPhysics.z < -2500) {
+          document.getElementById("final-score").innerText = `${Number(score.toFixed(1))} / 20`;
+          document.getElementById("finish-screen").style.display = "flex";
+        }
+      }
+
+      renderer.render(scene, camera);
+    }
+  </script>
+</body>
+</html>
