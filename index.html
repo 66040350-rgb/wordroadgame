@@ -183,15 +183,14 @@
 
     /* Modals */
     .custom-modal {
-      position: fixed; inset: 0; background: rgba(10, 12, 16, 0.88); backdrop-filter: blur(12px);
-      display: none; justify-content: center; align-items: center; padding: 18px; z-index: 250;
+      position: fixed; inset: 0; background: rgba(10, 12, 16, 0.9); backdrop-filter: blur(12px);
+      display: none; justify-content: center; align-items: center; padding: 16px; z-index: 250;
     }
     .modal-box {
-      background: #1e293b; border: 3px solid #0284c7; border-radius: 24px; padding: 26px;
-      max-width: 540px; width: 100%; color: #fff; box-shadow: 0 20px 60px rgba(0,0,0,0.8); text-align: left; max-height: 90vh; overflow-y: auto;
+      background: #1e293b; border: 3px solid #0284c7; border-radius: 24px; padding: 22px;
+      max-width: 540px; width: 100%; color: #fff; box-shadow: 0 20px 60px rgba(0,0,0,0.8); text-align: left; max-height: 92vh; overflow-y: auto;
     }
-    .modal-title { font-size: 1.25rem; font-weight: 900; color: #38bdf8; margin-bottom: 10px; }
-    .modal-desc { font-size: 0.98rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 16px; }
+    .modal-title { font-size: 1.15rem; font-weight: 900; color: #38bdf8; margin-bottom: 8px; }
   </style>
 </head>
 <body>
@@ -283,22 +282,33 @@
     </div>
   </div>
 
-  <!-- Modal อ่านสรุป และทำควิซ 3 ข้อ บังคับผ่าน -->
+  <!-- Modal อ่านสรุป และปุ่มกดทำควิซ 3 ข้อ -->
   <div id="study-modal" class="custom-modal">
     <div class="modal-box">
       <div class="modal-title" id="study-modal-title">หัวข้อบทเรียน</div>
-      <div class="modal-desc" id="study-modal-text">เนื้อหาสรุป...</div>
       
-      <div style="background:#0f172a; border:2px solid #334155; border-radius:16px; padding:16px; margin-bottom:16px;">
-        <div style="font-weight:800; color:#facc15; margin-bottom:8px;" id="quiz-header-title">⚡ แบบทดสอบก่อนเข้าเล่น (ข้อที่ 1/3)</div>
-        <div style="font-size:0.95rem; font-weight:700; margin-bottom:12px; color:#f8fafc;" id="quiz-q-text">คำถาม...</div>
-        <div id="quiz-options-area" style="display:flex; flex-direction:column; gap:8px;"></div>
+      <!-- ส่วนที่ 1: แสดงเนื้อหาให้อ่านอย่างเดียว -->
+      <div id="study-reading-section">
+        <div style="background:#0f172a; border-left:4px solid #38bdf8; padding:14px; border-radius:10px; margin-bottom:14px;">
+          <div style="font-size:0.88rem; font-weight:800; color:#38bdf8; margin-bottom:6px;">📖 สาระสำคัญประจำบท (อ่านทำความเข้าใจก่อน):</div>
+          <div style="font-size:0.95rem; color:#e2e8f0; line-height:1.6;" id="study-modal-text">เนื้อหาสรุป...</div>
+        </div>
+        <button class="rbx-green-btn" onclick="startQuizFromStudy()">อ่านเนื้อหาจบแล้ว เริ่มทำแบบทดสอบ (3 ข้อ) ✍️</button>
       </div>
 
-      <div id="study-complete-actions" style="display:none;">
-        <button class="rbx-green-btn" onclick="launchGameFromStudy()">ผ่านแบบทดสอบแล้ว! ไปลุยสนามแข่งกันเลย 🏎️</button>
+      <!-- ส่วนที่ 2: แบบทดสอบ 3 ข้อ (ซ่อนไว้ก่อนจนกว่าจะกดปุ่มด้านบน) -->
+      <div id="study-quiz-section" style="display:none;">
+        <div style="background:#111827; border:2px solid #334155; border-radius:16px; padding:14px; margin-bottom:14px;">
+          <div style="font-weight:800; color:#facc15; margin-bottom:6px; font-size:0.92rem;" id="quiz-header-title">⚡ แบบทดสอบบังคับผ่าน (ข้อที่ 1/3)</div>
+          <div style="font-size:0.9rem; font-weight:700; margin-bottom:10px; color:#f8fafc;" id="quiz-q-text">คำถาม...</div>
+          <div id="quiz-options-area" style="display:flex; flex-direction:column; gap:6px;"></div>
+        </div>
       </div>
-      <button id="close-study-btn" class="u-btn" style="width:100%; padding:12px; border-color:#334155; background:#1e293b; color:#94a3b8;" onclick="closeStudyModal()">ปิดหน้าต่างอ่านสรุป</button>
+
+      <div id="study-complete-actions" style="display:none; margin-bottom:10px;">
+        <button class="rbx-green-btn" onclick="launchGameFromStudy()">ผ่านแบบทดสอบครบแล้ว! ไปลุยสนามแข่งกันเลย 🏎️</button>
+      </div>
+      <button id="close-study-btn" class="u-btn" style="width:100%; padding:10px; border-color:#334155; background:#1e293b; color:#94a3b8; margin-top:8px;" onclick="closeStudyModal()">ปิดหน้าต่าง</button>
     </div>
   </div>
 
@@ -309,7 +319,7 @@
         <span style="background:#fef08a; color:#854d0e; font-weight:800; font-size:0.85rem; padding:4px 12px; border-radius:20px;" id="cp-badge">CHECKPOINT 1</span>
         <span style="font-weight:900; color:#38bdf8;" id="cert-code-disp">รหัสผ่านด่าน: WRD-01</span>
       </div>
-      <div style="font-size:1.1rem; font-weight:700; margin-bottom:14px; line-height:1.5;" id="cp-q">ภารกิจ...</div>
+      <div style="font-size:1.05rem; font-weight:700; margin-bottom:12px; line-height:1.5;" id="cp-q">ภารกิจ...</div>
       <div id="cp-options-area" style="display:flex; flex-direction:column; gap:8px;"></div>
     </div>
   </div>
@@ -317,10 +327,10 @@
   <!-- Modal แก้ตัวเมื่อตอบผิดในสนามแข่ง -->
   <div id="knowledge-modal" class="custom-modal">
     <div class="modal-box" style="border-color:#ef4444;">
-      <div style="color:#ef4444; font-weight:900; font-size:1.2rem; margin-bottom:8px;">ยังไม่ถูกต้อง! ทบทวนจุดสำคัญ</div>
-      <div style="background:#0f172a; border-left:4px solid #facc15; padding:12px; border-radius:8px; margin-bottom:16px;">
+      <div style="color:#ef4444; font-weight:900; font-size:1.15rem; margin-bottom:6px;">ยังไม่ถูกต้อง! ทบทวนจุดสำคัญ</div>
+      <div style="background:#0f172a; border-left:4px solid #facc15; padding:12px; border-radius:8px; margin-bottom:14px;">
         <div style="font-weight:800; color:#facc15; margin-bottom:4px;" id="kn-subject">หัวข้อ</div>
-        <div style="font-size:0.92rem; color:#e2e8f0; line-height:1.5;" id="kn-text">เนื้อหา...</div>
+        <div style="font-size:0.9rem; color:#e2e8f0; line-height:1.5;" id="kn-text">เนื้อหา...</div>
       </div>
       <button class="rbx-green-btn" onclick="retryMission()">ทำภารกิจแก้ตัวอีกครั้ง (RETRY)</button>
     </div>
@@ -512,12 +522,21 @@
       const ch = chapterData[idx];
 
       document.getElementById("study-modal-title").innerText = ch.title;
-      document.getElementById("study-modal-text").innerHTML = `<b>📖 สาระสำคัญประจำบท:</b><br>${ch.knText}`;
+      document.getElementById("study-modal-text").innerText = ch.knText;
+      
+      // แสดงเฉพาะส่วนหน้าอ่านเนื้อหาก่อน
+      document.getElementById("study-reading-section").style.display = "block";
+      document.getElementById("study-quiz-section").style.display = "none";
       document.getElementById("study-complete-actions").style.display = "none";
-      document.getElementById("close-study-btn").style.display = "block";
 
-      renderQuizStep();
       document.getElementById("study-modal").style.display = "flex";
+    }
+
+    function startQuizFromStudy() {
+      // ซ่อนหน้าอ่าน แล้วเปิดส่วนทำควิซข้อที่ 1
+      document.getElementById("study-reading-section").style.display = "none";
+      document.getElementById("study-quiz-section").style.display = "block";
+      renderQuizStep();
     }
 
     function renderQuizStep() {
@@ -536,8 +555,8 @@
         btn.style.background = "#1e293b";
         btn.style.border = "2px solid #334155";
         btn.style.boxShadow = "none";
-        btn.style.fontSize = "0.95rem";
-        btn.style.padding = "10px";
+        btn.style.fontSize = "0.9rem";
+        btn.style.padding = "8px";
         btn.innerText = opt;
         btn.onclick = () => {
           if (opt === qItem.target) {
@@ -548,14 +567,11 @@
               renderQuizStep();
             } else {
               alert("ยอดเยี่ยม! คุณผ่านแบบทดสอบครบทั้ง 3 ข้อแล้ว ปลดล็อกสนามแข่งเรียบร้อย!");
+              document.getElementById("study-quiz-section").style.display = "none";
               document.getElementById("study-complete-actions").style.display = "block";
-              document.getElementById("quiz-header-title").innerText = "🎉 ผ่านการทดสอบครบทุกข้อแล้ว!";
-              document.getElementById("quiz-q-text").innerText = "กดปุ่มด้านล่างเพื่อเข้าสู่สนามแข่ง 3D ได้ทันที";
-              optsArea.innerHTML = "";
             }
           } else {
-            // ตอบผิด แสดงเนื้อหาความรู้ที่ถูกต้องของข้อนั้นทันทีแล้วให้ทำใหม่
-            alert(`❌ ยังไม่ถูกต้อง!\n\n💡 คำอธิบาย/เนื้อหาที่ถูกต้อง:\n${qItem.explain}\n\nกรุณาลองทำข้อนี้ใหม่อีกครั้งครับ`);
+            alert(`❌ ยังไม่ถูกต้อง!\n\n💡 คำอธิบาย:\n${qItem.explain}\n\nกรุณาลองทำข้อนี้ใหม่อีกครั้งครับ`);
           }
         };
         optsArea.appendChild(btn);
