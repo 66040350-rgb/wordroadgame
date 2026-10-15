@@ -49,27 +49,9 @@
       white-space: nowrap;
     }
     .hud-chip { 
-      display: flex; 
-      align-items: center; 
-      gap: 8px; 
-      font-size: 0.92rem; 
-      font-weight: 700;
-      flex-shrink: 0;
+      display: flex; align-items: center; gap: 8px; font-size: 0.92rem; font-weight: 700; flex-shrink: 0;
     }
-    .hud-chip.player-chip {
-      max-width: 180px;
-      overflow: hidden;
-    }
-    #hud-name {
-      display: inline-block;
-      max-width: 130px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-weight: 900;
-      color: #38bdf8;
-      letter-spacing: 0.3px;
-    }
+    #hud-name { font-weight: 900; color: #38bdf8; }
     .hud-icon { width: 18px; height: 18px; fill: #38bdf8; display: inline-block; vertical-align: middle; flex-shrink: 0; }
     .hud-pill {
       background: linear-gradient(135deg, #f59e0b, #d97706);
@@ -113,9 +95,7 @@
       padding: 6px 22px; display: flex; align-items: baseline; gap: 6px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.6);
     }
-    .speed-num {
-      font-size: 2.3rem; font-weight: 900; color: #ef4444; font-family: 'Chakra Petch', sans-serif;
-    }
+    .speed-num { font-size: 2.3rem; font-weight: 900; color: #ef4444; font-family: 'Chakra Petch', sans-serif; }
     .speed-unit { font-size: 0.9rem; font-weight: 800; color: #94a3b8; }
     .gear-mode { font-size: 0.85rem; color: #38bdf8; font-weight: 800; margin-left: 6px; }
 
@@ -155,17 +135,13 @@
       background: var(--surface); border: 3px solid #00a2ff; border-radius: 28px;
       padding: 32px 28px; max-width: 500px; width: 100%; text-align: center; color: #fff;
       box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 35px rgba(0, 162, 255, 0.3);
-      animation: zoomIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    @keyframes zoomIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-
     .game-h1 {
       font-size: 2.3rem; font-weight: 900;
       background: linear-gradient(135deg, #facc15, #f59e0b);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       margin-bottom: 8px; letter-spacing: 1px;
     }
-
     .rbx-green-btn {
       width: 100%; padding: 16px; border-radius: 16px; border: none;
       background: linear-gradient(180deg, #00b06f 0%, #008755 100%);
@@ -177,82 +153,55 @@
 
     #start-screen {
       background: radial-gradient(circle at 50% 40%, rgba(14, 165, 233, 0.45) 0%, rgba(15, 23, 42, 0.92) 80%);
-      backdrop-filter: blur(12px);
-      z-index: 200;
-      overflow-y: auto;
+      backdrop-filter: blur(12px); z-index: 200; overflow-y: auto;
     }
-
     .start-modal {
       background: rgba(255, 255, 255, 0.98);
-      border: 4px solid #38bdf8;
-      border-radius: 32px;
-      padding: 26px 20px;
-      max-width: 580px;
-      width: 95%;
-      text-align: center;
-      color: #0f172a;
+      border: 4px solid #38bdf8; border-radius: 32px;
+      padding: 26px 20px; max-width: 580px; width: 95%;
+      text-align: center; color: #0f172a;
       box-shadow: 0 25px 60px rgba(2, 132, 199, 0.4);
-      position: relative;
-      margin: auto;
-      max-height: 94vh;
-      overflow-y: auto;
+      position: relative; margin: auto; max-height: 94vh; overflow-y: auto;
     }
-
     .hero-banner {
       background: linear-gradient(135deg, #0284c7, #2563eb);
-      margin: -26px -20px 16px -20px;
-      padding: 20px 14px 14px;
+      margin: -26px -20px 16px -20px; padding: 20px 14px 14px;
       border-bottom: 4px solid #facc15;
     }
-
     .game-logo-title {
-      font-size: 2rem;
-      font-weight: 900;
-      color: #ffffff;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-shadow: 3px 3px 0px #0369a1;
-      font-family: 'Chakra Petch', 'Kanit', sans-serif;
+      font-size: 2rem; font-weight: 900; color: #ffffff;
+      text-transform: uppercase; letter-spacing: 1px;
+      text-shadow: 3px 3px 0px #0369a1; font-family: 'Chakra Petch', 'Kanit', sans-serif;
     }
-
     .game-sub-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      margin-top: 6px;
-      background: #facc15;
-      color: #713f12;
-      font-size: 0.8rem;
-      font-weight: 800;
-      padding: 4px 12px;
-      border-radius: 999px;
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 6px;
+      background: #facc15; color: #713f12; font-size: 0.8rem; font-weight: 800;
+      padding: 4px 12px; border-radius: 999px;
     }
 
-    .hub-menu-tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 16px;
+    /* Auth tabs & inputs */
+    .auth-box { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+    .auth-tabs { display: flex; gap: 8px; margin-bottom: 4px; }
+    .auth-tab-btn {
+      flex: 1; padding: 10px; border-radius: 12px; border: 2px solid #cbd5e1;
+      background: #f1f5f9; font-weight: 800; cursor: pointer; color: #475569;
     }
+    .auth-tab-btn.active { background: #0284c7; color: #fff; border-color: #0369a1; }
+    .start-input {
+      width: 100%; padding: 12px 16px; border-radius: 14px;
+      border: 3px solid #cbd5e1; background: #f8fafc; color: #0f172a;
+      font-size: 1rem; font-weight: 700; text-align: center; outline: none;
+    }
+    .start-input:focus { border-color: #0284c7; background: #fff; }
+
+    .hub-menu-tabs { display: flex; gap: 10px; margin-bottom: 16px; }
     .hub-tab-btn {
-      flex: 1;
-      padding: 12px;
-      border-radius: 14px;
-      border: 2px solid #cbd5e1;
-      background: #f8fafc;
-      color: #334155;
-      font-weight: 800;
-      font-size: 0.95rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all 0.15s;
+      flex: 1; padding: 12px; border-radius: 14px; border: 2px solid #cbd5e1;
+      background: #f8fafc; color: #334155; font-weight: 800; font-size: 0.95rem;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
     }
     .hub-tab-btn.active {
-      background: #0284c7;
-      color: #fff;
-      border-color: #0369a1;
+      background: #0284c7; color: #fff; border-color: #0369a1;
       box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
     }
     .hub-tab-btn svg { width: 20px; height: 20px; fill: currentColor; }
@@ -261,51 +210,28 @@
     .hub-content-pane.active { display: block; }
 
     .chapter-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      max-height: 220px;
-      overflow-y: auto;
-      padding-right: 4px;
-      margin-bottom: 14px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+      max-height: 220px; overflow-y: auto; padding-right: 4px; margin-bottom: 14px;
     }
     .chapter-card {
-      background: #f0f9ff;
-      border: 2px solid #bae6fd;
-      border-radius: 12px;
-      padding: 10px 12px;
-      cursor: pointer;
-      transition: 0.1s;
+      background: #f0f9ff; border: 2px solid #bae6fd; border-radius: 12px;
+      padding: 10px 12px; cursor: pointer; transition: 0.1s; position: relative;
     }
-    .chapter-card:hover { border-color: #0284c7; background: #e0f2fe; }
+    .chapter-card.locked {
+      background: #e2e8f0; border-color: #cbd5e1; opacity: 0.7; cursor: not-allowed;
+    }
+    .chapter-card:not(.locked):hover { border-color: #0284c7; background: #e0f2fe; }
     .chapter-card .ch-num { font-size: 0.75rem; font-weight: 800; color: #0284c7; }
+    .chapter-card.locked .ch-num { color: #64748b; }
     .chapter-card .ch-title { font-size: 0.85rem; font-weight: 700; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .start-input {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 14px;
-      border: 3px solid #cbd5e1;
-      background: #f8fafc;
-      color: #0f172a;
-      font-size: 1rem;
-      font-weight: 700;
-      text-align: center;
-      outline: none;
-      margin-bottom: 12px;
-    }
-    .start-input:focus { border-color: #0284c7; background: #fff; }
-
     #checkpoint-modal {
-      position: fixed; inset: 0;
-      background: rgba(10, 12, 16, 0.88); backdrop-filter: blur(12px);
-      display: none; justify-content: center; align-items: center;
-      padding: 16px; z-index: 120;
+      position: fixed; inset: 0; background: rgba(10, 12, 16, 0.88); backdrop-filter: blur(12px);
+      display: none; justify-content: center; align-items: center; padding: 16px; z-index: 120;
     }
     .cp-box {
-      background: #ffffff; border: 4px solid #38bdf8;
-      border-radius: 26px; padding: 24px; max-width: 600px; width: 100%;
-      color: #1e293b; box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      background: #ffffff; border: 4px solid #38bdf8; border-radius: 26px; padding: 24px;
+      max-width: 600px; width: 100%; color: #1e293b; box-shadow: 0 20px 60px rgba(0,0,0,0.8);
       max-height: 94vh; overflow-y: auto; text-align: left;
     }
     .cp-top {
@@ -317,141 +243,31 @@
       padding: 4px 14px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px;
       border: 2px solid #facc15;
     }
-    .badge-cp svg { width: 16px; height: 16px; fill: #854d0e; }
-    .q-statement {
-      font-size: 1.15rem; font-weight: 700; margin-bottom: 14px; line-height: 1.5; color: #0f172a;
-    }
-
+    .q-statement { font-size: 1.15rem; font-weight: 700; margin-bottom: 14px; line-height: 1.5; color: #0f172a; }
     .minigame-stage {
-      background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 16px;
-      padding: 18px; display: flex; flex-direction: column; align-items: center;
-      justify-content: center; min-height: 140px; gap: 12px; margin-bottom: 14px;
+      background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 16px; padding: 18px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 140px; gap: 12px; margin-bottom: 14px;
     }
-
-    .match-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      width: 100%;
-    }
-    .match-col {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .match-card {
-      background: #ffffff;
-      border: 2px solid #cbd5e1;
-      border-radius: 12px;
-      padding: 10px 12px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: #1e293b;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.15s ease;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .match-card:hover { border-color: #38bdf8; background: #f0f9ff; }
-    .match-card.selected { border-color: #0284c7; background: #e0f2fe; color: #0284c7; font-weight: 800; }
-    .match-card.paired { border-color: #10b981; background: #ecfdf5; color: #059669; pointer-events: none; }
-
-    .ribbon-bar { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
     .ribbon-btn {
       padding: 10px 16px; border-radius: 10px; border: 2px solid #cbd5e1;
-      background: #ffffff; font-family: 'Kanit'; cursor: pointer; font-weight: 600;
-      font-size: 0.95rem; color: #1e293b; transition: 0.15s;
-    }
-    .ribbon-btn:hover { background: #e0f2fe; border-color: #38bdf8; }
-
-    .table-picker {
-      display: grid; grid-template-columns: repeat(4, 38px); grid-template-rows: repeat(3, 38px); gap: 6px;
-    }
-    .table-cell {
-      background: #e2e8f0; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer;
-    }
-    .table-cell.selected { background: #38bdf8; border-color: #0284c7; }
-
-    .image-choices-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%;
-    }
-    .img-choice-btn {
-      background: #ffffff; border: 2px solid #cbd5e1; border-radius: 14px;
-      padding: 14px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 8px; cursor: pointer; transition: 0.15s ease;
-    }
-    .img-choice-btn:hover { border-color: #0284c7; background: #f0f9ff; transform: translateY(-2px); }
-    .img-choice-btn svg { width: 44px; height: 44px; }
-    .img-choice-btn span { font-size: 0.88rem; font-weight: 700; color: #334155; }
-
-    .word-sim-sheet {
-      width: 100%; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 10px;
-      padding: 16px 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); position: relative;
-      text-align: center;
-    }
-    .wavy-underline-blue {
-      text-decoration: underline wavy #0284c7;
-      text-underline-offset: 7px;
-      text-decoration-thickness: 2.5px;
-      font-weight: 800;
-      font-size: 1.45rem;
-      color: #0f172a;
-      letter-spacing: 1px;
-    }
-    .wrap-behind-demo {
-      position: relative; width: 100%; height: 95px; display: flex;
-      align-items: center; justify-content: center; overflow: hidden;
-      background: #f8fafc; border: 1px dashed #94a3b8; border-radius: 8px;
-    }
-    .wrap-behind-box {
-      position: absolute; width: 140px; height: 65px;
-      background: linear-gradient(135deg, #fde047, #f59e0b);
-      border: 2px solid #d97706; border-radius: 10px; z-index: 1;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
-    }
-    .wrap-behind-text {
-      position: relative; z-index: 2; font-size: 1.25rem; font-weight: 900;
-      color: #0f172a; text-shadow: 0 0 4px #ffffff, 0 0 8px #ffffff;
+      background: #ffffff; font-family: 'Kanit'; cursor: pointer; font-weight: 600; font-size: 0.95rem; color: #1e293b; width: 100%; margin-bottom: 8px;
     }
 
     #knowledge-modal {
-      position: fixed; inset: 0;
-      background: rgba(10, 12, 16, 0.92); backdrop-filter: blur(14px);
-      display: none; justify-content: center; align-items: center;
-      padding: 18px; z-index: 130;
+      position: fixed; inset: 0; background: rgba(10, 12, 16, 0.92); backdrop-filter: blur(14px);
+      display: none; justify-content: center; align-items: center; padding: 18px; z-index: 130;
     }
     .knowledge-card {
-      background: #0f172a; border: 3px solid #ef4444; border-radius: 28px;
-      padding: 26px; max-width: 540px; width: 100%; color: #fff;
-      box-shadow: 0 20px 60px rgba(239, 68, 68, 0.3); text-align: left;
-      animation: zoomIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      background: #0f172a; border: 3px solid #ef4444; border-radius: 28px; padding: 26px;
+      max-width: 540px; width: 100%; color: #fff; box-shadow: 0 20px 60px rgba(239, 68, 68, 0.3); text-align: left;
     }
-    .kn-header {
-      display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
-      color: #ef4444; font-size: 1.3rem; font-weight: 800;
-    }
-    .kn-header svg { width: 28px; height: 28px; fill: #ef4444; }
-    .kn-subtitle { font-size: 0.92rem; color: #cbd5e1; margin-bottom: 16px; line-height: 1.5; }
-    .kn-box {
-      background: #1e293b; border-left: 4px solid #facc15;
-      padding: 14px 16px; border-radius: 10px; margin-bottom: 18px;
-    }
-    .kn-title { font-size: 1.05rem; font-weight: 800; color: #facc15; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-    .kn-title svg { width: 20px; height: 20px; fill: #facc15; }
+    .kn-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; color: #ef4444; font-size: 1.3rem; font-weight: 800; }
+    .kn-box { background: #1e293b; border-left: 4px solid #facc15; padding: 14px 16px; border-radius: 10px; margin-bottom: 18px; }
+    .kn-title { font-size: 1.05rem; font-weight: 800; color: #facc15; margin-bottom: 6px; }
     .kn-desc { font-size: 0.95rem; color: #e2e8f0; line-height: 1.6; }
-    .kn-notice {
-      font-size: 0.85rem; color: #f87171; background: rgba(239, 68, 68, 0.15);
-      border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px;
-      padding: 8px 12px; margin-bottom: 18px; display: flex; align-items: center; gap: 8px;
-    }
-    .kn-notice svg { width: 18px; height: 18px; fill: #f87171; flex-shrink: 0; }
   </style>
 </head>
-<body onload="initHubMenu()">
+<body>
 
   <div id="three-container"></div>
 
@@ -460,7 +276,7 @@
   </div>
 
   <div id="top-hud">
-    <div class="hud-chip player-chip">
+    <div class="hud-chip">
       <svg class="hud-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
       <span id="hud-name">-</span>
     </div>
@@ -469,12 +285,10 @@
       <span class="hud-pill" id="hud-stage">ด่าน 1 / 12</span>
     </div>
     <div class="hud-chip">
-      <svg class="hud-icon" style="fill:#818cf8;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-6h2v6zm0-8h-2V7h2v1z"/></svg>
-      <span class="hud-progress-pill" id="hud-progress">0% (ข้อ 0/20)</span>
+      <span class="hud-progress-pill" id="hud-progress">0% (ด่าน 0/12)</span>
     </div>
     <div class="hud-chip">
-      <svg class="hud-icon" style="fill:#10b981;" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg>
-      <span class="hud-pill" style="background: linear-gradient(135deg, #10b981, #059669);" id="hud-score">0 / 20</span>
+      <span class="hud-pill" style="background: linear-gradient(135deg, #10b981, #059669);" id="hud-score">0 / 12</span>
     </div>
   </div>
 
@@ -484,10 +298,7 @@
   </div>
 
   <div id="speedometer-box">
-    <div class="star-badge">
-      <svg viewBox="0 0 24 24" width="14" height="14" fill="#facc15"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
-      <span>TAXI PRO</span>
-    </div>
+    <div class="star-badge"><span>TAXI PRO</span></div>
     <div class="speed-dial">
       <span class="speed-num" id="speed-val">0</span>
       <span class="speed-unit">mph</span>
@@ -495,67 +306,68 @@
     </div>
   </div>
 
-  <!-- ปุ่มบังคับบนหน้าจอ (เชื่อมต่อฟังก์ชันเรียบร้อย) -->
+  <!-- ปุ่มควบคุมการขับรถ -->
   <div id="mobile-controls">
     <div class="pad-cluster">
-      <div class="v-btn" id="btn-left" ontouchstart="setKey('left', true)" ontouchend="setKey('left', false)" onmousedown="setKey('left', true)" onmouseup="setKey('left', false)">
+      <div class="v-btn" ontouchstart="setKey('left', true)" ontouchend="setKey('left', false)" onmousedown="setKey('left', true)" onmouseup="setKey('left', false)">
         <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
       </div>
-      <div class="v-btn" id="btn-right" ontouchstart="setKey('right', true)" ontouchend="setKey('right', false)" onmousedown="setKey('right', true)" onmouseup="setKey('right', false)">
+      <div class="v-btn" ontouchstart="setKey('right', true)" ontouchend="setKey('right', false)" onmousedown="setKey('right', true)" onmouseup="setKey('right', false)">
         <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
       </div>
     </div>
     <div class="pad-cluster">
-      <div class="v-btn" id="btn-down" ontouchstart="setKey('down', true)" ontouchend="setKey('down', false)" onmousedown="setKey('down', true)" onmouseup="setKey('down', false)" style="border-color:#ef4444; background: rgba(239, 68, 68, 0.25);">
+      <div class="v-btn" ontouchstart="setKey('down', true)" ontouchend="setKey('down', false)" onmousedown="setKey('down', true)" onmouseup="setKey('down', false)" style="border-color:#ef4444; background: rgba(239, 68, 68, 0.25);">
         <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
       </div>
-      <div class="v-btn" id="btn-up" ontouchstart="setKey('up', true)" ontouchend="setKey('up', false)" onmousedown="setKey('up', true)" onmouseup="setKey('up', false)" style="border-color:#10b981; background: rgba(16, 185, 129, 0.35); width: 80px; height: 80px;">
+      <div class="v-btn" ontouchstart="setKey('up', true)" ontouchend="setKey('up', false)" onmousedown="setKey('up', true)" onmouseup="setKey('up', false)" style="border-color:#10b981; background: rgba(16, 185, 129, 0.35); width: 80px; height: 80px;">
         <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
       </div>
     </div>
   </div>
 
-  <!-- Main Hub / Start Screen -->
+  <!-- หน้าจอสมัครสมาชิก / เข้าสู่ระบบ / เลือกด่าน -->
   <div id="start-screen" class="overlay-screen">
     <div class="start-modal">
       <div class="hero-banner">
         <div class="game-logo-title">WORD ROAD 3D HUB</div>
-        <div class="game-sub-badge">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="#713f12"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/></svg>
-          <span>ศูนย์รวมการเรียนรู้และสนามแข่ง Microsoft Word ม.1</span>
+        <div class="game-sub-badge"><span>ศูนย์รวมการเรียนรู้และสนามแข่ง Microsoft Word ม.1</span></div>
+      </div>
+
+      <!-- ส่วน Login / Register -->
+      <div id="auth-container" class="auth-box">
+        <div class="auth-tabs">
+          <button class="auth-tab-btn active" id="tab-login-btn" onclick="switchAuthTab('login')">เข้าสู่ระบบ (Login)</button>
+          <button class="auth-tab-btn" id="tab-reg-btn" onclick="switchAuthTab('register')">สมัครสมาชิก (Register)</button>
         </div>
+        <input type="text" id="auth-user" class="start-input" placeholder="ชื่อผู้ใช้งาน (Username)..." autocomplete="off" />
+        <input type="password" id="auth-pass" class="start-input" placeholder="รหัสผ่าน (Password)..." autocomplete="off" />
+        <button class="rbx-green-btn" id="auth-action-btn" onclick="handleAuth()">เข้าสู่ระบบเพื่อลุยด่าน</button>
       </div>
 
-      <input type="text" id="player-input" class="start-input" placeholder="พิมพ์ชื่อ - นามสกุล หรือ เลขที่..." autocomplete="off" />
+      <!-- ส่วนเลือกด่าน (ซ่อนไว้จนกว่าจะ Login สำเร็จ) -->
+      <div id="hub-container" style="display:none;">
+        <div style="font-size: 0.95rem; font-weight: 800; color: #0284c7; margin-bottom: 8px;" id="welcome-user-text">ยินดีต้อนรับนักขับ</div>
+        
+        <div class="hub-menu-tabs">
+          <button class="hub-tab-btn active" onclick="switchHubTab('game')">ลุยสนามแข่ง (Game)</button>
+          <button class="hub-tab-btn" onclick="switchHubTab('study')">ห้องสมุดความรู้ (Study)</button>
+        </div>
 
-      <div class="hub-menu-tabs">
-        <button class="hub-tab-btn active" onclick="switchHubTab('game')">
-          <svg viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/></svg>
-          ลุยสนามแข่ง (Game)
-        </button>
-        <button class="hub-tab-btn" onclick="switchHubTab('study')">
-          <svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-          ห้องสมุดความรู้ (Study)
-        </button>
-      </div>
+        <!-- Game Mode Pane -->
+        <div id="pane-game" class="hub-content-pane active">
+          <div style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-bottom: 6px;">ต้องผ่านด่านก่อนหน้าเพื่อปลดล็อกด่านถัดไป:</div>
+          <div class="chapter-grid" id="chapter-select-grid"></div>
+        </div>
 
-      <!-- Game Mode Pane -->
-      <div id="pane-game" class="hub-content-pane active">
-        <div style="font-size: 0.9rem; font-weight: 800; color: #0284c7; margin-bottom: 6px;">เลือกบทเรียนเพื่อเริ่มซิ่ง (ด่าน 1 - 12):</div>
-        <div class="chapter-grid" id="chapter-select-grid"></div>
-        <button class="rbx-green-btn" onclick="startGame(0)">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="#fff"><path d="M8 5v14l11-7z"/></svg>
-          เริ่มลุยสนามแข่งตั้งแต่ด่าน 1 (START MISSION)
-        </button>
-      </div>
-
-      <!-- Study Mode Pane -->
-      <div id="pane-study" class="hub-content-pane">
-        <div style="font-size: 0.9rem; font-weight: 800; color: #0284c7; margin-bottom: 6px;">เลือกบทเรียนเพื่ออ่านสรุป (ไม่ต้องขับรถ):</div>
-        <div class="chapter-grid" id="study-grid"></div>
-        <div id="study-reader-box" style="background:#f1f5f9; border:2px solid #cbd5e1; border-radius:14px; padding:12px; font-size:0.88rem; color:#334155; margin-top:8px; display:none;">
-          <div id="study-title" style="font-weight:900; color:#0284c7; margin-bottom:4px;">หัวข้อ</div>
-          <div id="study-desc">เนื้อหาสรุป...</div>
+        <!-- Study Mode Pane -->
+        <div id="pane-study" class="hub-content-pane">
+          <div style="font-size: 0.9rem; font-weight: 800; color: #0284c7; margin-bottom: 6px;">เลือกบทเรียนเพื่ออ่านสรุป:</div>
+          <div class="chapter-grid" id="study-grid"></div>
+          <div id="study-reader-box" style="background:#f1f5f9; border:2px solid #cbd5e1; border-radius:14px; padding:12px; font-size:0.88rem; color:#334155; margin-top:8px; display:none;">
+            <div id="study-title" style="font-weight:900; color:#0284c7; margin-bottom:4px;">หัวข้อ</div>
+            <div id="study-desc">เนื้อหาสรุป...</div>
+          </div>
         </div>
       </div>
 
@@ -565,255 +377,90 @@
   <div id="checkpoint-modal">
     <div class="cp-box">
       <div class="cp-top">
-        <span class="badge-cp" id="cp-badge">
-          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-          CHECKPOINT 1
-        </span>
+        <span class="badge-cp" id="cp-badge">CHECKPOINT 1</span>
         <span style="font-weight:900; color:#0284c7;" id="cp-pts">+1 คะแนน</span>
       </div>
       <div class="q-statement" id="cp-q">ภารกิจปฏิบัติการ...</div>
-
       <div class="minigame-stage" id="cp-minigame-area"></div>
-
-      <div style="background: #f1f5f9; border: 1px solid #cbd5e1; padding: 10px 14px; border-radius: 12px; font-size: 0.88rem; color: #475569; display: flex; gap: 8px; align-items: center;">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="#64748b"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-        <span id="cp-footer-tip">แตะเลือกคำตอบหรือจับคู่ให้ถูกต้องเพื่อปลดล็อกม่านเลเซอร์</span>
-      </div>
     </div>
   </div>
 
   <div id="knowledge-modal">
     <div class="knowledge-card">
-      <div class="kn-header">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-        <span>ยังไม่ถูกต้อง! ใบความรู้สรุปแนวคิดสำคัญ</span>
-      </div>
-      <div class="kn-subtitle">ศึกษาคำอธิบายและจุดสังเกตด้านล่างนี้ เพื่อทำภารกิจแก้ตัวและเปิดม่านเลเซอร์เดินทางต่อ</div>
-
+      <div class="kn-header"><span>ยังไม่ถูกต้อง! ใบความรู้สรุปแนวคิดสำคัญ</span></div>
       <div class="kn-box">
-        <div class="kn-title" id="kn-title">
-          <svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-          <span id="kn-subject">หัวข้อความรู้</span>
-        </div>
+        <div class="kn-title"><span id="kn-subject">หัวข้อความรู้</span></div>
         <div class="kn-desc" id="kn-text">เนื้อหาความรู้สรุป...</div>
       </div>
-
-      <div class="kn-notice">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
-        <span>รอบแก้ตัวนี้จะช่วยให้รถผ่านด่านได้ แต่คำถามนี้จะถูกบันทึกไว้เพื่อนำกลับมาสุ่มทวนซ้ำ (Spaced Repetition) ในด่านถัดไป!</span>
-      </div>
-
-      <button class="rbx-green-btn" onclick="retryMission()">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="#fff"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-        ทำภารกิจแก้ตัว (RETRY MISSION)
-      </button>
-    </div>
-  </div>
-
-  <div id="finish-screen" class="overlay-screen" style="display:none;">
-    <div class="modal-card">
-      <div class="game-h1" style="-webkit-text-fill-color: #4ade80;">VICTORY LAP!</div>
-      <p style="color: #cbd5e1; font-size: 0.95rem;">คุณพิชิตเส้นทาง Word Road ครบถ้วนทั้ง 12 สถานี 20 ภารกิจ</p>
-
-      <div style="background: #030712; border: 2px dashed #facc15; border-radius: 18px; padding: 20px; margin: 18px 0;">
-        <div style="font-size: 0.85rem; color: #94a3b8;">คะแนนรวมทั้งสิ้น</div>
-        <div id="final-score" style="font-size: 2.8rem; font-weight: 900; color: #facc15; font-family:'Chakra Petch';">0 / 20</div>
-        <div id="final-rank" style="font-size: 1.05rem; font-weight: 800; color: #38bdf8;">ระดับ: ยอดนักขับระดับ Master</div>
-      </div>
-
-      <div id="cert-code" style="background: rgba(31, 41, 55, 0.8); padding: 12px; border-radius: 12px; font-size: 0.85rem; color: #cbd5e1; margin-bottom: 16px;">
-        รหัสยืนยันผล: WR-CODE-READY
-      </div>
-
-      <p style="font-size:0.85rem; color:#38bdf8; margin-bottom:15px;">บันทึกภาพหน้าจอนี้เพื่อส่งหลักฐานการเรียนรู้</p>
-      <button class="rbx-green-btn" onclick="location.reload()">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="#fff"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-        เล่นอีกครั้ง
-      </button>
+      <button class="rbx-green-btn" onclick="retryMission()">ทำภารกิจแก้ตัว (RETRY MISSION)</button>
     </div>
   </div>
 
   <script>
-    const questionsPool = [
-      {
-        qId: 1, stage: 1, pts: 1.0, mode: "ribbon",
-        q: "ข้อที่ 1/20: เลือกแท็บเมนู Ribbon ที่ใช้เปลี่ยนแบบฟอนต์และขนาดตัวอักษร:",
-        target: "Home",
-        knTitle: "แถบเมนู Ribbon: หน้าแรก (Home)",
-        knText: "จุดสังเกตที่มักจำสับสน: แถบ <span style='color:#facc15; font-weight:800;'>หน้าแรก (Home)</span> เป็นศูนย์รวมคำสั่งพื้นฐานที่ใช้บ่อยที่สุด เช่น เปลี่ยนฟอนต์, ปรับขนาดอักษร, ทำตัวหนา/เอียง/ขีดเส้นใต้ และการจัดตำแหน่งย่อหน้า ต่างจากแท็บ Insert ที่ใช้แทรกรูปหรือตาราง"
-      },
-      {
-        qId: 2, stage: 1, pts: 1.0, mode: "image_choice",
-        q: "ข้อที่ 2/20: ภาพไอคอนใดต่อไปนี้คือคำสั่ง 'ตัวคัดวางรูปแบบ (Format Painter)' ใช้คัดลอกสไตล์ข้อความ?",
-        target: "brush",
-        options: [
-          { id: "brush", label: "แปรงทาสี", svg: `<svg viewBox="0 0 24 24" fill="#0284c7"><path d="M7 14c-1.66 0-3 1.34-3 3 0 1.31-1.16 2-2 2 .92 1.22 2.49 2 4 2 2.21 0 4-1.79 4-4 0-1.66-1.34-3-3-3zm13.71-9.71l-1.42-1.42a1 1 0 0 0-1.41 0L10.5 10.25 13.75 13.5l7.38-7.38a1 1 0 0 0-.42-1.83z"/></svg>` },
-          { id: "cut", label: "กรรไกร", svg: `<svg viewBox="0 0 24 24" fill="#64748b"><path d="M9.64 7.64c.23-.5.36-1.05.36-1.64 0-2.21-1.79-4-4-4S2 3.79 2 6s1.79 4 4 4c.59 0 1.14-.13 1.64-.36L10 12l-2.36 2.36C7.14 14.13 6.59 14 6 14c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4c0-.59-.13-1.14-.36-1.64L12 14l7 7h3v-1L9.64 7.64zM6 8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm0 12c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm16-16h-3l-5 5 2 2 6-6V4z"/></svg>` },
-          { id: "copy", label: "กระดาษซ้อน", svg: `<svg viewBox="0 0 24 24" fill="#64748b"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>` },
-          { id: "save", label: "แผ่นดิสก์", svg: `<svg viewBox="0 0 24 24" fill="#64748b"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>` }
-        ],
-        knTitle: "เครื่องมือ Format Painter (ตัวคัดวางรูปแบบ)",
-        knText: "จุดสังเกต: ไอคอนรูป <span style='color:#facc15; font-weight:800;'>แปรงทาสี (Format Painter)</span> ใช้สำหรับคัดลอกสไตล์ข้อความ ไปทาใส่ข้อความอื่น ไม่ใช่การคัดลอกเนื้อหาตัวอักษรแบบ Ctrl+C"
-      },
-      {
-        qId: 3, stage: 2, pts: 1.0, mode: "matching",
-        q: "ข้อที่ 3/20: แตะจับคู่ 'คำสั่งจัดการเอกสาร' กับ 'คีย์ลัด' ให้ถูกต้องทั้ง 2 คู่:",
-        pairs: [
-          { action: "บันทึกเอกสาร", key: "Ctrl + S" },
-          { action: "สร้างเอกสารใหม่", key: "Ctrl + N" }
-        ],
-        knTitle: "คีย์ลัดพื้นฐานในการจัดการไฟล์",
-        knText: "จุดสังเกต: <span style='color:#facc15; font-weight:800;'>Ctrl + S (Save)</span> คือบันทึกไฟล์ และ <span style='color:#facc15; font-weight:800;'>Ctrl + N (New)</span> คือสร้างเอกสารใหม่"
-      },
-      {
-        qId: 4, stage: 2, pts: 1.0, mode: "choice",
-        q: "ข้อที่ 4/20: หากต้องการเปิดเอกสารเก่าที่เคยบันทึกไว้ขึ้นมาใช้งาน ต้องกดคีย์ลัดใด:",
-        target: "Ctrl + O",
-        opts: ["Ctrl + P", "Ctrl + O", "Ctrl + W", "Ctrl + F"],
-        knTitle: "คีย์ลัดเปิดไฟล์ (Open)",
-        knText: "จุดสังเกต: <span style='color:#facc15; font-weight:800;'>Ctrl + O</span> ย่อมาจาก <span style='color:#facc15; font-weight:800;'>Open</span> ใช้เปิดไฟล์เดิม ส่วน Ctrl + P คือพิมพ์เอกสาร"
-      },
-      {
-        qId: 5, stage: 3, pts: 1.0, mode: "choice",
-        q: "ข้อที่ 5/20: พิมพ์ข้อความผิดแล้วเผลอลบหายไป จะกดคีย์ลัดใดเพื่อกู้คืนข้อความกลับมาทันที (Undo):",
-        target: "Ctrl + Z",
-        opts: ["Ctrl + X", "Ctrl + Z", "Ctrl + Y", "Ctrl + C"],
-        knTitle: "การยกเลิกคำสั่งล่าสุด (Undo)",
-        knText: "จุดสังเกต: <span style='color:#facc15; font-weight:800;'>Ctrl + Z (Undo)</span> เป็นคีย์ลัดกู้ชีพเมื่อเผลอลบข้อความ สามารถกดเพื่อย้อนกลับได้หลายขั้นตอน"
-      },
-      {
-        qId: 6, stage: 3, pts: 1.0, mode: "choice",
-        q: "ข้อที่ 6/20: หากต้องการ 'ทำซ้ำคำสั่งล่าสุด' (Redo) ที่เพิ่งยกเลิกไป ต้องกดปุ่มใด:",
-        target: "Ctrl + Y",
-        opts: ["Ctrl + R", "Ctrl + Y", "Ctrl + U", "Ctrl + V"],
-        knTitle: "การทำซ้ำคำสั่ง (Redo)",
-        knText: "จุดสังเกต: คู่หูกับ Undo คือ <span style='color:#facc15; font-weight:800;'>Ctrl + Y (Redo)</span> ใช้ทำซ้ำสิ่งที่เพิ่งสั่ง หรือดึงการกระทำที่เผลอกด Undo เกินกลับคืนมา"
-      },
-      {
-        qId: 7, stage: 4, pts: 1.0, mode: "matching",
-        q: "ข้อที่ 7/20: แตะจับคู่ 'สไตล์ฟอนต์' กับ 'คีย์ลัดคำสั่ง' ให้ถูกต้องครบทั้ง 2 คู่:",
-        pairs: [
-          { action: "ตัวหนา", key: "Ctrl + B" },
-          { action: "ตัวเอียง", key: "Ctrl + I" }
-        ],
-        knTitle: "คีย์ลัดรูปแบบตัวอักษร (Bold / Italic)",
-        knText: "จุดสังเกต: <span style='color:#facc15; font-weight:800;'>Ctrl + B</span> มาจาก Bold และ <span style='color:#facc15; font-weight:800;'>Ctrl + I</span> มาจาก Italic"
-      },
-      {
-        qId: 8, stage: 4, pts: 1.0, mode: "image_query",
-        q: "ข้อที่ 8/20: จากรูปภาพไอคอนด้านล่างนี้ มีหน้าที่สั่งการทำงานใดใน Word?",
-        customHtml: `<div style="padding:10px;"><svg viewBox="0 0 24 24" width="70" height="70" fill="#0284c7"><path d="M12 17c3.31 0 6-2.69 6-6V3h-2.5v8c0 1.93-1.57 3.5-3.5 3.5S8.5 12.93 8.5 11V3H6v8c0 3.31 2.69 6 6 6zm-7 2v2h14v-2H5z"/></svg></div>`,
-        target: "ขีดเส้นใต้ข้อความ (Underline)",
-        opts: ["ขีดเส้นใต้ข้อความ (Underline)", "ตัวเอียง (Italic)", "ตัวยก (Superscript)", "เน้นสีข้อความ (Highlight)"],
-        knTitle: "คำสั่งขีดเส้นใต้ (Underline)",
-        knText: "จุดสังเกต: ไอคอนรูปตัว U มีเส้นขีดใต้ ย่อมาจาก Underline (คีย์ลัด Ctrl + U)"
-      },
-      {
-        qId: 9, stage: 5, pts: 1.0, mode: "align",
-        q: "ข้อที่ 9/20: กดปุ่มจัดตำแหน่งเอกสาร เพื่อวางข้อความให้อยู่ 'กึ่งกลางหน้ากระดาษ':",
-        target: "center",
-        knTitle: "การจัดแนวย่อหน้า (Paragraph Alignment)",
-        knText: "จุดสังเกต: ปุ่ม <span style='color:#facc15; font-weight:800;'>กึ่งกลาง (Center / Ctrl + E)</span> นิยมใช้สำหรับพิมพ์ชื่อเรื่อง หัวข้อรายงาน"
-      },
-      {
-        qId: 10, stage: 6, pts: 1.0, mode: "choice",
-        q: "ข้อที่ 10/20: เครื่องมือใดใช้สร้างรายการที่มีลำดับ 1, 2, 3 ตามลำดับก่อนหลัง:",
-        target: "Numbering",
-        opts: ["Bullets", "Numbering", "Multilevel List"],
-        knTitle: "เครื่องมือลำดับเลข (Numbering)",
-        knText: "จุดสังเกต: ขั้นตอนที่ต้องทำตามลำดับก่อนหลัง (มีตัวเลข 1, 2, 3) ต้องใช้คำสั่ง <span style='color:#facc15; font-weight:800;'>Numbering</span>"
-      },
-      {
-        qId: 11, stage: 6, pts: 1.0, mode: "image_choice",
-        q: "ข้อที่ 11/20: สัญลักษณ์ภาพใดคือ 'สัญลักษณ์แสดงหัวข้อย่อย (Bullets)' ที่ใช้ทำรายการแบบไม่มีลำดับเลข?",
-        target: "bullets",
-        options: [
-          { id: "bullets", label: "จุด Bullet", svg: `<svg viewBox="0 0 24 24" fill="#0284c7"><path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"/></svg>` },
-          { id: "num", label: "เลข 1 2 3", svg: `<svg viewBox="0 0 24 24" fill="#64748b"><path d="M2 17h2v.5H3v1h1v.5H2v1h3v-4H2v1zm1-9h1V4H2v1h1v3zm-1 3h1.8L2 13.1v.9h3v-1H3.2L5 10.9V10H2v1zm5-6v2h14V5H7zm0 14h14v-2H7v2zm0-6h14v-2H7v2z"/></svg>` },
-          { id: "align_just", label: "กระจายข้อความ", svg: `<svg viewBox="0 0 24 24" fill="#64748b"><path d="M3 3h18v2H3V3zm0 4h18v2H3V7zm0 4h18v2H3v-2zm0 4h18v2H3v-2zm0 4h18v2H3v-2z"/></svg>` },
-          { id: "sort", label: "เรียง A-Z", svg: `<svg viewBox="0 0 24 24" fill="#64748b"><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v2z"/></svg>` }
-        ],
-        knTitle: "สัญลักษณ์หัวข้อย่อย (Bullets)",
-        knText: "จุดสังเกต: <span style='color:#facc15; font-weight:800;'>Bullets</span> แสดงเป็นจุดสัญลักษณ์นำหน้าข้อความ เหมาะสำหรับรายการที่ไม่เรียงลำดับ"
-      },
-      {
-        qId: 12, stage: 7, pts: 1.0, mode: "choice",
-        q: "ข้อที่ 12/20: คำสั่ง Wrap Text รูปแบบใดทำให้ข้อความไหลล้อมรอบกรอบรูปภาพเป็นสี่เหลี่ยมพอดี:",
-        target: "Square",
-        opts: ["In Line with Text", "Square", "Behind Text"],
-        knTitle: "การตัดข้อความล้อมรูปภาพ (Wrap Text - Square)",
-        knText: "จุดสังเกต: เลือก <span style='color:#facc15; font-weight:800;'>Square</span> เมื่อต้องการให้ข้อความวิ่งล้อมรอบขอบสี่เหลี่ยมของรูปภาพอย่างเป็นระเบียบ"
-      },
-      {
-        qId: 13, stage: 7, pts: 1.0, mode: "image_query",
-        q: "ข้อที่ 13/20: ภาพจำลองเอกสารด้านล่าง (รูปภาพอยู่ด้านหลัง ตัวหนังสือพิมพ์ลอยทับด้านบน) ตรงกับคำสั่ง Wrap Text ชนิดใด?",
-        customHtml: `<div class="word-sim-sheet"><div style="font-size:0.75rem; color:#94a3b8; margin-bottom:8px; font-weight:800;">จำลองหน้ากระดาษ Word</div><div class="wrap-behind-demo"><div class="wrap-behind-box"><svg viewBox="0 0 24 24" width="28" height="28" fill="#713f12" opacity="0.4"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg></div><div class="wrap-behind-text">ข้อความลอยทับรูปภาพ</div></div></div>`,
-        target: "Behind Text (อยู่ข้างหลังข้อความ)",
-        opts: ["In Front of Text (ข้างหน้าข้อความ)", "Behind Text (อยู่ข้างหลังข้อความ)", "Top and Bottom (บนและล่าง)", "Through (ทะลุผ่าน)"],
-        knTitle: "Behind Text (อยู่ข้างหลังข้อความ)",
-        knText: "จุดสังเกต: <span style='color:#facc15; font-weight:800;'>Behind Text</span> ดันรูปภาพไปอยู่เลเยอร์ล่างสุด ทำให้พิมพ์ตัวหนังสือทับลงบนภาพได้เหมือนลายน้ำ"
-      },
-      {
-        qId: 14, stage: 8, pts: 1.0, mode: "table_grid",
-        q: "ข้อที่ 14/20: กำหนดขนาดสร้างตารางข้อมูลจำนวน '3 คอลัมน์ x 2 แถว' ให้ถูกต้อง:",
-        targetCols: 3, targetRows: 2,
-        knTitle: "โครงสร้างตาราง (Table Dimension)",
-        knText: "จุดสังเกต: <span style='color:#facc15; font-weight:800;'>คอลัมน์ (แนวตั้ง)</span> x <span style='color:#facc15; font-weight:800;'>แถว (แนวนอน)</span> ดังนั้น 3 x 2 คือ 3 คอลัมน์ และ 2 แถว"
-      },
-      {
-        qId: 15, stage: 9, pts: 1.0, mode: "choice",
-        q: "ข้อที่ 15/20: พิมพ์ตารางกว้าง ต้องตั้งค่าหน้ากระดาษแบบใดในเมนู Orientation:",
-        target: "Landscape (แนวนอน)",
-        opts: ["Portrait (แนวตั้ง)", "Landscape (แนวนอน)", "Columns (คอลัมน์)"],
-        knTitle: "การวางแนวกระดาษ (Page Orientation)",
-        knText: "จุดสังเกต: หากมีตารางหลายคอลัมน์ควรอัปเกรดเป็น <span style='color:#facc15; font-weight:800;'>Landscape (แนวนอน)</span>"
-      },
-      {
-        qId: 16, stage: 9, pts: 1.0, mode: "image_choice",
-        q: "ข้อที่ 16/20: ไอคอนใดคือคำสั่ง 'ระยะขอบกระดาษ (Margins)' ในแท็บ Layout?",
-        target: "margin",
-        options: [
-          { id: "margin", label: "ขอบกระดาษ", svg: `<svg viewBox="0 0 24 24" fill="#0284c7"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 7h10v10H7z"/></svg>` },
-          { id: "size", label: "ขนาดกระดาษ", svg: `<svg viewBox="0 0 24 24" fill="#64748b"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>` },
-          { id: "cols", label: "แบ่งคอลัมน์", svg: `<svg viewBox="0 0 24 24" fill="#64748b"><path d="M10 18h5V5h-5v13zm-6 0h5V5H4v13zm12 0h5V5h-5v13z"/></svg>` },
-          { id: "break", label: "ตัวแบ่งหน้า", svg: `<svg viewBox="0 0 24 24" fill="#64748b"><path d="M18.6 6.62c-1.44 0-2.8.56-3.77 1.53L12 10.98l-2.83-2.83c-.97-.97-2.33-1.53-3.77-1.53-2.93 0-5.4 2.47-5.4 5.4 0 2.93 2.47 5.4 5.4 5.4 1.44 0 2.8-.56 3.77-1.53L12 13.02l2.83 2.83c.97.97 2.33 1.53 3.77 1.53 2.93 0 5.4-2.47 5.4-5.4 0-2.93-2.47-5.36-5.4-5.36z"/></svg>` }
-        ],
-        knTitle: "คำสั่ง Margins (ระยะขอบกระดาษ)",
-        knText: "จุดสังเกต: <span style='color:#facc15; font-weight:800;'>Margins</span> ใช้กำหนดระยะเว้นว่างรอบขอบกระดาษสำหรับการเข้าเล่ม"
-      },
-      {
-        qId: 17, stage: 10, pts: 1.0, mode: "choice",
-        q: "ข้อที่ 17/20: ในโปรแกรม Word การตรวจพบคำที่สะกดผิดจะแจ้งเตือนด้วยสัญลักษณ์ใดใต้คำ:",
-        target: "เส้นใต้หยักสีแดง",
-        opts: ["เส้นใต้ขีดทึบสีดำ", "เส้นใต้หยักสีแดง", "เส้นใต้เส้นคู่สีเขียว"],
-        knTitle: "การตรวจสอบคำสะกดผิด (Proofing)",
-        knText: "จุดสังเกต: <span style='color:#facc15; font-weight:800;'>เส้นใต้หยักสีแดง</span> หมายถึงสะกดผิดหรือไม่พบในพจนานุกรม"
-      },
-      {
-        qId: 18, stage: 10, pts: 1.0, mode: "image_query",
-        q: "ข้อที่ 18/20: เส้นหยักสีฟ้าใต้ข้อความดังภาพ บ่งบอกถึงข้อผิดพลาดประเภทใด?",
-        customHtml: `<div class="word-sim-sheet"><div style="font-size:0.75rem; color:#94a3b8; margin-bottom:10px; font-weight:800;">จำลองการพิมพ์ใน Microsoft Word</div><div style="padding:14px 6px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px;"><span class="wavy-underline-blue">สวัสดี&nbsp;&nbsp;&nbsp;&nbsp;ครับผม</span></div><div style="font-size:0.8rem; color:#64748b; margin-top:8px;">(สังเกต: มีเส้นหยักสีฟ้าปรากฏใต้ข้อความ)</div></div>`,
-        target: "ไวยากรณ์หรือการเคาะเว้นวรรคผิดพลาด",
-        opts: ["สะกดคำผิด", "ไวยากรณ์หรือการเคาะเว้นวรรคผิดพลาด", "ไม่ได้บันทึกไฟล์", "ฟอนต์ไม่รองรับภาษาไทย"],
-        knTitle: "เส้นหยักสีฟ้า (Grammar & Spacing)",
-        knText: "จุดสังเกต: <span style='color:#facc15; font-weight:800;'>เส้นหยักสีฟ้า</span> บ่งบอกถึงข้อผิดพลาดทางไวยากรณ์หรือการเคาะเว้นวรรคติดกันเกินไป"
-      },
-      {
-        qId: 19, stage: 11, pts: 1.0, mode: "choice",
-        q: "ข้อที่ 19/20: การเตรียมหัวข้อเพื่อสร้างสารบัญอัตโนมัติ (Table of Contents) ต้องกำหนดสไตล์ใดให้กับหัวข้อหลัก:",
-        target: "Heading 1 (หัวเรื่อง 1)",
-        opts: ["Title (ชื่อเรื่อง)", "Heading 1 (หัวเรื่อง 1)", "Normal (ปกติ)"],
-        knTitle: "การใช้ Heading สร้างสารบัญ",
-        knText: "จุดสังเกต: สารบัญอัตโนมัติดึงข้อมูลจากข้อความที่กำหนดสไตล์เป็น <span style='color:#facc15; font-weight:800;'>Heading 1</span> และ Heading 2 เท่านั้น"
-      },
-      {
-        qId: 20, stage: 12, pts: 1.0, mode: "choice",
-        q: "ข้อที่ 20/20: ส่งออกไฟล์ชนิดใดที่ล็อกการจัดหน้ากระดาษและฟอนต์ได้แน่นอนที่สุดเมื่อนำไปพิมพ์งาน:",
-        target: ".pdf",
-        opts: [".docx", ".txt", ".pdf"],
-        knTitle: "การส่งออกไฟล์เป็น PDF",
-        knText: "จุดสังเกต: หากกลัวฟอนต์เพี้ยนหรือหน้ากระดาษเคลื่อนเมื่อนำไปเปิดเครื่องอื่น ควรอพอร์ตเป็นสกุล <span style='color:#facc15; font-weight:800;'>.pdf</span> เสมอ"
+    let currentUserData = null;
+    let authMode = 'login';
+
+    function switchAuthTab(mode) {
+      authMode = mode;
+      const btn = document.getElementById("auth-action-btn");
+      if(mode === 'login') {
+        document.getElementById("tab-login-btn").classList.add("active");
+        document.getElementById("tab-reg-btn").classList.remove("active");
+        btn.innerText = "เข้าสู่ระบบเพื่อลุยด่าน";
+      } else {
+        document.getElementById("tab-reg-btn").classList.add("active");
+        document.getElementById("tab-login-btn").classList.remove("active");
+        btn.innerText = "สมัครสมาชิกใหม่";
       }
+    }
+
+    function handleAuth() {
+      const u = document.getElementById("auth-user").value.trim();
+      const p = document.getElementById("auth-pass").value.trim();
+      if(!u || !p) { alert("กรุณากรอกชื่อผู้ใช้งานและรหัสผ่านให้ครบถ้วนครับ!"); return; }
+
+      let usersDB = JSON.parse(localStorage.getItem("wordroad_users") || "{}");
+
+      if(authMode === 'register') {
+        if(usersDB[u]) { alert("ชื่อผู้ใช้งานนี้มีคนสมัครไปแล้ว กรุณาใช้ชื่ออื่นหรือกดเข้าสู่ระบบ!"); return; }
+        usersDB[u] = { pass: p, maxUnlockedStage: 1 };
+        localStorage.setItem("wordroad_users", JSON.stringify(usersDB));
+        alert("สมัครสมาชิกสำเร็จ! กำลังเข้าสู่ระบบ...");
+      }
+
+      if(!usersDB[u] || usersDB[u].pass !== p) {
+        alert("ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง!");
+        return;
+      }
+
+      currentUserData = { username: u, data: usersDB[u] };
+      document.getElementById("auth-container").style.display = "none";
+      document.getElementById("hub-container").style.display = "block";
+      document.getElementById("welcome-user-text").innerText = `ยินดีต้อนรับนักขับ: ${u} (สูงสุดถึงด่าน ${currentUserData.data.maxUnlockedStage})`;
+      
+      initHubMenu();
+    }
+
+    function saveUserProgress() {
+      if(!currentUserData) return;
+      let usersDB = JSON.parse(localStorage.getItem("wordroad_users") || "{}");
+      usersDB[currentUserData.username] = currentUserData.data;
+      localStorage.setItem("wordroad_users", JSON.stringify(usersDB));
+    }
+
+    const questionsPool = [
+      { qId: 1, stage: 1, pts: 1.0, mode: "ribbon", q: "ข้อที่ 1/12: เลือกแท็บเมนู Ribbon ที่ใช้เปลี่ยนแบบฟอนต์และขนาดตัวอักษร:", target: "Home", knTitle: "แถบเมนู Ribbon: หน้าแรก (Home)", knText: "แถบ หน้าแรก (Home) เป็นศูนย์รวมคำสั่งพื้นฐาน เช่น เปลี่ยนฟอนต์, ขนาดอักษร, และตัวหนา/เอียง" },
+      { qId: 2, stage: 2, pts: 1.0, mode: "choice", q: "ข้อที่ 2/12: หากต้องการเปิดเอกสารเก่าที่เคยบันทึกไว้ขึ้นมาใช้งาน ต้องกดคีย์ลัดใด:", target: "Ctrl + O", opts: ["Ctrl + P", "Ctrl + O", "Ctrl + W", "Ctrl + F"], knTitle: "คีย์ลัดเปิดไฟล์ (Open)", knText: "Ctrl + O ย่อมาจาก Open ใช้เปิดไฟล์เดิม" },
+      { qId: 3, stage: 3, pts: 1.0, mode: "choice", q: "ข้อที่ 3/12: พิมพ์ข้อความผิดแล้วเผลอลบหายไป จะกดคีย์ลัดใดเพื่อกู้คืนข้อความกลับมาทันที (Undo):", target: "Ctrl + Z", opts: ["Ctrl + X", "Ctrl + Z", "Ctrl + Y", "Ctrl + C"], knTitle: "การยกเลิกคำสั่งล่าสุด (Undo)", knText: "Ctrl + Z เป็นคีย์ลัดกู้ชีพเมื่อเผลอลบข้อความ" },
+      { qId: 4, stage: 4, pts: 1.0, mode: "choice", q: "ข้อที่ 4/12: คีย์ลัดคำสั่งทำตัวหนา (Bold) ตรงกับปุ่มใด:", target: "Ctrl + B", opts: ["Ctrl + B", "Ctrl + I", "Ctrl + U", "Ctrl + P"], knTitle: "ตัวหนา (Bold)", knText: "Ctrl + B มาจาก Bold" },
+      { qId: 5, stage: 5, pts: 1.0, mode: "align", q: "ข้อที่ 5/12: เลือกปุ่มจัดตำแหน่งข้อความให้อยู่ 'กึ่งกลางหน้ากระดาษ':", target: "center", knTitle: "กึ่งกลาง (Center)", knText: "นิยมใช้สำหรับพิมพ์ชื่อเรื่อง หัวข้อรายงาน (Ctrl + E)" },
+      { qId: 6, stage: 6, pts: 1.0, mode: "choice", q: "ข้อที่ 6/12: เครื่องมือใดใช้สร้างรายการที่มีลำดับ 1, 2, 3 ตามลำดับ:", target: "Numbering", opts: ["Bullets", "Numbering", "Multilevel List"], knTitle: "ลำดับเลข (Numbering)", knText: "ขั้นตอนที่ต้องทำตามลำดับก่อนหลังต้องใช้ Numbering" },
+      { qId: 7, stage: 7, pts: 1.0, mode: "choice", q: "ข้อที่ 7/12: คำสั่ง Wrap Text รูปแบบใดทำให้ข้อความไหลล้อมรอบกรอบรูปภาพเป็นสี่เหลี่ยม:", target: "Square", opts: ["In Line with Text", "Square", "Behind Text"], knTitle: "Square Wrap Text", knText: "เลือก Square เพื่อให้ข้อความวิ่งล้อมรอบขอบสี่เหลี่ยมรูปภาพ" },
+      { qId: 8, stage: 8, pts: 1.0, mode: "choice", q: "ข้อที่ 8/12: การสร้างตาราง 3 คอลัมน์ x 2 แถว คอลัมน์แทนแนวใด:", target: "แนวตั้ง", opts: ["แนวตั้ง", "แนวนอน", "แนวทแยง"], knTitle: "โครงสร้างตาราง", knText: "คอลัมน์คือแนวตั้ง แถวคือแนวนอน" },
+      { qId: 9, stage: 9, pts: 1.0, mode: "choice", q: "ข้อที่ 9/12: พิมพ์ตารางกว้าง ต้องตั้งค่าหน้ากระดาษแบบใด:", target: "Landscape (แนวนอน)", opts: ["Portrait (แนวตั้ง)", "Landscape (แนวนอน)", "Columns"], knTitle: "แนวกระดาษ (Landscape)", knText: "ตารางกว้างควรอัปเกรดเป็น Landscape แนวนอน" },
+      { qId: 10, stage: 10, pts: 1.0, mode: "choice", q: "ข้อที่ 10/12: การตรวจพบคำที่สะกดผิดจะแจ้งเตือนด้วยสัญลักษณ์ใด:", target: "เส้นใต้หยักสีแดง", opts: ["เส้นใต้ขีดทึบสีดำ", "เส้นใต้หยักสีแดง", "เส้นใต้เส้นคู่สีเขียว"], knTitle: "คำสะกดผิด", knText: "เส้นใต้หยักสีแดงหมายถึงสะกดผิด" },
+      { qId: 11, stage: 11, pts: 1.0, mode: "choice", q: "ข้อที่ 11/12: สร้างสารบัญอัตโนมัติ ต้องกำหนดสไตล์หัวข้อเป็นอะไร:", target: "Heading 1 (หัวเรื่อง 1)", opts: ["Title", "Heading 1 (หัวเรื่อง 1)", "Normal"], knTitle: "Heading 1", knText: "สารบัญดึงข้อมูลจาก Heading 1 และ Heading 2" },
+      { qId: 12, stage: 12, pts: 1.0, mode: "choice", q: "ข้อที่ 12/12: ส่งออกไฟล์ชนิดใดที่ล็อกการจัดหน้าและฟอนต์ไม่ให้เพี้ยน:", target: ".pdf", opts: [".docx", ".txt", ".pdf"], knTitle: "ไฟล์ PDF", knText: "สกุล .pdf ช่วยป้องกันหน้ากระดาษและฟอนต์เคลื่อน" }
     ];
 
     const chapterTitles = [
@@ -838,16 +485,26 @@
       grid.innerHTML = "";
       studyGrid.innerHTML = "";
 
+      const maxUnlocked = currentUserData ? currentUserData.data.maxUnlockedStage : 1;
+
       chapterTitles.forEach((title, idx) => {
+        const stageNum = idx + 1;
+        const isLocked = stageNum > maxUnlocked;
+
         const card = document.createElement("div");
-        card.className = "chapter-card";
-        card.innerHTML = `<div class="ch-num">ด่าน ${idx + 1}</div><div class="ch-title">${title}</div>`;
-        card.onclick = () => startGame(idx);
+        card.className = `chapter-card ${isLocked ? 'locked' : ''}`;
+        card.innerHTML = `<div class="ch-num">ด่าน ${stageNum} ${isLocked ? '🔒 (ล็อก)' : '🔓 (ปลดล็อกแล้ว)'}</div><div class="ch-title">${title}</div>`;
+        
+        if(!isLocked) {
+          card.onclick = () => startGame(idx);
+        } else {
+          card.onclick = () => alert(`ด่านนี้ยังไม่ถูกปลดล็อก! คุณต้องเคลียร์ด่านก่อนหน้าให้สำเร็จก่อนครับ`);
+        }
         grid.appendChild(card);
 
         const scard = document.createElement("div");
         scard.className = "chapter-card";
-        scard.innerHTML = `<div class="ch-num">เนื้อหาบทที่ ${idx + 1}</div><div class="ch-title">${title}</div>`;
+        scard.innerHTML = `<div class="ch-num">เนื้อหาบทที่ ${stageNum}</div><div class="ch-title">${title}</div>`;
         scard.onclick = () => showStudyContent(idx);
         studyGrid.appendChild(scard);
       });
@@ -878,12 +535,10 @@
     let engineSubOsc = null;
     let engineFilter = null;
     let engineGain = null;
-    let bgmInterval = null;
 
     function initAudio() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
         engineFilter = audioCtx.createBiquadFilter();
         engineFilter.type = "lowpass";
         engineFilter.frequency.setValueAtTime(140, audioCtx.currentTime);
@@ -903,94 +558,31 @@
         engineSubOsc.connect(engineFilter);
         engineFilter.connect(engineGain);
         engineGain.connect(audioCtx.destination);
-
         engineOsc.start();
         engineSubOsc.start();
-
-        startBGM();
       } else if (audioCtx.state === 'suspended') {
         audioCtx.resume();
       }
     }
 
     function updateEngineSound(speedRatio) {
-      if (!audioCtx || isMuted || !engineOsc || !engineFilter) return;
+      if (!audioCtx || isMuted || !engineOsc) return;
       const absRatio = Math.min(1.0, Math.abs(speedRatio));
-      
-      const targetFreq = 36 + absRatio * 44; 
-      engineOsc.frequency.setTargetAtTime(targetFreq, audioCtx.currentTime, 0.1);
-      engineSubOsc.frequency.setTargetAtTime(targetFreq * 0.5, audioCtx.currentTime, 0.1);
-      
-      const targetFilter = 140 + absRatio * 220;
-      engineFilter.frequency.setTargetAtTime(targetFilter, audioCtx.currentTime, 0.1);
+      engineOsc.frequency.setTargetAtTime(36 + absRatio * 44, audioCtx.currentTime, 0.1);
       engineGain.gain.setTargetAtTime(0.035 + absRatio * 0.045, audioCtx.currentTime, 0.1);
-    }
-
-    function playCrashSound() {
-      if (!audioCtx || isMuted) return;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = "square";
-      osc.frequency.setValueAtTime(120, audioCtx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 0.35);
-      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.35);
-    }
-
-    function playWrongSound() {
-      if (!audioCtx || isMuted) return;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = "sawtooth";
-      osc.frequency.setValueAtTime(160, audioCtx.currentTime);
-      osc.frequency.setValueAtTime(110, audioCtx.currentTime + 0.15);
-      gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.35);
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.35);
     }
 
     function playSuccessSound() {
       if (!audioCtx || isMuted) return;
-      const notes = [523.25, 659.25, 783.99, 1046.50];
-      notes.forEach((freq, idx) => {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = "triangle";
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.1);
-        gain.gain.setValueAtTime(0.2, audioCtx.currentTime + idx * 0.1);
-        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + idx * 0.1 + 0.25);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start(audioCtx.currentTime + idx * 0.1);
-        osc.stop(audioCtx.currentTime + idx * 0.1 + 0.25);
-      });
-    }
-
-    function startBGM() {
-      if (bgmInterval) clearInterval(bgmInterval);
-      const melody = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63, 293.66, 349.23];
-      let step = 0;
-      bgmInterval = setInterval(() => {
-        if (!audioCtx || isMuted) return;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(melody[step % melody.length], audioCtx.currentTime);
-        gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.22);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.22);
-        step++;
-      }, 300);
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.2);
+      gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+      osc.connect(gain); gain.connect(audioCtx.destination);
+      osc.start(); osc.stop(audioCtx.currentTime + 0.2);
     }
 
     function toggleAudio() {
@@ -999,74 +591,38 @@
       document.getElementById("audio-icon").style.fill = isMuted ? "#94a3b8" : "#38bdf8";
     }
 
-    let scene, camera, renderer;
-    let carGroup;
+    let scene, camera, renderer, carGroup;
     let checkpoints = [];
-    let obstacles = [];
-    let playerName = "Player";
-    let score = 0;
-    let currentStage = 0; 
-    let solvedQuestionsCount = 0; 
+    let score = 0, currentStage = 0, solvedQuestionsCount = 0;
     let isModalOpen = false;
-    let isGameOver = false;
-
-    let questionFailedAttempts = {};
-    let spacedRepetitionQueue = [];
     let keys = { up: false, down: false, left: false, right: false };
 
-    // ฟังก์ชันเชื่อมต่อปุ่มกดบนหน้าจอ
-    function setKey(action, state) {
-      if (keys.hasOwnProperty(action)) {
-        keys[action] = state;
-      }
-    }
+    function setKey(action, state) { if (keys.hasOwnProperty(action)) keys[action] = state; }
 
-    let carPhysics = {
-      x: 0, z: 0,
-      angle: 0,
-      speed: 0,
-      maxSpeed: 1.25,
-      accel: 0.028,
-      friction: 0.016,
-      turnSpeed: 0.038,
-      spinTimer: 0
-    };
+    let carPhysics = { x: 0, z: 0, speed: 0, maxSpeed: 1.25, accel: 0.028, friction: 0.016, turnSpeed: 0.038 };
 
     const waypoints = [
-      { x: 0, z: -150, stage: 1 },
-      { x: 0, z: -350, stage: 2 },
-      { x: 0, z: -550, stage: 3 },
-      { x: 0, z: -750, stage: 4 },
-      { x: 0, z: -950, stage: 5 },
-      { x: 0, z: -1150, stage: 6 },
-      { x: 0, z: -1350, stage: 7 },
-      { x: 0, z: -1550, stage: 8 },
-      { x: 0, z: -1750, stage: 9 },
-      { x: 0, z: -1950, stage: 10 },
-      { x: 0, z: -2150, stage: 11 },
-      { x: 0, z: -2350, stage: 12 }
+      { x: 0, z: -150, stage: 1 }, { x: 0, z: -350, stage: 2 }, { x: 0, z: -550, stage: 3 },
+      { x: 0, z: -750, stage: 4 }, { x: 0, z: -950, stage: 5 }, { x: 0, z: -1150, stage: 6 },
+      { x: 0, z: -1350, stage: 7 }, { x: 0, z: -1550, stage: 8 }, { x: 0, z: -1750, stage: 9 },
+      { x: 0, z: -1950, stage: 10 }, { x: 0, z: -2150, stage: 11 }, { x: 0, z: -2350, stage: 12 }
     ];
 
     function updateProgressHUD() {
-      const pct = Math.round((solvedQuestionsCount / 20) * 100);
-      document.getElementById("hud-progress").innerText = `${pct}% (ข้อ ${solvedQuestionsCount}/20)`;
-      document.getElementById("hud-score").innerText = `${Number(score.toFixed(1))} / 20`;
+      const pct = Math.round((solvedQuestionsCount / 12) * 100);
+      document.getElementById("hud-progress").innerText = `${pct}% (ด่าน ${solvedQuestionsCount}/12)`;
+      document.getElementById("hud-score").innerText = `${score} / 12`;
       document.getElementById("hud-stage").innerText = `ด่าน ${Math.min(currentStage + 1, 12)} / 12`;
     }
 
     function startGame(startStageIndex = 0) {
-      const nameVal = document.getElementById("player-input").value.trim();
-      if (!nameVal) { alert("กรุณาพิมพ์ชื่อหรือเลขที่ก่อนเริ่มเล่นครับ!"); return; }
-      playerName = nameVal;
-      document.getElementById("hud-name").innerText = playerName;
-      document.getElementById("hud-name").title = playerName;
+      document.getElementById("hud-name").innerText = currentUserData.username;
       document.getElementById("start-screen").style.display = "none";
 
       currentStage = startStageIndex;
-      if (currentStage > 0) {
-        carPhysics.z = waypoints[currentStage - 1].z + 20;
-        solvedQuestionsCount = currentStage * Math.floor(20 / 12);
-      }
+      carPhysics.z = startStageIndex === 0 ? 10 : waypoints[startStageIndex - 1].z + 20;
+      solvedQuestionsCount = startStageIndex;
+      score = startStageIndex;
 
       initAudio();
       init3DWorld();
@@ -1077,209 +633,58 @@
 
     function init3DWorld() {
       scene = new THREE.Scene();
-      setThemeByStage(currentStage);
+      scene.background = new THREE.Color(0x7dd3fc);
+      scene.fog = new THREE.Fog(0x7dd3fc, 80, 500);
 
       camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
-
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: "high-performance" });
+      renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.shadowMap.enabled = true;
       document.getElementById("three-container").appendChild(renderer.domElement);
 
-      window.addEventListener("resize", onWindowResize);
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
 
-      const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.85);
-      scene.add(hemiLight);
-
+      scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 0.85));
       const dirLight = new THREE.DirectionalLight(0xfff7ed, 0.9);
       dirLight.position.set(60, 120, 60);
-      dirLight.castShadow = true;
       scene.add(dirLight);
 
-      buildWorldEnvironment();
-      buildSportsCar();
-      buildCheckpointsAndBarriers();
-      buildObstacles();
-    }
+      const ground = new THREE.Mesh(new THREE.PlaneGeometry(800, 3200), new THREE.MeshLambertMaterial({ color: 0x4ade80 }));
+      ground.rotation.x = -Math.PI / 2; ground.position.z = -1200; scene.add(ground);
 
-    function setThemeByStage(stageIdx) {
-      if (stageIdx <= 2) {
-        scene.background = new THREE.Color(0x7dd3fc);
-        scene.fog = new THREE.Fog(0x7dd3fc, 80, 500);
-      } else if (stageIdx <= 5) {
-        scene.background = new THREE.Color(0xbae6fd);
-        scene.fog = new THREE.Fog(0xbae6fd, 80, 500);
-      } else if (stageIdx <= 8) {
-        scene.background = new THREE.Color(0xfef08a);
-        scene.fog = new THREE.Fog(0xfef08a, 80, 500);
-      } else {
-        scene.background = new THREE.Color(0x0f172a);
-        scene.fog = new THREE.Fog(0x0f172a, 80, 500);
-      }
-    }
+      const road = new THREE.Mesh(new THREE.PlaneGeometry(32, 3000), new THREE.MeshLambertMaterial({ color: 0x1e293b }));
+      road.rotation.x = -Math.PI / 2; road.position.y = 0.05; road.position.z = -1200; scene.add(road);
 
-    function onWindowResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    }
-
-    function buildWorldEnvironment() {
-      const groundGeo = new THREE.PlaneGeometry(800, 3200);
-      const groundMat = new THREE.MeshLambertMaterial({ color: 0x4ade80 });
-      const ground = new THREE.Mesh(groundGeo, groundMat);
-      ground.rotation.x = -Math.PI / 2;
-      ground.position.z = -1200;
-      scene.add(ground);
-
-      const roadGeo = new THREE.PlaneGeometry(32, 3000);
-      const roadMat = new THREE.MeshLambertMaterial({ color: 0x1e293b });
-      const road = new THREE.Mesh(roadGeo, roadMat);
-      road.rotation.x = -Math.PI / 2;
-      road.position.y = 0.05;
-      road.position.z = -1200;
-      scene.add(road);
-
-      for (let z = 50; z > -2600; z -= 14) {
-        const lineGeo = new THREE.PlaneGeometry(0.35, 8);
-        const lineMat = new THREE.MeshBasicMaterial({ color: 0xfacc15 });
-        const leftYellow = new THREE.Mesh(lineGeo, lineMat);
-        leftYellow.rotation.x = -Math.PI / 2;
-        leftYellow.position.set(-0.4, 0.08, z);
-        scene.add(leftYellow);
-
-        const rightYellow = leftYellow.clone();
-        rightYellow.position.x = 0.4;
-        scene.add(rightYellow);
-      }
-
-      for (let z = 50; z > -2600; z -= 16) {
-        const dashGeo = new THREE.PlaneGeometry(0.4, 6);
-        const dashMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        const leftDash = new THREE.Mesh(dashGeo, dashMat);
-        leftDash.rotation.x = -Math.PI / 2;
-        leftDash.position.set(-8, 0.08, z);
-        scene.add(leftDash);
-
-        const rightDash = leftDash.clone();
-        rightDash.position.x = 8;
-        scene.add(rightDash);
-      }
-
-      const curbGeo = new THREE.BoxGeometry(4, 0.5, 3000);
-      const curbMat = new THREE.MeshLambertMaterial({ color: 0xe2e8f0 });
-      const leftCurb = new THREE.Mesh(curbGeo, curbMat);
-      leftCurb.position.set(-18, 0.25, -1200);
-      scene.add(leftCurb);
-
-      const rightCurb = new THREE.Mesh(curbGeo, curbMat);
-      rightCurb.position.set(18, 0.25, -1200);
-      scene.add(rightCurb);
-
-      const colors = [0xef4444, 0x3b82f6, 0xf59e0b, 0x10b981, 0x8b5cf6, 0xec4899, 0x06b6d4, 0xf97316];
-      for (let z = 20; z > -2500; z -= 38) {
-        const bH1 = 28 + Math.random() * 40;
-        const bW1 = 20 + Math.random() * 8;
-        const bGeo1 = new THREE.BoxGeometry(bW1, bH1, 28);
-        const bMat1 = new THREE.MeshLambertMaterial({ color: colors[Math.floor(Math.random() * colors.length)] });
-        const b1 = new THREE.Mesh(bGeo1, bMat1);
-        b1.position.set(-32 - bW1 / 2, bH1 / 2, z);
-        scene.add(b1);
-
-        const bH2 = 28 + Math.random() * 40;
-        const bW2 = 20 + Math.random() * 8;
-        const bGeo2 = new THREE.BoxGeometry(bW2, bH2, 28);
-        const bMat2 = new THREE.MeshLambertMaterial({ color: colors[Math.floor(Math.random() * colors.length)] });
-        const b2 = new THREE.Mesh(bGeo2, bMat2);
-        b2.position.set(32 + bW2 / 2, bH2 / 2, z);
-        scene.add(b2);
-      }
-    }
-
-    function buildSportsCar() {
       carGroup = new THREE.Group();
-      const bodyMat = new THREE.MeshLambertMaterial({ color: 0x00a2ff });
-      const topMat = new THREE.MeshLambertMaterial({ color: 0x1e293b });
-      const wheelMat = new THREE.MeshLambertMaterial({ color: 0x0f172a });
-
-      const bodyGeo = new THREE.BoxGeometry(2.2, 0.8, 4.4);
-      const body = new THREE.Mesh(bodyGeo, bodyMat);
-      body.position.y = 0.6;
-      carGroup.add(body);
-
-      const topGeo = new THREE.BoxGeometry(1.6, 0.7, 2.2);
-      const top = new THREE.Mesh(topGeo, topMat);
-      top.position.set(0, 1.25, -0.2);
-      carGroup.add(top);
-
-      const wheelGeo = new THREE.CylinderGeometry(0.45, 0.45, 0.4, 16);
-      wheelGeo.rotateZ(Math.PI / 2);
-      
-      [-1.2, 1.2].forEach(x => {
-        [-1.4, 1.4].forEach(z => {
-          const wheel = new THREE.Mesh(wheelGeo, wheelMat);
-          wheel.position.set(x, 0.45, z);
-          carGroup.add(wheel);
-        });
-      });
-
-      carGroup.position.set(0, 0, 10);
+      const body = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.8, 4.4), new THREE.MeshLambertMaterial({ color: 0x00a2ff }));
+      body.position.y = 0.6; carGroup.add(body);
       scene.add(carGroup);
-      carPhysics.z = 10;
-    }
 
-    function buildCheckpointsAndBarriers() {
-      waypoints.forEach((wp, idx) => {
+      waypoints.forEach((wp) => {
         const cpGroup = new THREE.Group();
         cpGroup.position.set(wp.x, 0, wp.z);
-
-        const postGeo = new THREE.BoxGeometry(0.8, 8, 0.8);
-        const postMat = new THREE.MeshLambertMaterial({ color: 0xfacc15 });
-        const leftPost = new THREE.Mesh(postGeo, postMat);
-        leftPost.position.set(-14, 4, 0);
-        cpGroup.add(leftPost);
-
-        const rightPost = leftPost.clone();
-        rightPost.position.x = 14;
-        cpGroup.add(rightPost);
-
-        const barGeo = new THREE.BoxGeometry(28, 0.8, 0.8);
-        const barMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
-        const laserBar = new THREE.Mesh(barGeo, barMat);
-        laserBar.position.set(0, 4, 0);
-        cpGroup.add(laserBar);
-
+        const bar = new THREE.Mesh(new THREE.BoxGeometry(28, 0.8, 0.8), new THREE.MeshBasicMaterial({ color: 0xef4444 }));
+        bar.position.set(0, 4, 0); cpGroup.add(bar);
         scene.add(cpGroup);
-        checkpoints.push({ z: wp.z, stage: wp.stage, group: cpGroup, passed: false });
+        checkpoints.push({ z: wp.z, stage: wp.stage, passed: false });
       });
-    }
-
-    function buildObstacles() {
-      for (let z = -100; z > -2400; z -= 180) {
-        const obsGeo = new THREE.BoxGeometry(2.4, 1.4, 2.4);
-        const obsMat = new THREE.MeshLambertMaterial({ color: 0xf97316 });
-        const obs = new THREE.Mesh(obsGeo, obsMat);
-        const laneX = (Math.random() - 0.5) * 22;
-        obs.position.set(laneX, 0.7, z);
-        scene.add(obs);
-        obstacles.push(obs);
-      }
     }
 
     function setupInputListeners() {
       window.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowUp" || e.key === "w" || e.key === "W") keys.up = true;
-        if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") keys.down = true;
-        if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") keys.left = true;
-        if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") keys.right = true;
+        if (e.key === "ArrowUp" || e.key === "w") keys.up = true;
+        if (e.key === "ArrowDown" || e.key === "s") keys.down = true;
+        if (e.key === "ArrowLeft" || e.key === "a") keys.left = true;
+        if (e.key === "ArrowRight" || e.key === "d") keys.right = true;
       });
-
       window.addEventListener("keyup", (e) => {
-        if (e.key === "ArrowUp" || e.key === "w" || e.key === "W") keys.up = false;
-        if (e.key === "ArrowDown" || e.key === "s" || e.key === "S") keys.down = false;
-        if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") keys.left = false;
-        if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") keys.right = false;
+        if (e.key === "ArrowUp" || e.key === "w") keys.up = false;
+        if (e.key === "ArrowDown" || e.key === "s") keys.down = false;
+        if (e.key === "ArrowLeft" || e.key === "a") keys.left = false;
+        if (e.key === "ArrowRight" || e.key === "d") keys.right = false;
       });
     }
 
@@ -1290,159 +695,31 @@
       isModalOpen = true;
       carPhysics.speed = 0;
 
-      let q = questionsPool.find(item => item.stage === stageNum);
-      if (!q) q = questionsPool[0];
+      let q = questionsPool.find(item => item.stage === stageNum) || questionsPool[0];
       currentActiveQuestion = q;
 
-      document.getElementById("cp-badge").innerHTML = `<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> CHECKPOINT ${stageNum}`;
+      document.getElementById("cp-badge").innerText = `CHECKPOINT ${stageNum}`;
       document.getElementById("cp-q").innerText = q.q;
 
       const area = document.getElementById("cp-minigame-area");
       area.innerHTML = "";
 
-      if (q.mode === "choice" || q.mode === "image_query") {
-        const opts = q.opts || [];
+      if (q.mode === "choice" || q.mode === "align") {
+        const opts = q.opts || ["left", "center", "right", "justify"];
         opts.forEach(opt => {
           const btn = document.createElement("button");
           btn.className = "ribbon-btn";
-          btn.style.width = "100%";
           btn.innerText = opt;
           btn.onclick = () => checkAnswer(opt, q.target);
           area.appendChild(btn);
         });
       } else if (q.mode === "ribbon") {
-        const tabs = ["Home", "Insert", "Design", "Layout", "References"];
-        const bar = document.createElement("div");
-        bar.className = "ribbon-bar";
-        tabs.forEach(tab => {
-          const b = document.createElement("button");
-          b.className = "ribbon-btn";
-          b.innerText = tab;
-          b.onclick = () => checkAnswer(tab, q.target);
-          bar.appendChild(b);
-        });
-        area.appendChild(bar);
-      } else if (q.mode === "align") {
-        const aligns = [
-          { id: "left", label: "ชิดซ้าย (Left)" },
-          { id: "center", label: "กึ่งกลาง (Center)" },
-          { id: "right", label: "ชิดขวา (Right)" },
-          { id: "justify", label: "กระจายแนว (Justify)" }
-        ];
-        const bar = document.createElement("div");
-        bar.className = "ribbon-bar";
-        aligns.forEach(al => {
-          const b = document.createElement("button");
-          b.className = "ribbon-btn";
-          b.innerText = al.label;
-          b.onclick = () => checkAnswer(al.id, q.target);
-          bar.appendChild(b);
-        });
-        area.appendChild(bar);
-      } else if (q.mode === "image_choice") {
-        const grid = document.createElement("div");
-        grid.className = "image-choices-grid";
-        q.options.forEach(opt => {
+        ["Home", "Insert", "Design", "Layout"].forEach(tab => {
           const btn = document.createElement("button");
-          btn.className = "img-choice-btn";
-          btn.innerHTML = `${opt.svg}<span>${opt.label}</span>`;
-          btn.onclick = () => checkAnswer(opt.id, q.target);
-          grid.appendChild(btn);
+          btn.className = "ribbon-btn"; btn.innerText = tab;
+          btn.onclick = () => checkAnswer(tab, q.target);
+          area.appendChild(btn);
         });
-        area.appendChild(grid);
-      } else if (q.mode === "table_grid") {
-        const pBox = document.createElement("div");
-        pBox.style.textAlign = "center";
-        pBox.innerHTML = `<div style="font-size:0.9rem; font-weight:700; margin-bottom:8px;">คลิกเลือกตารางขนาด 3 คอลัมน์ x 2 แถว</div><div class="table-picker" id="tbl-picker"></div>`;
-        area.appendChild(pBox);
-
-        const picker = document.getElementById("tbl-picker");
-        for(let r=0; r<3; r++) {
-          for(let c=0; c<4; c++) {
-            const cell = document.createElement("div");
-            cell.className = "table-cell";
-            cell.dataset.row = r+1;
-            cell.dataset.col = c+1;
-            cell.onclick = () => {
-              document.querySelectorAll(".table-cell").forEach(cl => cl.classList.remove("selected"));
-              cell.classList.add("selected");
-              checkTableAnswer(r+1, c+1, q.targetCols, q.targetRows);
-            };
-            picker.appendChild(cell);
-          }
-        }
-      } else if (q.mode === "matching") {
-        area.innerHTML = `<div class="match-container"><div class="match-col" id="m-left"></div><div class="match-col" id="m-right"></div></div>`;
-        const mLeft = document.getElementById("m-left");
-        const mRight = document.getElementById("m-right");
-
-        let selectedActionCard = null;
-        let selectedKeyCard = null;
-        let correctMatches = 0;
-
-        q.pairs.forEach((pair, idx) => {
-          const actCard = document.createElement("div");
-          actCard.className = "match-card";
-          actCard.innerText = pair.action;
-          actCard.onclick = () => {
-            if(actCard.classList.contains("paired")) return;
-            document.querySelectorAll("#m-left .match-card").forEach(c => c.classList.remove("selected"));
-            actCard.classList.add("selected");
-            selectedActionCard = pair.action;
-            tryMatch();
-          };
-          mLeft.appendChild(actCard);
-
-          const keyCard = document.createElement("div");
-          keyCard.className = "match-card";
-          keyCard.innerText = pair.key;
-          keyCard.onclick = () => {
-            if(keyCard.classList.contains("paired")) return;
-            document.querySelectorAll("#m-right .match-card").forEach(c => c.classList.remove("selected"));
-            keyCard.classList.add("selected");
-            selectedKeyCard = pair.key;
-            tryMatch();
-          };
-          mRight.appendChild(keyCard);
-        });
-
-        function tryMatch() {
-          if (selectedActionCard && selectedKeyCard) {
-            const foundPair = q.pairs.find(p => p.action === selectedActionCard && p.key === selectedKeyCard);
-            if (foundPair) {
-              playSuccessSound();
-              document.querySelectorAll("#m-left .match-card, #m-right .match-card").forEach(card => {
-                if (card.innerText === selectedActionCard || card.innerText === selectedKeyCard) {
-                  card.classList.remove("selected");
-                  card.classList.add("paired");
-                }
-              });
-              correctMatches++;
-              selectedActionCard = null;
-              selectedKeyCard = null;
-              if (correctMatches === q.pairs.length) {
-                setTimeout(() => {
-                  solvedQuestionsCount++;
-                  score += q.pts;
-                  updateProgressHUD();
-                  document.getElementById("checkpoint-modal").style.display = "none";
-                  isModalOpen = false;
-                }, 600);
-              }
-            } else {
-              playWrongSound();
-              document.querySelectorAll("#m-left .match-card, #m-right .match-card").forEach(c => c.classList.remove("selected"));
-              selectedActionCard = null;
-              selectedKeyCard = null;
-            }
-          }
-        }
-      }
-
-      if (q.customHtml && q.mode !== "image_choice" && q.mode !== "matching") {
-        const customWrap = document.createElement("div");
-        customWrap.innerHTML = q.customHtml;
-        area.prepend(customWrap);
       }
 
       document.getElementById("checkpoint-modal").style.display = "flex";
@@ -1451,37 +728,23 @@
     function checkAnswer(userAns, targetAns) {
       if (userAns === targetAns) {
         playSuccessSound();
-        solvedQuestionsCount++;
-        score += currentActiveQuestion.pts;
+        score = Math.max(score, currentActiveQuestion.stage);
+        solvedQuestionsCount = Math.max(solvedQuestionsCount, currentActiveQuestion.stage);
+
+        if(currentActiveQuestion.stage >= currentUserData.data.maxUnlockedStage) {
+          currentUserData.data.maxUnlockedStage = Math.min(12, currentActiveQuestion.stage + 1);
+          saveUserProgress();
+        }
+
         updateProgressHUD();
         document.getElementById("checkpoint-modal").style.display = "none";
         isModalOpen = false;
       } else {
-        playWrongSound();
         document.getElementById("checkpoint-modal").style.display = "none";
-        showKnowledgeModal(currentActiveQuestion);
+        document.getElementById("kn-subject").innerText = currentActiveQuestion.knTitle;
+        document.getElementById("kn-text").innerText = currentActiveQuestion.knText;
+        document.getElementById("knowledge-modal").style.display = "flex";
       }
-    }
-
-    function checkTableAnswer(r, c, targetC, targetR) {
-      if (c === targetC && r === targetR) {
-        playSuccessSound();
-        solvedQuestionsCount++;
-        score += currentActiveQuestion.pts;
-        updateProgressHUD();
-        document.getElementById("checkpoint-modal").style.display = "none";
-        isModalOpen = false;
-      } else {
-        playWrongSound();
-        document.getElementById("checkpoint-modal").style.display = "none";
-        showKnowledgeModal(currentActiveQuestion);
-      }
-    }
-
-    function showKnowledgeModal(q) {
-      document.getElementById("kn-subject").innerText = q.knTitle;
-      document.getElementById("kn-text").innerHTML = q.knText;
-      document.getElementById("knowledge-modal").style.display = "flex";
     }
 
     function retryMission() {
@@ -1491,37 +754,27 @@
 
     function animate() {
       requestAnimationFrame(animate);
-
       if (!isModalOpen) {
         if (keys.up) carPhysics.speed = Math.min(carPhysics.speed + carPhysics.accel, carPhysics.maxSpeed);
         else if (keys.down) carPhysics.speed = Math.max(carPhysics.speed - carPhysics.accel, -carPhysics.maxSpeed * 0.4);
-        else {
-          if (carPhysics.speed > 0) carPhysics.speed = Math.max(0, carPhysics.speed - carPhysics.friction);
-          else if (carPhysics.speed < 0) carPhysics.speed = Math.min(0, carPhysics.speed + carPhysics.friction);
-        }
+        else carPhysics.speed *= 0.95;
 
-        if (keys.left) carPhysics.x -= carPhysics.turnSpeed * (carPhysics.speed / carPhysics.maxSpeed || 0.5);
-        if (keys.right) carPhysics.x += carPhysics.turnSpeed * (carPhysics.speed / carPhysics.maxSpeed || 0.5);
+        if (keys.left) carPhysics.x -= carPhysics.turnSpeed;
+        if (keys.right) carPhysics.x += carPhysics.turnSpeed;
 
         carPhysics.x = Math.max(-15, Math.min(15, carPhysics.x));
         carPhysics.z -= carPhysics.speed;
 
         if (carGroup) {
-          carGroup.position.x = carPhysics.x;
-          carGroup.position.z = carPhysics.z;
-          carGroup.rotation.y = (keys.left ? 0.2 : (keys.right ? -0.2 : 0));
+          carGroup.position.set(carPhysics.x, 0.6, carPhysics.z);
         }
-
         if (camera && carGroup) {
-          camera.position.x = carGroup.position.x * 0.3;
-          camera.position.y = carGroup.position.y + 7.5;
-          camera.position.z = carGroup.position.z + 14;
+          camera.position.set(carGroup.position.x * 0.3, carGroup.position.y + 7.5, carGroup.position.z + 14);
           camera.lookAt(carGroup.position.x, carGroup.position.y + 1.2, carGroup.position.z - 4);
         }
 
         updateEngineSound(carPhysics.speed / carPhysics.maxSpeed);
         document.getElementById("speed-val").innerText = Math.round(Math.abs(carPhysics.speed) * 85);
-        document.getElementById("gear-val").innerText = carPhysics.speed > 0 ? "D" : (carPhysics.speed < 0 ? "R" : "N");
 
         checkpoints.forEach(cp => {
           if (!cp.passed && Math.abs(carPhysics.z - cp.z) < 3.5) {
@@ -1529,13 +782,7 @@
             triggerCheckpoint(cp.stage);
           }
         });
-
-        if (carPhysics.z < -2500) {
-          document.getElementById("final-score").innerText = `${Number(score.toFixed(1))} / 20`;
-          document.getElementById("finish-screen").style.display = "flex";
-        }
       }
-
       renderer.render(scene, camera);
     }
   </script>
