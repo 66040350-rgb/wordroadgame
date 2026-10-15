@@ -283,23 +283,26 @@
     </div>
   </div>
 
-  <!-- Modal อ่านสรุปบทเรียน พร้อม Flashcard Quiz สั้นๆ -->
+  <!-- Modal อ่านสรุป และทำควิซ 3 ข้อ บังคับผ่าน -->
   <div id="study-modal" class="custom-modal">
     <div class="modal-box">
       <div class="modal-title" id="study-modal-title">หัวข้อบทเรียน</div>
       <div class="modal-desc" id="study-modal-text">เนื้อหาสรุป...</div>
       
       <div style="background:#0f172a; border:2px solid #334155; border-radius:16px; padding:16px; margin-bottom:16px;">
-        <div style="font-weight:800; color:#facc15; margin-bottom:8px;" id="quiz-flash-title">⚡ ซ้อมมือก่อนลงสนาม (Quick Quiz)</div>
-        <div style="font-size:0.92rem; font-weight:700; margin-bottom:12px;" id="quiz-flash-q">คำถาม...</div>
-        <div id="quiz-flash-options" style="display:flex; flex-direction:column; gap:8px;"></div>
+        <div style="font-weight:800; color:#facc15; margin-bottom:8px;" id="quiz-header-title">⚡ แบบทดสอบก่อนเข้าเล่น (ข้อที่ 1/3)</div>
+        <div style="font-size:0.95rem; font-weight:700; margin-bottom:12px; color:#f8fafc;" id="quiz-q-text">คำถาม...</div>
+        <div id="quiz-options-area" style="display:flex; flex-direction:column; gap:8px;"></div>
       </div>
 
-      <button class="rbx-green-btn" onclick="closeStudyModal()">ปิดหน้าต่าง (CLOSE)</button>
+      <div id="study-complete-actions" style="display:none;">
+        <button class="rbx-green-btn" onclick="launchGameFromStudy()">ผ่านแบบทดสอบแล้ว! ไปลุยสนามแข่งกันเลย 🏎️</button>
+      </div>
+      <button id="close-study-btn" class="u-btn" style="width:100%; padding:12px; border-color:#334155; background:#1e293b; color:#94a3b8;" onclick="closeStudyModal()">ปิดหน้าต่างอ่านสรุป</button>
     </div>
   </div>
 
-  <!-- Modal ตอบคำถามสนามแข่ง -->
+  <!-- Modal ตอบคำถามในสนามแข่ง 3D -->
   <div id="checkpoint-modal" class="custom-modal">
     <div class="modal-box">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
@@ -311,7 +314,7 @@
     </div>
   </div>
 
-  <!-- Modal แก้ตัวเมื่อตอบผิด -->
+  <!-- Modal แก้ตัวเมื่อตอบผิดในสนามแข่ง -->
   <div id="knowledge-modal" class="custom-modal">
     <div class="modal-box" style="border-color:#ef4444;">
       <div style="color:#ef4444; font-weight:900; font-size:1.2rem; margin-bottom:8px;">ยังไม่ถูกต้อง! ทบทวนจุดสำคัญ</div>
@@ -326,6 +329,8 @@
   <script>
     let currentUserData = null;
     let authMode = 'login';
+    let currentStudyIdx = 0;
+    let currentQuizStep = 0; // 0, 1, 2 (3 ข้อ)
 
     function switchAuthTab(mode) {
       authMode = mode;
@@ -382,18 +387,90 @@
     }
 
     const chapterData = [
-      { id: 1, title: "บทที่ 1: รู้จักหน้าตาและส่วนประกอบของ Microsoft Word", theme: "City", themeName: "เมืองหลวง (City Road)", knTitle: "ส่วนประกอบ Ribbon", knText: "แถบ Ribbon รวบรวมเครื่องมือจัดรูปแบบเอกสารแบ่งเป็นแท็บ Home, Insert, Design และ Layout เพื่อความสะดวกในการใช้งาน", q: "ข้อที่ 1/12: แท็บใดรวบรวมคำสั่งพื้นฐาน เช่น ฟอนต์ ขนาดตัวอักษร และการจัดย่อหน้า?", opts: ["Home", "Insert", "Design", "References"], target: "Home" },
-      { id: 2, title: "บทที่ 2: การจัดการไฟล์เอกสารและคีย์ลัดพื้นฐาน", theme: "City", themeName: "เมืองหลวง (City Road)", knTitle: "การเปิดไฟล์เดิม (Open)", knText: "การเรียกไฟล์งานเดิมขึ้นมาแก้ไขอย่างรวดเร็วสามารถใช้คีย์ลัดมาตรฐานสากลคือ Ctrl + O", q: "ข้อที่ 2/12: หากต้องการเปิดเอกสารเก่าที่เคยบันทึกไว้ ต้องกดคีย์ลัดใด?", opts: ["Ctrl + P", "Ctrl + O", "Ctrl + W", "Ctrl + F"], target: "Ctrl + O" },
-      { id: 3, title: "บทที่ 3: การพิมพ์และการจัดการข้อความภาษาไทย/อังกฤษ", theme: "City", themeName: "เมืองหลวง (City Road)", knTitle: "การกู้คืนข้อความ (Undo)", knText: "กรณีเผลอลบข้อความสำคัญหายไป สามารถใช้คำสั่งย้อนกลับการกระทำล่าสุดได้ทันทีด้วย Ctrl + Z", q: "ข้อที่ 3/12: คีย์ลัดใดใช้กู้คืนข้อความที่เผลอลบหายไป (Undo)?", opts: ["Ctrl + X", "Ctrl + Z", "Ctrl + Y", "Ctrl + C"], target: "Ctrl + Z" },
-      { id: 4, title: "บทที่ 4: การตกแต่งฟอนต์และรูปแบบตัวอักษร", theme: "Beach", themeName: "ชายหาด/ริมทะเล (Beach Highway)", knTitle: "การทำตัวหนา (Bold)", knText: "การเน้นข้อความให้โดดเด่นสะดุดตา นิยมใช้ตัวหนาผ่านปุ่ม Ctrl + B", q: "ข้อที่ 4/12: คำสั่งทำตัวหนา (Bold) ตรงกับคีย์ลัดใด?", opts: ["Ctrl + B", "Ctrl + I", "Ctrl + U", "Ctrl + P"], target: "Ctrl + B" },
-      { id: 5, title: "บทที่ 5: การจัดแนวย่อหน้าและการเว้นระยะบรรทัด", theme: "Beach", themeName: "ชายหาด/ริมทะเล (Beach Highway)", knTitle: "การจัดกึ่งกลาง (Center)", knText: "หัวข้อรายงานหรือชื่อเรื่องเอกสารควรจัดตำแหน่งให้อยู่กึ่งกลางหน้ากระดาษเสมอด้วย Ctrl + E", q: "ข้อที่ 5/12: คีย์ลัดหรือปุ่มใดใช้จัดตำแหน่งข้อความให้อยู่กึ่งกลางหน้า?", opts: ["Ctrl + L", "Ctrl + E", "Ctrl + R", "Ctrl + J"], target: "Ctrl + E" },
-      { id: 6, title: "บทที่ 6: การสร้างรายการหัวข้อย่อยและลำดับเลข", theme: "Beach", themeName: "ชายหาด/ริมทะเล (Beach Highway)", knTitle: "การสร้างลำดับเลข (Numbering)", knText: "ขั้นตอนการทำงานที่ต้องเรียงลำดับก่อนหลัง ควรใช้คำสั่ง Numbering", q: "ข้อที่ 6/12: เครื่องมือใดเหมาะสมที่สุดสำหรับการสร้างขั้นตอนเรียงลำดับ 1, 2, 3?", opts: ["Bullets", "Numbering", "Multilevel List", "Highlight"], target: "Numbering" },
-      { id: 7, title: "บทที่ 7: การแทรกรูปภาพและการตัดข้อความ (Wrap Text)", theme: "Forest", themeName: "ป่า/ภูเขา (Forest Track)", knTitle: "การตัดข้อความรอบรูปภาพ (Square)", knText: "เพื่อให้ข้อความไหลล้อมรอบกรอบรูปภาพอย่างเป็นระเบียบ ควรตั้งค่า Wrap Text เป็น Square", q: "ข้อที่ 7/12: รูปแบบ Wrap Text ใดทำให้ข้อความวิ่งล้อมรอบขอบภาพเป็นสี่เหลี่ยม?", opts: ["In Line with Text", "Square", "Behind Text", "Top and Bottom"], target: "Square" },
-      { id: 8, title: "บทที่ 8: การสร้างและตกแต่งตารางข้อมูล", theme: "Forest", themeName: "ป่า/ภูเขา (Forest Track)", knTitle: "โครงสร้างตาราง (Columns & Rows)", knText: "ตารางใน Word ประกอบด้วยช่องแนวตั้งเรียกว่าคอลัมน์ และแนวนอนเรียกว่าแถว", q: "ข้อที่ 8/12: ช่องข้อมูลที่เรียงใน 'แนวตั้ง' ของตารางเรียกว่าอะไร?", opts: ["คอลัมน์ (Column)", "แถว (Row)", "เซลล์ข้าม (Merge)", "ขอบเขต (Border)"], target: "คอลัมน์ (Column)" },
-      { id: 9, title: "บทที่ 9: การตั้งค่าหน้ากระดาษและระยะขอบ (Margins)", theme: "Forest", themeName: "ป่า/ภูเขา (Forest Track)", knTitle: "แนวกระดาษ (Landscape)", knText: "หากเอกสารมีตารางกว้างมาก การปรับหน้ากระดาษเป็นแนวนอนจะช่วยให้แสดงผลได้สมบูรณ์", q: "ข้อที่ 9/12: หากเอกสารมีตารางกว้างมาก ควรปรับการตั้งค่าหน้ากระดาษเป็นแบบใด?", opts: ["Portrait (แนวตั้ง)", "Landscape (แนวนอน)", "A3 Size", "Columns 3"], target: "Landscape (แนวนอน)" },
-      { id: 10, title: "บทที่ 10: การตรวจคำสะกดและไวยากรณ์ (Proofing)", theme: "Cyber", themeName: "ไซเบอร์/อวกาศ (Cyber Neon Road)", knTitle: "สัญลักษณ์คำสะกดผิด", knText: "โปรแกรมจะขีดเส้นใต้หยักสีแดงใต้คำที่สะกดผิด เพื่อให้ผู้ใช้คลิกขวาเลือกคำที่ถูกต้อง", q: "ข้อที่ 10/12: เส้นใต้หยักสีแดงใต้ข้อความใน Word หมายถึงข้อใด?", opts: ["คำนี้สวยงาม", "คำนี้สะกดผิด", "คำนี้ถูกคัดลอกมา", "คำนี้เป็นลิงก์เว็บ"], target: "คำนี้สะกดผิด" },
-      { id: 11, title: "บทที่ 11: การใช้ Heading สร้างสารบัญอัตโนมัติ", theme: "Cyber", themeName: "ไซเบอร์/อวกาศ (Cyber Neon Road)", knTitle: "การใช้งาน Heading 1", knText: "การสร้างสารบัญอัตโนมัติจำเป็นต้องกำหนดสไตล์หัวข้อหลักให้เป็น Heading 1 เสมอ", q: "ข้อที่ 11/12: สไตล์รูปแบบใดที่ต้องกำหนดให้กับหัวข้อหลักเพื่อนำไปสร้างสารบัญอัตโนมัติ?", opts: ["Title", "Heading 1 (หัวเรื่อง 1)", "Normal", "Subtitle"], target: "Heading 1 (หัวเรื่อง 1)" },
-      { id: 12, title: "บทที่ 12: การส่งออกเอกสารเป็น PDF", theme: "Cyber", themeName: "ไซเบอร์/อวกาศ (Cyber Neon Road)", knTitle: "ประโยชน์ของไฟล์ PDF", knText: "การบันทึกไฟล์เป็น PDF ช่วยล็อกรูปแบบฟอนต์และการจัดหน้าไม่ให้เพี้ยนเมื่อนำไปเปิดเครื่องอื่น", q: "ข้อที่ 12/12: สกุลไฟล์ใดช่วยป้องกันหน้ากระดาษและฟอนต์เพี้ยนเมื่อนำไปพิมพ์งาน?", opts: [".docx", ".txt", ".pdf", ".pptx"], target: ".pdf" }
+      { id: 1, title: "บทที่ 1: รู้จักหน้าตาและส่วนประกอบของ Microsoft Word", theme: "City", themeName: "เมืองหลวง (City Road)", knTitle: "ส่วนประกอบ Ribbon", knText: "แถบ Ribbon รวบรวมเครื่องมือจัดรูปแบบเอกสารแบ่งเป็นแท็บ Home, Insert, Design และ Layout เพื่อความสะดวกในการใช้งาน", 
+        quizSet: [
+          { q: "ข้อ 1/3: แท็บใดรวบรวมคำสั่งพื้นฐาน เช่น ฟอนต์ ขนาดตัวอักษร และการจัดย่อหน้า?", opts: ["Home", "Insert", "Design", "References"], target: "Home", explain: "แท็บ Home เป็นศูนย์รวมคำสั่งพื้นฐานหลักในการพิมพ์และจัดหน้าเอกสาร" },
+          { q: "ข้อ 2/3: หากต้องการแทรกตารางหรือรูปภาพลงในเอกสาร ต้องเลือกใช้แท็บใด?", opts: ["Home", "Insert", "Layout", "View"], target: "Insert", explain: "แท็บ Insert (แทรก) ใช้สำหรับเพิ่มรูปภาพ ตาราง รูปร่าง และวัตถุต่างๆ" },
+          { q: "ข้อ 3/3: แถบคำสั่งใดใช้สำหรับตั้งค่าระยะขอบกระดาษ (Margins) และแนวกระดาษ?", opts: ["Home", "Design", "Layout", "Review"], target: "Layout", explain: "แท็บ Layout (การจัดหน้ากระดาษ) ใช้กำหนดระยะขอบ ขนาดกระดาษ และการตัดหน้า" }
+        ]
+      },
+      { id: 2, title: "บทที่ 2: การจัดการไฟล์เอกสารและคีย์ลัดพื้นฐาน", theme: "City", themeName: "เมืองหลวง (City Road)", knTitle: "การเปิดไฟล์เดิม (Open)", knText: "การเรียกไฟล์งานเดิมขึ้นมาแก้ไขอย่างรวดเร็วสามารถใช้คีย์ลัดมาตรฐานสากลคือ Ctrl + O", 
+        quizSet: [
+          { q: "ข้อ 1/3: คีย์ลัดใดใช้สำหรับเปิดเอกสารเก่าที่เคยบันทึกไว้ (Open)?", opts: ["Ctrl + P", "Ctrl + O", "Ctrl + W", "Ctrl + F"], target: "Ctrl + O", explain: "Ctrl + O มาจากคำว่า Open ใช้เปิดไฟล์เอกสารเดิมขึ้นมาทำงานต่อ" },
+          { q: "ข้อ 2/3: หากต้องการสร้างไฟล์เอกสารใหม่ขึ้นมาเปล่าๆ ต้องกดคีย์ลัดใด?", opts: ["Ctrl + N", "Ctrl + S", "Ctrl + O", "Ctrl + A"], target: "Ctrl + N", explain: "Ctrl + N ย่อมาจาก New Document ใช้สร้างหน้าต่างเอกสารใหม่" },
+          { q: "ข้อ 3/3: คำสั่งสำหรับบันทึกงานทับไฟล์เดิมคือคีย์ลัดใด?", opts: ["Ctrl + P", "Ctrl + S", "Ctrl + C", "Ctrl + V"], target: "Ctrl + S", explain: "Ctrl + S มาจากคำว่า Save ใช้บันทึกข้อมูลป้องกันงานสูญหาย" }
+        ]
+      },
+      { id: 3, title: "บทที่ 3: การพิมพ์และการจัดการข้อความภาษาไทย/อังกฤษ", theme: "City", themeName: "เมืองหลวง (City Road)", knTitle: "การกู้คืนข้อความ (Undo)", knText: "กรณีเผลอลบข้อความสำคัญหายไป สามารถใช้คำสั่งย้อนกลับการกระทำล่าสุดได้ทันทีด้วย Ctrl + Z", 
+        quizSet: [
+          { q: "ข้อ 1/3: คีย์ลัดใดใช้กู้คืนข้อความที่เผลอลบหายไปทันที (Undo)?", opts: ["Ctrl + X", "Ctrl + Z", "Ctrl + Y", "Ctrl + C"], target: "Ctrl + Z", explain: "Ctrl + Z ใช้ยกเลิกคำสั่งล่าสุดเพื่อกู้คืนข้อความที่เผลอลบ" },
+          { q: "ข้อ 2/3: หากต้องการคัดลอกข้อความที่เลือกไว้ ต้องกดปุ่มใด?", opts: ["Ctrl + C", "Ctrl + V", "Ctrl + X", "Ctrl + Z"], target: "Ctrl + C", explain: "Ctrl + C มาจาก Copy ใช้คัดลอกข้อความเก็บไว้ในหน่วยความจำ" },
+          { q: "ข้อ 3/3: หลังจากคัดลอกข้อความแล้ว ต้องการนำไปวางในตำแหน่งใหม่ต้องกดอะไร?", opts: ["Ctrl + V", "Ctrl + X", "Ctrl + F", "Ctrl + B"], target: "Ctrl + V", explain: "Ctrl + V ใช้สำหรับวาง (Paste) ข้อความที่คัดลอกไว้ลงในเอกสาร" }
+        ]
+      },
+      { id: 4, title: "บทที่ 4: การตกแต่งฟอนต์และรูปแบบตัวอักษร", theme: "Beach", themeName: "ชายหาด/ริมทะเล (Beach Highway)", knTitle: "การทำตัวหนา (Bold)", knText: "การเน้นข้อความให้โดดเด่นสะดุดตา นิยมใช้ตัวหนาผ่านปุ่ม Ctrl + B", 
+        quizSet: [
+          { q: "ข้อ 1/3: คำสั่งทำตัวหนา (Bold) ตรงกับคีย์ลัดใด?", opts: ["Ctrl + B", "Ctrl + I", "Ctrl + U", "Ctrl + P"], target: "Ctrl + B", explain: "Ctrl + B ย่อมาจาก Bold ทำให้ตัวอักษรหนาขึ้น" },
+          { q: "ข้อ 2/3: คำสั่งทำตัวอักษรเอียง (Italic) ตรงกับคีย์ลัดใด?", opts: ["Ctrl + B", "Ctrl + I", "Ctrl + U", "Ctrl + E"], target: "Ctrl + I", explain: "Ctrl + I ย่อมาจาก Italic ใช้ปรับข้อความให้เอียง" },
+          { q: "ข้อ 3/3: คำสั่งขีดเส้นใต้ข้อความ (Underline) ตรงกับคีย์ลัดใด?", opts: ["Ctrl + U", "Ctrl + L", "Ctrl + T", "Ctrl + D"], target: "Ctrl + U", explain: "Ctrl + U ย่อมาจาก Underline ใช้ขีดเส้นใต้ข้อความสำคัญ" }
+        ]
+      },
+      { id: 5, title: "บทที่ 5: การจัดแนวย่อหน้าและการเว้นระยะบรรทัด", theme: "Beach", themeName: "ชายหาด/ริมทะเล (Beach Highway)", knTitle: "การจัดกึ่งกลาง (Center)", knText: "หัวข้อรายงานหรือชื่อเรื่องเอกสารควรจัดตำแหน่งให้อยู่กึ่งกลางหน้ากระดาษเสมอด้วย Ctrl + E", 
+        quizSet: [
+          { q: "ข้อ 1/3: คีย์ลัดใดใช้จัดตำแหน่งข้อความให้อยู่กึ่งกลางหน้ากระดาษ?", opts: ["Ctrl + L", "Ctrl + E", "Ctrl + R", "Ctrl + J"], target: "Ctrl + E", explain: "Ctrl + E จัดข้อความให้อยู่กึ่งกลาง (Center)" },
+          { q: "ข้อ 2/3: คีย์ลัดใดใช้จัดชิดขอบซ้ายของหน้ากระดาษ?", opts: ["Ctrl + L", "Ctrl + R", "Ctrl + E", "Ctrl + J"], target: "Ctrl + L", explain: "Ctrl + L จัดชิดซ้าย (Align Left) เป็นค่าเริ่มต้นมาตรฐาน" },
+          { q: "ข้อ 3/3: คีย์ลัดใดใช้จัดข้อความชิดขอบขวา?", opts: ["Ctrl + R", "Ctrl + L", "Ctrl + C", "Ctrl + M"], target: "Ctrl + R", explain: "Ctrl + R จัดชิดขวา (Align Right)" }
+        ]
+      },
+      { id: 6, title: "บทที่ 6: การสร้างรายการหัวข้อย่อยและลำดับเลข", theme: "Beach", themeName: "ชายหาด/ริมทะเล (Beach Highway)", knTitle: "การสร้างลำดับเลข (Numbering)", knText: "ขั้นตอนการทำงานที่ต้องเรียงลำดับก่อนหลัง ควรใช้คำสั่ง Numbering", 
+        quizSet: [
+          { q: "ข้อ 1/3: เครื่องมือใดเหมาะสมที่สุดสำหรับการสร้างขั้นตอนเรียงลำดับ 1, 2, 3?", opts: ["Bullets", "Numbering", "Multilevel List", "Highlight"], target: "Numbering", explain: "Numbering ใช้สร้างลำดับตัวเลข 1., 2., 3. ตามขั้นตอน" },
+          { q: "ข้อ 2/3: เครื่องมือใดเหมาะสำหรับทำรายการหัวข้อย่อยด้วยสัญลักษณ์จุดกลมๆ?", opts: ["Bullets", "Numbering", "Font Color", "Format Painter"], target: "Bullets", explain: "Bullets ใช้ใส่สัญลักษณ์หัวข้อย่อย (Bullet points)" },
+          { q: "ข้อ 3/3: หากต้องการสร้างหัวข้อย่อยซ้อนกันหลายระดับต้องใช้เครื่องมือใด?", opts: ["Multilevel List", "Bullets", "Numbering", "Table"], target: "Multilevel List", explain: "Multilevel List ใช้ทำรายการหลายระดับ (1.1, 1.2, ก, ข)" }
+        ]
+      },
+      { id: 7, title: "บทที่ 7: การแทรกรูปภาพและการตัดข้อความ (Wrap Text)", theme: "Forest", themeName: "ป่า/ภูเขา (Forest Track)", knTitle: "การตัดข้อความรอบรูปภาพ (Square)", knText: "เพื่อให้ข้อความไหลล้อมรอบกรอบรูปภาพอย่างเป็นระเบียบ ควรตั้งค่า Wrap Text เป็น Square", 
+        quizSet: [
+          { q: "ข้อ 1/3: รูปแบบ Wrap Text ใดทำให้ข้อความวิ่งล้อมรอบขอบภาพเป็นสี่เหลี่ยม?", opts: ["In Line with Text", "Square", "Behind Text", "Top and Bottom"], target: "Square", explain: "Square ทำให้ข้อความตัดรอบกรอบรูปภาพเป็นสี่เหลี่ยมเรียบร้อย" },
+          { q: "ข้อ 2/3: รูปแบบใดวางภาพทับอยู่ฉากหลังข้อความ?", opts: ["Behind Text", "Square", "Tight", "Through"], target: "Behind Text", explain: "Behind Text ซ่อนภาพไว้ด้านหลังข้อความเสมือนลายน้ำ" },
+          { q: "ข้อ 3/3: รูปแบบที่จัดภาพให้อยู่ในบรรทัดเดียวกับตัวอักษรปกติคือข้อใด?", opts: ["In Line with Text", "Square", "Float", "Top"], target: "In Line with Text", explain: "In Line with Text ทำให้รูปภาพทำตัวเหมือนตัวอักษรหนึ่งตัว" }
+        ]
+      },
+      { id: 8, title: "บทที่ 8: การสร้างและตกแต่งตารางข้อมูล", theme: "Forest", themeName: "ป่า/ภูเขา (Forest Track)", knTitle: "โครงสร้างตาราง (Columns & Rows)", knText: "ตารางใน Word ประกอบด้วยช่องแนวตั้งเรียกว่าคอลัมน์ และแนวนอนเรียกว่าแถว", 
+        quizSet: [
+          { q: "ข้อ 1/3: ช่องข้อมูลที่เรียงใน 'แนวตั้ง' ของตารางเรียกว่าอะไร?", opts: ["คอลัมน์ (Column)", "แถว (Row)", "เซลล์ข้าม (Merge)", "ขอบเขต (Border)"], target: "คอลัมน์ (Column)", explain: "แนวตั้งเรียกว่า Column ส่วนแนวนอนเรียกว่า Row" },
+          { q: "ข้อ 2/3: หากต้องการรวมหลายเซลล์ให้เป็นช่องเดียวกันต้องใช้คำสั่งใด?", opts: ["Merge Cells", "Split Cells", "Delete Row", "Insert Below"], target: "Merge Cells", explain: "Merge Cells ใช้รวมเซลล์หลายช่องเข้าด้วยกันเป็นช่องเดียว" },
+          { q: "ข้อ 3/3: คำสั่งสำหรับแบ่งช่องตารางออกเป็นช่องย่อยๆ คือข้อใด?", opts: ["Split Cells", "Merge Cells", "Eraser", "AutoFit"], target: "Split Cells", explain: "Split Cells ใช้แยกเซลล์ออกเป็นคอลัมน์หรือแถวเพิ่ม" }
+        ]
+      },
+      { id: 9, title: "บทที่ 9: การตั้งค่าหน้ากระดาษและระยะขอบ (Margins)", theme: "Forest", themeName: "ป่า/ภูเขา (Forest Track)", knTitle: "แนวกระดาษ (Landscape)", knText: "หากเอกสารมีตารางกว้างมาก การปรับหน้ากระดาษเป็นแนวนอนจะช่วยให้แสดงผลได้สมบูรณ์", 
+        quizSet: [
+          { q: "ข้อ 1/3: หากเอกสารมีตารางกว้างมาก ควรปรับการตั้งค่าหน้ากระดาษเป็นแบบใด?", opts: ["Portrait (แนวตั้ง)", "Landscape (แนวนอน)", "A3 Size", "Columns 3"], target: "Landscape (แนวนอน)", explain: "Landscape คือแนวนอน เหมาะกับตารางหรือกราฟิกกว้างๆ" },
+          { q: "ข้อ 2/3: ค่าระยะขอบกระดาษมาตรฐานทั่วไปภาษาอังกฤษเรียกว่าอะไร?", opts: ["Margins", "Orientation", "Size", "Gutter"], target: "Margins", explain: "Margins คือการกำหนดระยะขอบซ้าย ขวา บน ล่าง ของเอกสาร" },
+          { q: "ข้อ 3/3: ขนาดกระดาษมาตรฐานที่นิยมใช้พิมพ์รายงานทั่วไปคือขนาดใด?", opts: ["A4", "A3", "Letter", "Legal"], target: "A4", explain: "A4 เป็นขนาดกระดาษมาตรฐานราชการและสถานศึกษาไทย" }
+        ]
+      },
+      { id: 10, title: "บทที่ 10: การตรวจคำสะกดและไวยากรณ์ (Proofing)", theme: "Cyber", themeName: "ไซเบอร์/อวกาศ (Cyber Neon Road)", knTitle: "สัญลักษณ์คำสะกดผิด", knText: "โปรแกรมจะขีดเส้นใต้หยักสีแดงใต้คำที่สะกดผิด เพื่อให้ผู้ใช้คลิกขวาเลือกคำที่ถูกต้อง", 
+        quizSet: [
+          { q: "ข้อ 1/3: เส้นใต้หยักสีแดงใต้ข้อความใน Word หมายถึงข้อใด?", opts: ["คำนี้สวยงาม", "คำนี้สะกดผิด", "คำนี้ถูกคัดลอกมา", "คำนี้เป็นลิงก์เว็บ"], target: "คำนี้สะกดผิด", explain: "เส้นหยักสีแดงแจ้งเตือนการสะกดคำผิดพลาด" },
+          { q: "ข้อ 2/3: หากปรากฏเส้นใต้หยักสีเขียวหรือน้ำเงินใต้ข้อความ มักหมายถึงเรื่องใด?", opts: ["ไวยากรณ์หรือการเว้นวรรคผิด", "ตัวหนา", "ขนาดฟอนต์ใหญ่เกินไป", "คำศัพท์ภาษาต่างประเทศ"], target: "ไวยากรณ์หรือการเว้นวรรคผิด", explain: "เส้นหยักสีเขียว/น้ำเงินเกี่ยวข้องกับไวยากรณ์ (Grammar)" },
+          { q: "ข้อ 3/3: คีย์ลัดมาตรฐานในการเรียกหน้าต่างการค้นหาคำ (Find) คืออะไร?", opts: ["Ctrl + F", "Ctrl + H", "Ctrl + P", "Ctrl + G"], target: "Ctrl + F", explain: "Ctrl + F มาจาก Find ใช้ค้นหาคำในเอกสาร" }
+        ]
+      },
+      { id: 11, title: "บทที่ 11: การใช้ Heading สร้างสารบัญอัตโนมัติ", theme: "Cyber", themeName: "ไซเบอร์/อวกาศ (Cyber Neon Road)", knTitle: "การใช้งาน Heading 1", knText: "การสร้างสารบัญอัตโนมัติจำเป็นต้องกำหนดสไตล์หัวข้อหลักให้เป็น Heading 1 เสมอ", 
+        quizSet: [
+          { q: "ข้อ 1/3: สไตล์รูปแบบใดที่ต้องกำหนดให้กับหัวข้อหลักเพื่อนำไปสร้างสารบัญอัตโนมัติ?", opts: ["Title", "Heading 1 (หัวเรื่อง 1)", "Normal", "Subtitle"], target: "Heading 1 (หัวเรื่อง 1)", explain: "สารบัญอัตโนมัติจะดึงข้อมูลจากสไตล์ Heading 1 และ Heading 2" },
+          { q: "ข้อ 2/3: เมนูใดใน Word ที่ใช้สำหรับกดแท็บสร้างสารบัญ (Table of Contents)?", opts: ["References (การอ้างอิง)", "Insert", "Home", "View"], target: "References (การอ้างอิง)", explain: "คำสั่งสร้างสารบัญอัตโนมัติอยู่ในแท็บ References" },
+          { q: "ข้อ 3/3: หากมีการแก้ไขเนื้อหาและหน้ากระดาษเปลี่ยน ต้องกดปุ่มใดเพื่ออัปเดตสารบัญ?", opts: ["Update Table", "Refresh Page", "Reload", "Sync"], target: "Update Table", explain: "กด Update Table เพื่ออัปเดตเลขหน้าและหัวข้อในสารบัญใหม่" }
+        ]
+      },
+      { id: 12, title: "บทที่ 12: การส่งออกเอกสารเป็น PDF", theme: "Cyber", themeName: "ไซเบอร์/อวกาศ (Cyber Neon Road)", knTitle: "ประโยชน์ของไฟล์ PDF", knText: "การบันทึกไฟล์เป็น PDF ช่วยล็อกรูปแบบฟอนต์และการจัดหน้าไม่ให้เพี้ยนเมื่อนำไปเปิดเครื่องอื่น", 
+        quizSet: [
+          { q: "ข้อ 1/3: สกุลไฟล์ใดช่วยป้องกันหน้ากระดาษและฟอนต์เพี้ยนเมื่อนำไปพิมพ์งาน?", opts: [".docx", ".txt", ".pdf", ".pptx"], target: ".pdf", explain: ".pdf เป็นรูปแบบที่ล็อกการจัดหน้าและฟอนต์ไม่ให้เพี้ยน" },
+          { q: "ข้อ 2/3: เมนูการบันทึกงานเป็น PDF ใน Word อยู่ในส่วนใด?", opts: ["File -> Save As / Export", "Home -> PDF", "Insert -> Save", "View -> PDF"], target: "File -> Save As / Export", explain: "สามารถเลือก Save As เป็น PDF หรือ Export เป็น PDF ได้จากเมนู File" },
+          { q: "ข้อ 3/3: ข้อดีที่สุดของการส่งงานเป็นไฟล์ PDF คืออะไร?", opts: ["ทุกคนเปิดอ่านได้โดยรูปแบบไม่เพี้ยน", "แก้ไขข้อมูลง่ายที่สุด", "ไฟล์มีขนาดใหญ่มาก", "บังคับให้ใส่รหัสผ่าน"], target: "ทุกคนเปิดอ่านได้โดยรูปแบบไม่เพี้ยน", explain: "PDF คงสภาพหน้ากระดาษ รูปภาพ และฟอนต์ไว้ได้สมบูรณ์ที่สุด" }
+        ]
+      }
     ];
 
     function buildHubCards() {
@@ -415,7 +492,7 @@
           <div class="unit-title">${ch.title}</div>
           <div class="unit-actions">
             <button class="u-btn study" onclick="openStudyModal(${idx})">
-              <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg> อ่านสรุป
+              <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg> อ่านสรุป & ทำควิซ
             </button>
             ${isLocked ? 
               `<button class="u-btn locked-btn" onclick="alert('ด่านนี้ยังถูกล็อกอยู่! ต้องผ่านด่านก่อนหน้าก่อนครับ')">🔒 ล็อก</button>` :
@@ -430,15 +507,30 @@
     }
 
     function openStudyModal(idx) {
+      currentStudyIdx = idx;
+      currentQuizStep = 0;
       const ch = chapterData[idx];
+
       document.getElementById("study-modal-title").innerText = ch.title;
-      document.getElementById("study-modal-text").innerHTML = `<b>สาระสำคัญ:</b><br>${ch.knText}`;
-      
-      // Flashcard / Quiz สั้นๆ 1 ข้อก่อนลงสนาม
-      document.getElementById("quiz-flash-q").innerText = ch.q;
-      const optsArea = document.getElementById("quiz-flash-options");
+      document.getElementById("study-modal-text").innerHTML = `<b>📖 สาระสำคัญประจำบท:</b><br>${ch.knText}`;
+      document.getElementById("study-complete-actions").style.display = "none";
+      document.getElementById("close-study-btn").style.display = "block";
+
+      renderQuizStep();
+      document.getElementById("study-modal").style.display = "flex";
+    }
+
+    function renderQuizStep() {
+      const ch = chapterData[currentStudyIdx];
+      const qItem = ch.quizSet[currentQuizStep];
+
+      document.getElementById("quiz-header-title").innerText = `⚡ แบบทดสอบบังคับผ่าน (${currentQuizStep + 1}/3)`;
+      document.getElementById("quiz-q-text").innerText = qItem.q;
+
+      const optsArea = document.getElementById("quiz-options-area");
       optsArea.innerHTML = "";
-      ch.opts.forEach(opt => {
+
+      qItem.opts.forEach(opt => {
         const btn = document.createElement("button");
         btn.className = "rbx-green-btn";
         btn.style.background = "#1e293b";
@@ -448,16 +540,31 @@
         btn.style.padding = "10px";
         btn.innerText = opt;
         btn.onclick = () => {
-          if(opt === ch.target) {
-            alert("ยอดเยี่ยม! ตอบถูกต้อง คุณพร้อมสำหรับสนามแข่งแล้ว");
+          if (opt === qItem.target) {
+            playSuccessSound();
+            currentQuizStep++;
+            if (currentQuizStep < 3) {
+              alert("ยอดเยี่ยม! ตอบถูกต้อง ไปลุยข้อถัดไปกันเลยครับ");
+              renderQuizStep();
+            } else {
+              alert("ยอดเยี่ยม! คุณผ่านแบบทดสอบครบทั้ง 3 ข้อแล้ว ปลดล็อกสนามแข่งเรียบร้อย!");
+              document.getElementById("study-complete-actions").style.display = "block";
+              document.getElementById("quiz-header-title").innerText = "🎉 ผ่านการทดสอบครบทุกข้อแล้ว!";
+              document.getElementById("quiz-q-text").innerText = "กดปุ่มด้านล่างเพื่อเข้าสู่สนามแข่ง 3D ได้ทันที";
+              optsArea.innerHTML = "";
+            }
           } else {
-            alert(`ยังไม่ถูกต้อง คำตอบที่ถูกต้องคือ: ${ch.target}`);
+            // ตอบผิด แสดงเนื้อหาความรู้ที่ถูกต้องของข้อนั้นทันทีแล้วให้ทำใหม่
+            alert(`❌ ยังไม่ถูกต้อง!\n\n💡 คำอธิบาย/เนื้อหาที่ถูกต้อง:\n${qItem.explain}\n\nกรุณาลองทำข้อนี้ใหม่อีกครั้งครับ`);
           }
         };
         optsArea.appendChild(btn);
       });
+    }
 
-      document.getElementById("study-modal").style.display = "flex";
+    function launchGameFromStudy() {
+      closeStudyModal();
+      startRaceGame(currentStudyIdx);
     }
 
     function closeStudyModal() {
@@ -627,26 +734,26 @@
       carPhysics.speed = 0;
 
       let ch = chapterData[stageNum - 1];
-      currentActiveQuestion = ch;
+      let mainQuiz = ch.quizSet[0];
+      currentActiveQuestion = { id: ch.id, knTitle: ch.knTitle, knText: ch.knText, target: mainQuiz.target };
 
-      // เปลี่ยนธีมสนามตามด่านที่ขับไปถึง
       applyThemeColors(ch.theme);
 
       document.getElementById("cp-badge").innerText = `CHECKPOINT ${stageNum}`;
       document.getElementById("cert-code-disp").innerText = `รหัสผ่านด่าน: WRD-0${stageNum}`;
-      document.getElementById("cp-q").innerText = ch.q;
+      document.getElementById("cp-q").innerText = mainQuiz.q;
 
       const area = document.getElementById("cp-options-area");
       area.innerHTML = "";
 
-      ch.opts.forEach(opt => {
+      mainQuiz.opts.forEach(opt => {
         const btn = document.createElement("button");
         btn.className = "rbx-green-btn";
         btn.style.background = "#1e293b";
         btn.style.border = "2px solid #334155";
         btn.style.boxShadow = "none";
         btn.innerText = opt;
-        btn.onclick = () => checkAnswer(opt, ch.target);
+        btn.onclick = () => checkAnswer(opt, mainQuiz.target);
         area.appendChild(btn);
       });
 
