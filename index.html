@@ -14,9 +14,9 @@
       --primary: #00a2ff;
       --yellow: #facc15;
       --green: #00b06f;
-      --red: #ef4444;
-      --surface: #111827;
-      --border: rgba(255, 255, 255, 0.18);
+      --surface: #0f172a;
+      --card-bg: #1e293b;
+      --border: rgba(255, 255, 255, 0.12);
     }
     * {
       box-sizing: border-box; margin: 0; padding: 0;
@@ -25,7 +25,7 @@
     }
     html, body {
       width: 100vw; height: 100vh; overflow: hidden;
-      background: #7dd3fc; position: fixed; inset: 0;
+      background: #0f172a; position: fixed; inset: 0;
       font-family: 'Kanit', sans-serif;
     }
 
@@ -45,226 +45,153 @@
       display: flex; align-items: center; justify-content: center;
       gap: 14px; color: #fff; z-index: 45;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      max-width: 95vw;
-      white-space: nowrap;
+      max-width: 95vw; white-space: nowrap;
     }
-    .hud-chip { 
-      display: flex; align-items: center; gap: 8px; font-size: 0.92rem; font-weight: 700; flex-shrink: 0;
-    }
+    .hud-chip { display: flex; align-items: center; gap: 8px; font-size: 0.92rem; font-weight: 700; flex-shrink: 0; }
     #hud-name { font-weight: 900; color: #38bdf8; }
     .hud-icon { width: 18px; height: 18px; fill: #38bdf8; display: inline-block; vertical-align: middle; flex-shrink: 0; }
     .hud-pill {
       background: linear-gradient(135deg, #f59e0b, #d97706);
-      padding: 4px 12px; border-radius: 999px; font-weight: 800; font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.88rem;
+      padding: 4px 12px; border-radius: 999px; font-weight: 800; font-family: 'Chakra Petch', sans-serif; font-size: 0.88rem;
     }
     .hud-progress-pill {
       background: linear-gradient(135deg, #6366f1, #4f46e5);
-      padding: 4px 12px; border-radius: 999px; font-weight: 800; font-family: 'Chakra Petch', sans-serif;
-      font-size: 0.88rem; color: #fff;
+      padding: 4px 12px; border-radius: 999px; font-weight: 800; font-family: 'Chakra Petch', sans-serif; font-size: 0.88rem; color: #fff;
     }
 
     #minimap-card {
-      position: fixed; top: 16px; right: 16px;
-      width: 165px; height: 165px;
+      position: fixed; top: 16px; right: 16px; width: 165px; height: 165px;
       background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(10px);
-      border: 3px solid #facc15; border-radius: 18px;
-      overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-      z-index: 50;
+      border: 3px solid #facc15; border-radius: 18px; overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5); z-index: 50;
     }
     #minimapCanvas { width: 100%; height: 100%; display: block; }
     .map-tag {
-      position: absolute; bottom: 4px; left: 6px;
-      font-size: 0.65rem; font-weight: 800; color: #facc15; background: rgba(0,0,0,0.7);
-      padding: 2px 6px; border-radius: 4px; pointer-events: none;
+      position: absolute; bottom: 4px; left: 6px; font-size: 0.65rem; font-weight: 800;
+      color: #facc15; background: rgba(0,0,0,0.7); padding: 2px 6px; border-radius: 4px; pointer-events: none;
     }
 
     #speedometer-box {
       position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; z-index: 50;
-      pointer-events: none;
+      display: flex; flex-direction: column; align-items: center; z-index: 50; pointer-events: none;
     }
     .star-badge {
       background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 8px; padding: 3px 12px; font-size: 0.8rem; font-weight: 800;
-      color: #facc15; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;
+      border-radius: 8px; padding: 3px 12px; font-size: 0.8rem; font-weight: 800; color: #facc15; margin-bottom: 4px;
     }
     .speed-dial {
       background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(10px);
-      border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 18px;
-      padding: 6px 22px; display: flex; align-items: baseline; gap: 6px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 18px; padding: 6px 22px;
+      display: flex; align-items: baseline; gap: 6px; box-shadow: 0 8px 24px rgba(0,0,0,0.6);
     }
     .speed-num { font-size: 2.3rem; font-weight: 900; color: #ef4444; font-family: 'Chakra Petch', sans-serif; }
     .speed-unit { font-size: 0.9rem; font-weight: 800; color: #94a3b8; }
-    .gear-mode { font-size: 0.85rem; color: #38bdf8; font-weight: 800; margin-left: 6px; }
 
     #mobile-controls {
       position: fixed; bottom: 25px; left: 0; right: 0;
-      display: flex; justify-content: space-between; padding: 0 35px;
-      pointer-events: none; z-index: 60;
+      display: flex; justify-content: space-between; padding: 0 35px; pointer-events: none; z-index: 60;
     }
     .pad-cluster { pointer-events: auto; display: flex; gap: 14px; align-items: center; }
     .v-btn {
-      width: 74px; height: 74px; border-radius: 22px;
-      background: rgba(15, 23, 42, 0.8);
+      width: 74px; height: 74px; border-radius: 22px; background: rgba(15, 23, 42, 0.8);
       border: 2px solid rgba(255, 255, 255, 0.35); backdrop-filter: blur(8px);
-      display: flex; justify-content: center; align-items: center;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.5); cursor: pointer;
-      transition: transform 0.08s;
+      display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 24px rgba(0,0,0,0.5); cursor: pointer;
     }
     .v-btn:active { transform: scale(0.92); border-color: #facc15; background: rgba(250, 204, 21, 0.35); }
     .v-btn svg { width: 34px; height: 34px; fill: #ffffff; }
 
     #audio-toggle {
-      position: fixed; top: 16px; left: 16px;
-      width: 44px; height: 44px; border-radius: 14px;
-      background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px);
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      display: flex; justify-content: center; align-items: center;
-      cursor: pointer; z-index: 50; color: #fff;
+      position: fixed; top: 16px; left: 16px; width: 44px; height: 44px; border-radius: 14px;
+      background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); border: 2px solid rgba(255, 255, 255, 0.2);
+      display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 50; color: #fff;
     }
     #audio-toggle svg { width: 22px; height: 22px; fill: #38bdf8; }
 
+    /* Overlay Screens */
     .overlay-screen {
-      position: fixed; inset: 0;
-      display: flex; justify-content: center; align-items: center; padding: 18px;
-      z-index: 100;
-    }
-    .modal-card {
-      background: var(--surface); border: 3px solid #00a2ff; border-radius: 28px;
-      padding: 32px 28px; max-width: 500px; width: 100%; text-align: center; color: #fff;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 35px rgba(0, 162, 255, 0.3);
-    }
-    .game-h1 {
-      font-size: 2.3rem; font-weight: 900;
-      background: linear-gradient(135deg, #facc15, #f59e0b);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      margin-bottom: 8px; letter-spacing: 1px;
-    }
-    .rbx-green-btn {
-      width: 100%; padding: 16px; border-radius: 16px; border: none;
-      background: linear-gradient(180deg, #00b06f 0%, #008755 100%);
-      color: #fff; font-size: 1.25rem; font-weight: 900; cursor: pointer;
-      box-shadow: 0 6px 0 #00603d; transition: 0.1s;
-      display: flex; justify-content: center; align-items: center; gap: 8px;
-    }
-    .rbx-green-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #00603d; }
-
-    #start-screen {
-      background: radial-gradient(circle at 50% 40%, rgba(14, 165, 233, 0.45) 0%, rgba(15, 23, 42, 0.92) 80%);
-      backdrop-filter: blur(12px); z-index: 200; overflow-y: auto;
+      position: fixed; inset: 0; display: flex; justify-content: center; align-items: center; padding: 18px; z-index: 200;
+      background: rgba(15, 23, 42, 0.94); backdrop-filter: blur(12px); overflow-y: auto;
     }
     .start-modal {
-      background: rgba(255, 255, 255, 0.98);
-      border: 4px solid #38bdf8; border-radius: 32px;
-      padding: 26px 20px; max-width: 580px; width: 95%;
-      text-align: center; color: #0f172a;
-      box-shadow: 0 25px 60px rgba(2, 132, 199, 0.4);
+      background: #111827; border: 3px solid #00a2ff; border-radius: 28px;
+      padding: 26px 22px; max-width: 680px; width: 100%; text-align: center; color: #fff;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 40px rgba(0, 162, 255, 0.3);
       position: relative; margin: auto; max-height: 94vh; overflow-y: auto;
     }
     .hero-banner {
-      background: linear-gradient(135deg, #0284c7, #2563eb);
-      margin: -26px -20px 16px -20px; padding: 20px 14px 14px;
-      border-bottom: 4px solid #facc15;
+      background: linear-gradient(135deg, #0284c7, #1d4ed8);
+      margin: -26px -22px 20px -22px; padding: 22px 16px; border-bottom: 4px solid #facc15;
+      border-radius: 25px 25px 0 0;
     }
     .game-logo-title {
-      font-size: 2rem; font-weight: 900; color: #ffffff;
-      text-transform: uppercase; letter-spacing: 1px;
-      text-shadow: 3px 3px 0px #0369a1; font-family: 'Chakra Petch', 'Kanit', sans-serif;
+      font-size: 2.1rem; font-weight: 900; color: #ffffff; text-transform: uppercase;
+      text-shadow: 3px 3px 0px #0369a1; font-family: 'Chakra Petch', sans-serif; letter-spacing: 1px;
     }
     .game-sub-badge {
       display: inline-flex; align-items: center; gap: 6px; margin-top: 6px;
-      background: #facc15; color: #713f12; font-size: 0.8rem; font-weight: 800;
-      padding: 4px 12px; border-radius: 999px;
+      background: #facc15; color: #713f12; font-size: 0.85rem; font-weight: 800; padding: 4px 14px; border-radius: 999px;
     }
 
-    /* Auth tabs & inputs */
-    .auth-box { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+    /* Auth Form */
+    .auth-box { display: flex; flex-direction: column; gap: 12px; margin-bottom: 10px; max-width: 400px; margin-left: auto; margin-right: auto; }
     .auth-tabs { display: flex; gap: 8px; margin-bottom: 4px; }
     .auth-tab-btn {
-      flex: 1; padding: 10px; border-radius: 12px; border: 2px solid #cbd5e1;
-      background: #f1f5f9; font-weight: 800; cursor: pointer; color: #475569;
+      flex: 1; padding: 10px; border-radius: 12px; border: 2px solid #334155;
+      background: #1e293b; font-weight: 800; cursor: pointer; color: #94a3b8; font-family: 'Kanit';
     }
-    .auth-tab-btn.active { background: #0284c7; color: #fff; border-color: #0369a1; }
+    .auth-tab-btn.active { background: #0284c7; color: #fff; border-color: #38bdf8; }
     .start-input {
-      width: 100%; padding: 12px 16px; border-radius: 14px;
-      border: 3px solid #cbd5e1; background: #f8fafc; color: #0f172a;
-      font-size: 1rem; font-weight: 700; text-align: center; outline: none;
+      width: 100%; padding: 12px 16px; border-radius: 14px; border: 3px solid #334155;
+      background: #1e293b; color: #fff; font-size: 1rem; font-weight: 700; text-align: center; outline: none; font-family: 'Kanit';
     }
-    .start-input:focus { border-color: #0284c7; background: #fff; }
+    .start-input:focus { border-color: #0284c7; background: #0f172a; }
 
-    .hub-menu-tabs { display: flex; gap: 10px; margin-bottom: 16px; }
-    .hub-tab-btn {
-      flex: 1; padding: 12px; border-radius: 14px; border: 2px solid #cbd5e1;
-      background: #f8fafc; color: #334155; font-weight: 800; font-size: 0.95rem;
-      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+    .rbx-green-btn {
+      width: 100%; padding: 14px; border-radius: 16px; border: none;
+      background: linear-gradient(180deg, #00b06f 0%, #008755 100%);
+      color: #fff; font-size: 1.15rem; font-weight: 900; cursor: pointer;
+      box-shadow: 0 6px 0 #00603d; transition: 0.1s; font-family: 'Kanit';
     }
-    .hub-tab-btn.active {
-      background: #0284c7; color: #fff; border-color: #0369a1;
-      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
-    }
-    .hub-tab-btn svg { width: 20px; height: 20px; fill: currentColor; }
+    .rbx-green-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #00603d; }
 
-    .hub-content-pane { display: none; text-align: left; }
-    .hub-content-pane.active { display: block; }
+    /* Hub Grid Styles */
+    .hub-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: left; max-height: 52vh; overflow-y: auto; padding-right: 4px;
+    }
+    .unit-card {
+      background: var(--card-bg); border: 2px solid #334155; border-radius: 20px; padding: 16px;
+      display: flex; flex-direction: column; justify-content: space-between; transition: 0.2s; position: relative;
+    }
+    .unit-card.locked { opacity: 0.55; filter: grayscale(0.4); }
+    .unit-card:not(.locked):hover { border-color: #0284c7; box-shadow: 0 6px 20px rgba(2, 132, 199, 0.25); }
+    
+    .unit-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .unit-badge { background: #0284c7; color: #fff; font-size: 0.75rem; font-weight: 800; padding: 3px 10px; border-radius: 8px; font-family: 'Chakra Petch'; }
+    .unit-sub { font-size: 0.75rem; font-weight: 700; color: #94a3b8; }
+    .unit-title { font-size: 0.9rem; font-weight: 800; color: #f8fafc; margin-bottom: 12px; line-height: 1.4; }
 
-    .chapter-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-      max-height: 220px; overflow-y: auto; padding-right: 4px; margin-bottom: 14px;
+    .unit-actions { display: flex; gap: 8px; }
+    .u-btn {
+      flex: 1; padding: 8px 6px; border-radius: 12px; border: 2px solid #334155;
+      background: #0f172a; color: #e2e8f0; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 5px; font-family: 'Kanit'; transition: 0.1s;
     }
-    .chapter-card {
-      background: #f0f9ff; border: 2px solid #bae6fd; border-radius: 12px;
-      padding: 10px 12px; cursor: pointer; transition: 0.1s; position: relative;
-    }
-    .chapter-card.locked {
-      background: #e2e8f0; border-color: #cbd5e1; opacity: 0.7; cursor: not-allowed;
-    }
-    .chapter-card:not(.locked):hover { border-color: #0284c7; background: #e0f2fe; }
-    .chapter-card .ch-num { font-size: 0.75rem; font-weight: 800; color: #0284c7; }
-    .chapter-card.locked .ch-num { color: #64748b; }
-    .chapter-card .ch-title { font-size: 0.85rem; font-weight: 700; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .u-btn.study:hover { border-color: #38bdf8; color: #38bdf8; background: rgba(56, 189, 248, 0.1); }
+    .u-btn.game { background: #059669; border-color: #10b981; color: #fff; }
+    .u-btn.game:hover { background: #047857; }
+    .u-btn.locked-btn { background: #334155; color: #94a3b8; cursor: not-allowed; border-color: #475569; }
 
-    #checkpoint-modal {
+    /* Modals */
+    .custom-modal {
       position: fixed; inset: 0; background: rgba(10, 12, 16, 0.88); backdrop-filter: blur(12px);
-      display: none; justify-content: center; align-items: center; padding: 16px; z-index: 120;
+      display: none; justify-content: center; align-items: center; padding: 18px; z-index: 250;
     }
-    .cp-box {
-      background: #ffffff; border: 4px solid #38bdf8; border-radius: 26px; padding: 24px;
-      max-width: 600px; width: 100%; color: #1e293b; box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-      max-height: 94vh; overflow-y: auto; text-align: left;
+    .modal-box {
+      background: #1e293b; border: 3px solid #0284c7; border-radius: 24px; padding: 26px;
+      max-width: 540px; width: 100%; color: #fff; box-shadow: 0 20px 60px rgba(0,0,0,0.8); text-align: left; max-height: 90vh; overflow-y: auto;
     }
-    .cp-top {
-      display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
-      border-bottom: 2px dashed #e2e8f0; padding-bottom: 10px;
-    }
-    .badge-cp {
-      background: #fef08a; color: #854d0e; font-weight: 800; font-size: 0.85rem;
-      padding: 4px 14px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px;
-      border: 2px solid #facc15;
-    }
-    .q-statement { font-size: 1.15rem; font-weight: 700; margin-bottom: 14px; line-height: 1.5; color: #0f172a; }
-    .minigame-stage {
-      background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 16px; padding: 18px;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 140px; gap: 12px; margin-bottom: 14px;
-    }
-    .ribbon-btn {
-      padding: 10px 16px; border-radius: 10px; border: 2px solid #cbd5e1;
-      background: #ffffff; font-family: 'Kanit'; cursor: pointer; font-weight: 600; font-size: 0.95rem; color: #1e293b; width: 100%; margin-bottom: 8px;
-    }
-
-    #knowledge-modal {
-      position: fixed; inset: 0; background: rgba(10, 12, 16, 0.92); backdrop-filter: blur(14px);
-      display: none; justify-content: center; align-items: center; padding: 18px; z-index: 130;
-    }
-    .knowledge-card {
-      background: #0f172a; border: 3px solid #ef4444; border-radius: 28px; padding: 26px;
-      max-width: 540px; width: 100%; color: #fff; box-shadow: 0 20px 60px rgba(239, 68, 68, 0.3); text-align: left;
-    }
-    .kn-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; color: #ef4444; font-size: 1.3rem; font-weight: 800; }
-    .kn-box { background: #1e293b; border-left: 4px solid #facc15; padding: 14px 16px; border-radius: 10px; margin-bottom: 18px; }
-    .kn-title { font-size: 1.05rem; font-weight: 800; color: #facc15; margin-bottom: 6px; }
-    .kn-desc { font-size: 0.95rem; color: #e2e8f0; line-height: 1.6; }
+    .modal-title { font-size: 1.25rem; font-weight: 900; color: #38bdf8; margin-bottom: 10px; }
+    .modal-desc { font-size: 0.98rem; color: #cbd5e1; line-height: 1.6; margin-bottom: 16px; }
   </style>
 </head>
 <body>
@@ -294,15 +221,14 @@
 
   <div id="minimap-card">
     <canvas id="minimapCanvas" width="165" height="165"></canvas>
-    <div class="map-tag">GPS MAP (1-12)</div>
+    <div class="map-tag" id="map-theme-tag">GPS MAP: City</div>
   </div>
 
   <div id="speedometer-box">
-    <div class="star-badge"><span>TAXI PRO</span></div>
+    <div class="star-badge" id="theme-badge-name">TAXI PRO (CITY)</div>
     <div class="speed-dial">
       <span class="speed-num" id="speed-val">0</span>
       <span class="speed-unit">mph</span>
-      <span class="gear-mode" id="gear-val">N</span>
     </div>
   </div>
 
@@ -326,7 +252,7 @@
     </div>
   </div>
 
-  <!-- หน้าจอสมัครสมาชิก / เข้าสู่ระบบ / เลือกด่าน -->
+  <!-- หน้าจอหลัก (Hub & Login) -->
   <div id="start-screen" class="overlay-screen">
     <div class="start-modal">
       <div class="hero-banner">
@@ -337,62 +263,63 @@
       <!-- ส่วน Login / Register -->
       <div id="auth-container" class="auth-box">
         <div class="auth-tabs">
-          <button class="auth-tab-btn active" id="tab-login-btn" onclick="switchAuthTab('login')">เข้าสู่ระบบ (Login)</button>
-          <button class="auth-tab-btn" id="tab-reg-btn" onclick="switchAuthTab('register')">สมัครสมาชิก (Register)</button>
+          <button class="auth-tab-btn active" id="tab-login-btn" onclick="switchAuthTab('login')">เข้าสู่ระบบ</button>
+          <button class="auth-tab-btn" id="tab-reg-btn" onclick="switchAuthTab('register')">สมัครสมาชิก</button>
         </div>
         <input type="text" id="auth-user" class="start-input" placeholder="ชื่อผู้ใช้งาน (Username)..." autocomplete="off" />
         <input type="password" id="auth-pass" class="start-input" placeholder="รหัสผ่าน (Password)..." autocomplete="off" />
-        <button class="rbx-green-btn" id="auth-action-btn" onclick="handleAuth()">เข้าสู่ระบบเพื่อลุยด่าน</button>
+        <button class="rbx-green-btn" id="auth-action-btn" onclick="handleAuth()">เข้าสู่ระบบเพื่อเริ่มเรียน</button>
       </div>
 
-      <!-- ส่วนเลือกด่าน (ซ่อนไว้จนกว่าจะ Login สำเร็จ) -->
+      <!-- ส่วน Hub รายการ 12 บทเรียน -->
       <div id="hub-container" style="display:none;">
-        <div style="font-size: 0.95rem; font-weight: 800; color: #0284c7; margin-bottom: 8px;" id="welcome-user-text">ยินดีต้อนรับนักขับ</div>
-        
-        <div class="hub-menu-tabs">
-          <button class="hub-tab-btn active" onclick="switchHubTab('game')">ลุยสนามแข่ง (Game)</button>
-          <button class="hub-tab-btn" onclick="switchHubTab('study')">ห้องสมุดความรู้ (Study)</button>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div style="font-size: 0.95rem; font-weight: 800; color: #38bdf8;" id="welcome-user-text">ยินดีต้อนรับนักเรียน</div>
+          <button onclick="logout()" style="background:#334155; border:none; color:#cbd5e1; padding:4px 10px; border-radius:8px; font-weight:700; cursor:pointer; font-family:'Kanit'; font-size:0.8rem;">ออกจากระบบ</button>
         </div>
-
-        <!-- Game Mode Pane -->
-        <div id="pane-game" class="hub-content-pane active">
-          <div style="font-size: 0.85rem; font-weight: 700; color: #64748b; margin-bottom: 6px;">ต้องผ่านด่านก่อนหน้าเพื่อปลดล็อกด่านถัดไป:</div>
-          <div class="chapter-grid" id="chapter-select-grid"></div>
-        </div>
-
-        <!-- Study Mode Pane -->
-        <div id="pane-study" class="hub-content-pane">
-          <div style="font-size: 0.9rem; font-weight: 800; color: #0284c7; margin-bottom: 6px;">เลือกบทเรียนเพื่ออ่านสรุป:</div>
-          <div class="chapter-grid" id="study-grid"></div>
-          <div id="study-reader-box" style="background:#f1f5f9; border:2px solid #cbd5e1; border-radius:14px; padding:12px; font-size:0.88rem; color:#334155; margin-top:8px; display:none;">
-            <div id="study-title" style="font-weight:900; color:#0284c7; margin-bottom:4px;">หัวข้อ</div>
-            <div id="study-desc">เนื้อหาสรุป...</div>
-          </div>
-        </div>
+        <div class="hub-grid" id="hub-grid-cards"></div>
       </div>
 
     </div>
   </div>
 
-  <div id="checkpoint-modal">
-    <div class="cp-box">
-      <div class="cp-top">
-        <span class="badge-cp" id="cp-badge">CHECKPOINT 1</span>
-        <span style="font-weight:900; color:#0284c7;" id="cp-pts">+1 คะแนน</span>
+  <!-- Modal อ่านสรุปบทเรียน พร้อม Flashcard Quiz สั้นๆ -->
+  <div id="study-modal" class="custom-modal">
+    <div class="modal-box">
+      <div class="modal-title" id="study-modal-title">หัวข้อบทเรียน</div>
+      <div class="modal-desc" id="study-modal-text">เนื้อหาสรุป...</div>
+      
+      <div style="background:#0f172a; border:2px solid #334155; border-radius:16px; padding:16px; margin-bottom:16px;">
+        <div style="font-weight:800; color:#facc15; margin-bottom:8px;" id="quiz-flash-title">⚡ ซ้อมมือก่อนลงสนาม (Quick Quiz)</div>
+        <div style="font-size:0.92rem; font-weight:700; margin-bottom:12px;" id="quiz-flash-q">คำถาม...</div>
+        <div id="quiz-flash-options" style="display:flex; flex-direction:column; gap:8px;"></div>
       </div>
-      <div class="q-statement" id="cp-q">ภารกิจปฏิบัติการ...</div>
-      <div class="minigame-stage" id="cp-minigame-area"></div>
+
+      <button class="rbx-green-btn" onclick="closeStudyModal()">ปิดหน้าต่าง (CLOSE)</button>
     </div>
   </div>
 
-  <div id="knowledge-modal">
-    <div class="knowledge-card">
-      <div class="kn-header"><span>ยังไม่ถูกต้อง! ใบความรู้สรุปแนวคิดสำคัญ</span></div>
-      <div class="kn-box">
-        <div class="kn-title"><span id="kn-subject">หัวข้อความรู้</span></div>
-        <div class="kn-desc" id="kn-text">เนื้อหาความรู้สรุป...</div>
+  <!-- Modal ตอบคำถามสนามแข่ง -->
+  <div id="checkpoint-modal" class="custom-modal">
+    <div class="modal-box">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <span style="background:#fef08a; color:#854d0e; font-weight:800; font-size:0.85rem; padding:4px 12px; border-radius:20px;" id="cp-badge">CHECKPOINT 1</span>
+        <span style="font-weight:900; color:#38bdf8;" id="cert-code-disp">รหัสผ่านด่าน: WRD-01</span>
       </div>
-      <button class="rbx-green-btn" onclick="retryMission()">ทำภารกิจแก้ตัว (RETRY MISSION)</button>
+      <div style="font-size:1.1rem; font-weight:700; margin-bottom:14px; line-height:1.5;" id="cp-q">ภารกิจ...</div>
+      <div id="cp-options-area" style="display:flex; flex-direction:column; gap:8px;"></div>
+    </div>
+  </div>
+
+  <!-- Modal แก้ตัวเมื่อตอบผิด -->
+  <div id="knowledge-modal" class="custom-modal">
+    <div class="modal-box" style="border-color:#ef4444;">
+      <div style="color:#ef4444; font-weight:900; font-size:1.2rem; margin-bottom:8px;">ยังไม่ถูกต้อง! ทบทวนจุดสำคัญ</div>
+      <div style="background:#0f172a; border-left:4px solid #facc15; padding:12px; border-radius:8px; margin-bottom:16px;">
+        <div style="font-weight:800; color:#facc15; margin-bottom:4px;" id="kn-subject">หัวข้อ</div>
+        <div style="font-size:0.92rem; color:#e2e8f0; line-height:1.5;" id="kn-text">เนื้อหา...</div>
+      </div>
+      <button class="rbx-green-btn" onclick="retryMission()">ทำภารกิจแก้ตัวอีกครั้ง (RETRY)</button>
     </div>
   </div>
 
@@ -406,7 +333,7 @@
       if(mode === 'login') {
         document.getElementById("tab-login-btn").classList.add("active");
         document.getElementById("tab-reg-btn").classList.remove("active");
-        btn.innerText = "เข้าสู่ระบบเพื่อลุยด่าน";
+        btn.innerText = "เข้าสู่ระบบเพื่อเริ่มเรียน";
       } else {
         document.getElementById("tab-reg-btn").classList.add("active");
         document.getElementById("tab-login-btn").classList.remove("active");
@@ -417,15 +344,15 @@
     function handleAuth() {
       const u = document.getElementById("auth-user").value.trim();
       const p = document.getElementById("auth-pass").value.trim();
-      if(!u || !p) { alert("กรุณากรอกชื่อผู้ใช้งานและรหัสผ่านให้ครบถ้วนครับ!"); return; }
+      if(!u || !p) { alert("กรุณากรอกชื่อผู้ใช้งานและรหัสผ่านให้ครบถ้วน!"); return; }
 
       let usersDB = JSON.parse(localStorage.getItem("wordroad_users") || "{}");
 
       if(authMode === 'register') {
-        if(usersDB[u]) { alert("ชื่อผู้ใช้งานนี้มีคนสมัครไปแล้ว กรุณาใช้ชื่ออื่นหรือกดเข้าสู่ระบบ!"); return; }
+        if(usersDB[u]) { alert("ชื่อผู้ใช้งานนี้มีผู้ใช้แล้ว กรุณาใช้ชื่ออื่นหรือเข้าสู่ระบบ!"); return; }
         usersDB[u] = { pass: p, maxUnlockedStage: 1 };
         localStorage.setItem("wordroad_users", JSON.stringify(usersDB));
-        alert("สมัครสมาชิกสำเร็จ! กำลังเข้าสู่ระบบ...");
+        alert("สมัครสมาชิกสำเร็จ! เข้าสู่ระบบอัตโนมัติ...");
       }
 
       if(!usersDB[u] || usersDB[u].pass !== p) {
@@ -436,9 +363,15 @@
       currentUserData = { username: u, data: usersDB[u] };
       document.getElementById("auth-container").style.display = "none";
       document.getElementById("hub-container").style.display = "block";
-      document.getElementById("welcome-user-text").innerText = `ยินดีต้อนรับนักขับ: ${u} (สูงสุดถึงด่าน ${currentUserData.data.maxUnlockedStage})`;
+      document.getElementById("welcome-user-text").innerText = `ยินดีต้อนรับนักเรียน: ${u}`;
       
-      initHubMenu();
+      buildHubCards();
+    }
+
+    function logout() {
+      currentUserData = null;
+      document.getElementById("hub-container").style.display = "none";
+      document.getElementById("auth-container").style.display = "flex";
     }
 
     function saveUserProgress() {
@@ -448,121 +381,105 @@
       localStorage.setItem("wordroad_users", JSON.stringify(usersDB));
     }
 
-    const questionsPool = [
-      { qId: 1, stage: 1, pts: 1.0, mode: "ribbon", q: "ข้อที่ 1/12: เลือกแท็บเมนู Ribbon ที่ใช้เปลี่ยนแบบฟอนต์และขนาดตัวอักษร:", target: "Home", knTitle: "แถบเมนู Ribbon: หน้าแรก (Home)", knText: "แถบ หน้าแรก (Home) เป็นศูนย์รวมคำสั่งพื้นฐาน เช่น เปลี่ยนฟอนต์, ขนาดอักษร, และตัวหนา/เอียง" },
-      { qId: 2, stage: 2, pts: 1.0, mode: "choice", q: "ข้อที่ 2/12: หากต้องการเปิดเอกสารเก่าที่เคยบันทึกไว้ขึ้นมาใช้งาน ต้องกดคีย์ลัดใด:", target: "Ctrl + O", opts: ["Ctrl + P", "Ctrl + O", "Ctrl + W", "Ctrl + F"], knTitle: "คีย์ลัดเปิดไฟล์ (Open)", knText: "Ctrl + O ย่อมาจาก Open ใช้เปิดไฟล์เดิม" },
-      { qId: 3, stage: 3, pts: 1.0, mode: "choice", q: "ข้อที่ 3/12: พิมพ์ข้อความผิดแล้วเผลอลบหายไป จะกดคีย์ลัดใดเพื่อกู้คืนข้อความกลับมาทันที (Undo):", target: "Ctrl + Z", opts: ["Ctrl + X", "Ctrl + Z", "Ctrl + Y", "Ctrl + C"], knTitle: "การยกเลิกคำสั่งล่าสุด (Undo)", knText: "Ctrl + Z เป็นคีย์ลัดกู้ชีพเมื่อเผลอลบข้อความ" },
-      { qId: 4, stage: 4, pts: 1.0, mode: "choice", q: "ข้อที่ 4/12: คีย์ลัดคำสั่งทำตัวหนา (Bold) ตรงกับปุ่มใด:", target: "Ctrl + B", opts: ["Ctrl + B", "Ctrl + I", "Ctrl + U", "Ctrl + P"], knTitle: "ตัวหนา (Bold)", knText: "Ctrl + B มาจาก Bold" },
-      { qId: 5, stage: 5, pts: 1.0, mode: "align", q: "ข้อที่ 5/12: เลือกปุ่มจัดตำแหน่งข้อความให้อยู่ 'กึ่งกลางหน้ากระดาษ':", target: "center", knTitle: "กึ่งกลาง (Center)", knText: "นิยมใช้สำหรับพิมพ์ชื่อเรื่อง หัวข้อรายงาน (Ctrl + E)" },
-      { qId: 6, stage: 6, pts: 1.0, mode: "choice", q: "ข้อที่ 6/12: เครื่องมือใดใช้สร้างรายการที่มีลำดับ 1, 2, 3 ตามลำดับ:", target: "Numbering", opts: ["Bullets", "Numbering", "Multilevel List"], knTitle: "ลำดับเลข (Numbering)", knText: "ขั้นตอนที่ต้องทำตามลำดับก่อนหลังต้องใช้ Numbering" },
-      { qId: 7, stage: 7, pts: 1.0, mode: "choice", q: "ข้อที่ 7/12: คำสั่ง Wrap Text รูปแบบใดทำให้ข้อความไหลล้อมรอบกรอบรูปภาพเป็นสี่เหลี่ยม:", target: "Square", opts: ["In Line with Text", "Square", "Behind Text"], knTitle: "Square Wrap Text", knText: "เลือก Square เพื่อให้ข้อความวิ่งล้อมรอบขอบสี่เหลี่ยมรูปภาพ" },
-      { qId: 8, stage: 8, pts: 1.0, mode: "choice", q: "ข้อที่ 8/12: การสร้างตาราง 3 คอลัมน์ x 2 แถว คอลัมน์แทนแนวใด:", target: "แนวตั้ง", opts: ["แนวตั้ง", "แนวนอน", "แนวทแยง"], knTitle: "โครงสร้างตาราง", knText: "คอลัมน์คือแนวตั้ง แถวคือแนวนอน" },
-      { qId: 9, stage: 9, pts: 1.0, mode: "choice", q: "ข้อที่ 9/12: พิมพ์ตารางกว้าง ต้องตั้งค่าหน้ากระดาษแบบใด:", target: "Landscape (แนวนอน)", opts: ["Portrait (แนวตั้ง)", "Landscape (แนวนอน)", "Columns"], knTitle: "แนวกระดาษ (Landscape)", knText: "ตารางกว้างควรอัปเกรดเป็น Landscape แนวนอน" },
-      { qId: 10, stage: 10, pts: 1.0, mode: "choice", q: "ข้อที่ 10/12: การตรวจพบคำที่สะกดผิดจะแจ้งเตือนด้วยสัญลักษณ์ใด:", target: "เส้นใต้หยักสีแดง", opts: ["เส้นใต้ขีดทึบสีดำ", "เส้นใต้หยักสีแดง", "เส้นใต้เส้นคู่สีเขียว"], knTitle: "คำสะกดผิด", knText: "เส้นใต้หยักสีแดงหมายถึงสะกดผิด" },
-      { qId: 11, stage: 11, pts: 1.0, mode: "choice", q: "ข้อที่ 11/12: สร้างสารบัญอัตโนมัติ ต้องกำหนดสไตล์หัวข้อเป็นอะไร:", target: "Heading 1 (หัวเรื่อง 1)", opts: ["Title", "Heading 1 (หัวเรื่อง 1)", "Normal"], knTitle: "Heading 1", knText: "สารบัญดึงข้อมูลจาก Heading 1 และ Heading 2" },
-      { qId: 12, stage: 12, pts: 1.0, mode: "choice", q: "ข้อที่ 12/12: ส่งออกไฟล์ชนิดใดที่ล็อกการจัดหน้าและฟอนต์ไม่ให้เพี้ยน:", target: ".pdf", opts: [".docx", ".txt", ".pdf"], knTitle: "ไฟล์ PDF", knText: "สกุล .pdf ช่วยป้องกันหน้ากระดาษและฟอนต์เคลื่อน" }
+    const chapterData = [
+      { id: 1, title: "บทที่ 1: รู้จักหน้าตาและส่วนประกอบของ Microsoft Word", theme: "City", themeName: "เมืองหลวง (City Road)", knTitle: "ส่วนประกอบ Ribbon", knText: "แถบ Ribbon รวบรวมเครื่องมือจัดรูปแบบเอกสารแบ่งเป็นแท็บ Home, Insert, Design และ Layout เพื่อความสะดวกในการใช้งาน", q: "ข้อที่ 1/12: แท็บใดรวบรวมคำสั่งพื้นฐาน เช่น ฟอนต์ ขนาดตัวอักษร และการจัดย่อหน้า?", opts: ["Home", "Insert", "Design", "References"], target: "Home" },
+      { id: 2, title: "บทที่ 2: การจัดการไฟล์เอกสารและคีย์ลัดพื้นฐาน", theme: "City", themeName: "เมืองหลวง (City Road)", knTitle: "การเปิดไฟล์เดิม (Open)", knText: "การเรียกไฟล์งานเดิมขึ้นมาแก้ไขอย่างรวดเร็วสามารถใช้คีย์ลัดมาตรฐานสากลคือ Ctrl + O", q: "ข้อที่ 2/12: หากต้องการเปิดเอกสารเก่าที่เคยบันทึกไว้ ต้องกดคีย์ลัดใด?", opts: ["Ctrl + P", "Ctrl + O", "Ctrl + W", "Ctrl + F"], target: "Ctrl + O" },
+      { id: 3, title: "บทที่ 3: การพิมพ์และการจัดการข้อความภาษาไทย/อังกฤษ", theme: "City", themeName: "เมืองหลวง (City Road)", knTitle: "การกู้คืนข้อความ (Undo)", knText: "กรณีเผลอลบข้อความสำคัญหายไป สามารถใช้คำสั่งย้อนกลับการกระทำล่าสุดได้ทันทีด้วย Ctrl + Z", q: "ข้อที่ 3/12: คีย์ลัดใดใช้กู้คืนข้อความที่เผลอลบหายไป (Undo)?", opts: ["Ctrl + X", "Ctrl + Z", "Ctrl + Y", "Ctrl + C"], target: "Ctrl + Z" },
+      { id: 4, title: "บทที่ 4: การตกแต่งฟอนต์และรูปแบบตัวอักษร", theme: "Beach", themeName: "ชายหาด/ริมทะเล (Beach Highway)", knTitle: "การทำตัวหนา (Bold)", knText: "การเน้นข้อความให้โดดเด่นสะดุดตา นิยมใช้ตัวหนาผ่านปุ่ม Ctrl + B", q: "ข้อที่ 4/12: คำสั่งทำตัวหนา (Bold) ตรงกับคีย์ลัดใด?", opts: ["Ctrl + B", "Ctrl + I", "Ctrl + U", "Ctrl + P"], target: "Ctrl + B" },
+      { id: 5, title: "บทที่ 5: การจัดแนวย่อหน้าและการเว้นระยะบรรทัด", theme: "Beach", themeName: "ชายหาด/ริมทะเล (Beach Highway)", knTitle: "การจัดกึ่งกลาง (Center)", knText: "หัวข้อรายงานหรือชื่อเรื่องเอกสารควรจัดตำแหน่งให้อยู่กึ่งกลางหน้ากระดาษเสมอด้วย Ctrl + E", q: "ข้อที่ 5/12: คีย์ลัดหรือปุ่มใดใช้จัดตำแหน่งข้อความให้อยู่กึ่งกลางหน้า?", opts: ["Ctrl + L", "Ctrl + E", "Ctrl + R", "Ctrl + J"], target: "Ctrl + E" },
+      { id: 6, title: "บทที่ 6: การสร้างรายการหัวข้อย่อยและลำดับเลข", theme: "Beach", themeName: "ชายหาด/ริมทะเล (Beach Highway)", knTitle: "การสร้างลำดับเลข (Numbering)", knText: "ขั้นตอนการทำงานที่ต้องเรียงลำดับก่อนหลัง ควรใช้คำสั่ง Numbering", q: "ข้อที่ 6/12: เครื่องมือใดเหมาะสมที่สุดสำหรับการสร้างขั้นตอนเรียงลำดับ 1, 2, 3?", opts: ["Bullets", "Numbering", "Multilevel List", "Highlight"], target: "Numbering" },
+      { id: 7, title: "บทที่ 7: การแทรกรูปภาพและการตัดข้อความ (Wrap Text)", theme: "Forest", themeName: "ป่า/ภูเขา (Forest Track)", knTitle: "การตัดข้อความรอบรูปภาพ (Square)", knText: "เพื่อให้ข้อความไหลล้อมรอบกรอบรูปภาพอย่างเป็นระเบียบ ควรตั้งค่า Wrap Text เป็น Square", q: "ข้อที่ 7/12: รูปแบบ Wrap Text ใดทำให้ข้อความวิ่งล้อมรอบขอบภาพเป็นสี่เหลี่ยม?", opts: ["In Line with Text", "Square", "Behind Text", "Top and Bottom"], target: "Square" },
+      { id: 8, title: "บทที่ 8: การสร้างและตกแต่งตารางข้อมูล", theme: "Forest", themeName: "ป่า/ภูเขา (Forest Track)", knTitle: "โครงสร้างตาราง (Columns & Rows)", knText: "ตารางใน Word ประกอบด้วยช่องแนวตั้งเรียกว่าคอลัมน์ และแนวนอนเรียกว่าแถว", q: "ข้อที่ 8/12: ช่องข้อมูลที่เรียงใน 'แนวตั้ง' ของตารางเรียกว่าอะไร?", opts: ["คอลัมน์ (Column)", "แถว (Row)", "เซลล์ข้าม (Merge)", "ขอบเขต (Border)"], target: "คอลัมน์ (Column)" },
+      { id: 9, title: "บทที่ 9: การตั้งค่าหน้ากระดาษและระยะขอบ (Margins)", theme: "Forest", themeName: "ป่า/ภูเขา (Forest Track)", knTitle: "แนวกระดาษ (Landscape)", knText: "หากเอกสารมีตารางกว้างมาก การปรับหน้ากระดาษเป็นแนวนอนจะช่วยให้แสดงผลได้สมบูรณ์", q: "ข้อที่ 9/12: หากเอกสารมีตารางกว้างมาก ควรปรับการตั้งค่าหน้ากระดาษเป็นแบบใด?", opts: ["Portrait (แนวตั้ง)", "Landscape (แนวนอน)", "A3 Size", "Columns 3"], target: "Landscape (แนวนอน)" },
+      { id: 10, title: "บทที่ 10: การตรวจคำสะกดและไวยากรณ์ (Proofing)", theme: "Cyber", themeName: "ไซเบอร์/อวกาศ (Cyber Neon Road)", knTitle: "สัญลักษณ์คำสะกดผิด", knText: "โปรแกรมจะขีดเส้นใต้หยักสีแดงใต้คำที่สะกดผิด เพื่อให้ผู้ใช้คลิกขวาเลือกคำที่ถูกต้อง", q: "ข้อที่ 10/12: เส้นใต้หยักสีแดงใต้ข้อความใน Word หมายถึงข้อใด?", opts: ["คำนี้สวยงาม", "คำนี้สะกดผิด", "คำนี้ถูกคัดลอกมา", "คำนี้เป็นลิงก์เว็บ"], target: "คำนี้สะกดผิด" },
+      { id: 11, title: "บทที่ 11: การใช้ Heading สร้างสารบัญอัตโนมัติ", theme: "Cyber", themeName: "ไซเบอร์/อวกาศ (Cyber Neon Road)", knTitle: "การใช้งาน Heading 1", knText: "การสร้างสารบัญอัตโนมัติจำเป็นต้องกำหนดสไตล์หัวข้อหลักให้เป็น Heading 1 เสมอ", q: "ข้อที่ 11/12: สไตล์รูปแบบใดที่ต้องกำหนดให้กับหัวข้อหลักเพื่อนำไปสร้างสารบัญอัตโนมัติ?", opts: ["Title", "Heading 1 (หัวเรื่อง 1)", "Normal", "Subtitle"], target: "Heading 1 (หัวเรื่อง 1)" },
+      { id: 12, title: "บทที่ 12: การส่งออกเอกสารเป็น PDF", theme: "Cyber", themeName: "ไซเบอร์/อวกาศ (Cyber Neon Road)", knTitle: "ประโยชน์ของไฟล์ PDF", knText: "การบันทึกไฟล์เป็น PDF ช่วยล็อกรูปแบบฟอนต์และการจัดหน้าไม่ให้เพี้ยนเมื่อนำไปเปิดเครื่องอื่น", q: "ข้อที่ 12/12: สกุลไฟล์ใดช่วยป้องกันหน้ากระดาษและฟอนต์เพี้ยนเมื่อนำไปพิมพ์งาน?", opts: [".docx", ".txt", ".pdf", ".pptx"], target: ".pdf" }
     ];
 
-    const chapterTitles = [
-      "บทที่ 1: แถบเครื่องมือ Ribbon & หน้าแรก",
-      "บทที่ 2: การจัดการไฟล์ (Save, New, Open)",
-      "บทที่ 3: การกู้คืนคำสั่ง (Undo / Redo)",
-      "บทที่ 4: รูปแบบตัวอักษร (Bold, Italic, Underline)",
-      "บทที่ 5: การจัดแนวย่อหน้า (Paragraph Alignment)",
-      "บทที่ 6: การสร้างรายการ (Bullets & Numbering)",
-      "บทที่ 7: การแทรกภาพและตัดข้อความ (Wrap Text)",
-      "บทที่ 8: การสร้างและจัดการตารางข้อมูล (Tables)",
-      "บทที่ 9: การตั้งค่าหน้ากระดาษและระยะขอบ (Margins)",
-      "บทที่ 10: การตรวจคำสะกดและไวยากรณ์ (Proofing)",
-      "บทที่ 11: การใช้ Heading สร้างสารบัญอัตโนมัติ",
-      "บทที่ 12: การส่งออกเอกสารเป็น PDF"
-    ];
-
-    function initHubMenu() {
-      const grid = document.getElementById("chapter-select-grid");
-      const studyGrid = document.getElementById("study-grid");
-      if(!grid || !studyGrid) return;
+    function buildHubCards() {
+      const grid = document.getElementById("hub-grid-cards");
       grid.innerHTML = "";
-      studyGrid.innerHTML = "";
-
       const maxUnlocked = currentUserData ? currentUserData.data.maxUnlockedStage : 1;
 
-      chapterTitles.forEach((title, idx) => {
-        const stageNum = idx + 1;
+      chapterData.forEach((ch, idx) => {
+        const stageNum = ch.id;
         const isLocked = stageNum > maxUnlocked;
 
         const card = document.createElement("div");
-        card.className = `chapter-card ${isLocked ? 'locked' : ''}`;
-        card.innerHTML = `<div class="ch-num">ด่าน ${stageNum} ${isLocked ? '🔒 (ล็อก)' : '🔓 (ปลดล็อกแล้ว)'}</div><div class="ch-title">${title}</div>`;
-        
-        if(!isLocked) {
-          card.onclick = () => startGame(idx);
-        } else {
-          card.onclick = () => alert(`ด่านนี้ยังไม่ถูกปลดล็อก! คุณต้องเคลียร์ด่านก่อนหน้าให้สำเร็จก่อนครับ`);
-        }
+        card.className = `unit-card ${isLocked ? 'locked' : ''}`;
+        card.innerHTML = `
+          <div class="unit-header">
+            <span class="unit-badge">UNIT ${stageNum}</span>
+            <span class="unit-sub">ธีม: ${ch.themeName.split(' ')[0]}</span>
+          </div>
+          <div class="unit-title">${ch.title}</div>
+          <div class="unit-actions">
+            <button class="u-btn study" onclick="openStudyModal(${idx})">
+              <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg> อ่านสรุป
+            </button>
+            ${isLocked ? 
+              `<button class="u-btn locked-btn" onclick="alert('ด่านนี้ยังถูกล็อกอยู่! ต้องผ่านด่านก่อนหน้าก่อนครับ')">🔒 ล็อก</button>` :
+              `<button class="u-btn game" onclick="startRaceGame(${idx})">
+                <svg style="width:14px;height:14px;fill:currentColor;" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.22.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.85 7h10.29l1.04 3H5.81l1.04-3zM19 17H5v-4.66l.12-.34h13.76l.12.34V17z"/></svg> ลุยสนามแข่ง
+               </button>`
+            }
+          </div>
+        `;
         grid.appendChild(card);
-
-        const scard = document.createElement("div");
-        scard.className = "chapter-card";
-        scard.innerHTML = `<div class="ch-num">เนื้อหาบทที่ ${stageNum}</div><div class="ch-title">${title}</div>`;
-        scard.onclick = () => showStudyContent(idx);
-        studyGrid.appendChild(scard);
       });
     }
 
-    function switchHubTab(tabName) {
-      document.querySelectorAll(".hub-tab-btn").forEach(b => b.classList.remove("active"));
-      document.querySelectorAll(".hub-content-pane").forEach(p => p.classList.remove("active"));
-      if (tabName === 'game') {
-        document.querySelectorAll(".hub-tab-btn")[0].classList.add("active");
-        document.getElementById("pane-game").classList.add("active");
-      } else {
-        document.querySelectorAll(".hub-tab-btn")[1].classList.add("active");
-        document.getElementById("pane-study").classList.add("active");
-      }
+    function openStudyModal(idx) {
+      const ch = chapterData[idx];
+      document.getElementById("study-modal-title").innerText = ch.title;
+      document.getElementById("study-modal-text").innerHTML = `<b>สาระสำคัญ:</b><br>${ch.knText}`;
+      
+      // Flashcard / Quiz สั้นๆ 1 ข้อก่อนลงสนาม
+      document.getElementById("quiz-flash-q").innerText = ch.q;
+      const optsArea = document.getElementById("quiz-flash-options");
+      optsArea.innerHTML = "";
+      ch.opts.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "rbx-green-btn";
+        btn.style.background = "#1e293b";
+        btn.style.border = "2px solid #334155";
+        btn.style.boxShadow = "none";
+        btn.style.fontSize = "0.95rem";
+        btn.style.padding = "10px";
+        btn.innerText = opt;
+        btn.onclick = () => {
+          if(opt === ch.target) {
+            alert("ยอดเยี่ยม! ตอบถูกต้อง คุณพร้อมสำหรับสนามแข่งแล้ว");
+          } else {
+            alert(`ยังไม่ถูกต้อง คำตอบที่ถูกต้องคือ: ${ch.target}`);
+          }
+        };
+        optsArea.appendChild(btn);
+      });
+
+      document.getElementById("study-modal").style.display = "flex";
     }
 
-    function showStudyContent(chIdx) {
-      const q = questionsPool.find(item => item.stage === (chIdx + 1)) || questionsPool[0];
-      document.getElementById("study-reader-box").style.display = "block";
-      document.getElementById("study-title").innerText = chapterTitles[chIdx];
-      document.getElementById("study-desc").innerHTML = `<b>ประเด็นสำคัญ / จุดสังเกต:</b><br>${q.knText}`;
+    function closeStudyModal() {
+      document.getElementById("study-modal").style.display = "none";
     }
 
     let audioCtx = null;
     let isMuted = false;
-    let engineOsc = null;
-    let engineSubOsc = null;
-    let engineFilter = null;
-    let engineGain = null;
+    let engineOsc = null, engineSubOsc = null, engineFilter = null, engineGain = null;
 
     function initAudio() {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         engineFilter = audioCtx.createBiquadFilter();
-        engineFilter.type = "lowpass";
-        engineFilter.frequency.setValueAtTime(140, audioCtx.currentTime);
-
-        engineGain = audioCtx.createGain();
-        engineGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-
-        engineOsc = audioCtx.createOscillator();
-        engineOsc.type = "triangle";
-        engineOsc.frequency.setValueAtTime(36, audioCtx.currentTime);
-
-        engineSubOsc = audioCtx.createOscillator();
-        engineSubOsc.type = "sine";
-        engineSubOsc.frequency.setValueAtTime(18, audioCtx.currentTime);
-
-        engineOsc.connect(engineFilter);
-        engineSubOsc.connect(engineFilter);
-        engineFilter.connect(engineGain);
-        engineGain.connect(audioCtx.destination);
-        engineOsc.start();
-        engineSubOsc.start();
-      } else if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
+        engineFilter.type = "lowpass"; engineFilter.frequency.setValueAtTime(140, audioCtx.currentTime);
+        engineGain = audioCtx.createGain(); engineGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        engineOsc = audioCtx.createOscillator(); engineOsc.type = "triangle"; engineOsc.frequency.setValueAtTime(36, audioCtx.currentTime);
+        engineSubOsc = audioCtx.createOscillator(); engineSubOsc.type = "sine"; engineSubOsc.frequency.setValueAtTime(18, audioCtx.currentTime);
+        engineOsc.connect(engineFilter); engineSubOsc.connect(engineFilter);
+        engineFilter.connect(engineGain); engineGain.connect(audioCtx.destination);
+        engineOsc.start(); engineSubOsc.start();
+      } else if (audioCtx.state === 'suspended') { audioCtx.resume(); }
     }
 
     function updateEngineSound(speedRatio) {
@@ -574,13 +491,10 @@
 
     function playSuccessSound() {
       if (!audioCtx || isMuted) return;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = "triangle";
-      osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+      const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+      osc.type = "triangle"; osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(1046.50, audioCtx.currentTime + 0.2);
-      gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+      gain.gain.setValueAtTime(0.2, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
       osc.connect(gain); gain.connect(audioCtx.destination);
       osc.start(); osc.stop(audioCtx.currentTime + 0.2);
     }
@@ -591,7 +505,7 @@
       document.getElementById("audio-icon").style.fill = isMuted ? "#94a3b8" : "#38bdf8";
     }
 
-    let scene, camera, renderer, carGroup;
+    let scene, camera, renderer, carGroup, groundMesh, roadMesh;
     let checkpoints = [];
     let score = 0, currentStage = 0, solvedQuestionsCount = 0;
     let isModalOpen = false;
@@ -599,13 +513,13 @@
 
     function setKey(action, state) { if (keys.hasOwnProperty(action)) keys[action] = state; }
 
-    let carPhysics = { x: 0, z: 0, speed: 0, maxSpeed: 1.25, accel: 0.028, friction: 0.016, turnSpeed: 0.038 };
+    let carPhysics = { x: 0, z: 0, speed: 0, maxSpeed: 1.25, accel: 0.028, turnSpeed: 0.038 };
 
     const waypoints = [
-      { x: 0, z: -150, stage: 1 }, { x: 0, z: -350, stage: 2 }, { x: 0, z: -550, stage: 3 },
-      { x: 0, z: -750, stage: 4 }, { x: 0, z: -950, stage: 5 }, { x: 0, z: -1150, stage: 6 },
-      { x: 0, z: -1350, stage: 7 }, { x: 0, z: -1550, stage: 8 }, { x: 0, z: -1750, stage: 9 },
-      { x: 0, z: -1950, stage: 10 }, { x: 0, z: -2150, stage: 11 }, { x: 0, z: -2350, stage: 12 }
+      { z: -150, stage: 1 }, { z: -350, stage: 2 }, { z: -550, stage: 3 },
+      { z: -750, stage: 4 }, { z: -950, stage: 5 }, { z: -1150, stage: 6 },
+      { z: -1350, stage: 7 }, { z: -1550, stage: 8 }, { z: -1750, stage: 9 },
+      { z: -1950, stage: 10 }, { z: -2150, stage: 11 }, { z: -2350, stage: 12 }
     ];
 
     function updateProgressHUD() {
@@ -615,26 +529,43 @@
       document.getElementById("hud-stage").innerText = `ด่าน ${Math.min(currentStage + 1, 12)} / 12`;
     }
 
-    function startGame(startStageIndex = 0) {
+    function startRaceGame(startIdx) {
       document.getElementById("hud-name").innerText = currentUserData.username;
       document.getElementById("start-screen").style.display = "none";
 
-      currentStage = startStageIndex;
-      carPhysics.z = startStageIndex === 0 ? 10 : waypoints[startStageIndex - 1].z + 20;
-      solvedQuestionsCount = startStageIndex;
-      score = startStageIndex;
+      currentStage = startIdx;
+      carPhysics.z = startIdx === 0 ? 10 : waypoints[startIdx - 1].z + 20;
+      solvedQuestionsCount = startIdx;
+      score = startIdx;
 
       initAudio();
       init3DWorld();
+      applyThemeColors(chapterData[startIdx].theme);
       setupInputListeners();
       updateProgressHUD();
       animate();
     }
 
+    function applyThemeColors(themeKey) {
+      let groundColor = 0x1e293b, roadColor = 0x334155, themeNameText = "CITY";
+      if (themeKey === 'Beach') {
+        groundColor = 0xfde047; roadColor = 0x0284c7; themeNameText = "BEACH";
+      } else if (themeKey === 'Forest') {
+        groundColor = 0x15803d; roadColor = 0x166534; themeNameText = "FOREST";
+      } else if (themeKey === 'Cyber') {
+        groundColor = 0x311042; roadColor = 0x1e1b4b; themeNameText = "CYBER";
+      }
+      if (groundMesh) groundMesh.material.color.setHex(groundColor);
+      if (roadMesh) roadMesh.material.color.setHex(roadColor);
+      document.getElementById("theme-badge-name").innerText = `TAXI PRO (${themeNameText})`;
+      document.getElementById("map-theme-tag").innerText = `GPS MAP: ${themeNameText}`;
+    }
+
     function init3DWorld() {
+      if (renderer) return;
       scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x7dd3fc);
-      scene.fog = new THREE.Fog(0x7dd3fc, 80, 500);
+      scene.background = new THREE.Color(0x0f172a);
+      scene.fog = new THREE.Fog(0x0f172a, 80, 500);
 
       camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
       renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -652,20 +583,20 @@
       dirLight.position.set(60, 120, 60);
       scene.add(dirLight);
 
-      const ground = new THREE.Mesh(new THREE.PlaneGeometry(800, 3200), new THREE.MeshLambertMaterial({ color: 0x4ade80 }));
-      ground.rotation.x = -Math.PI / 2; ground.position.z = -1200; scene.add(ground);
+      groundMesh = new THREE.Mesh(new THREE.PlaneGeometry(800, 3200), new THREE.MeshLambertMaterial({ color: 0x1e293b }));
+      groundMesh.rotation.x = -Math.PI / 2; groundMesh.position.z = -1200; scene.add(groundMesh);
 
-      const road = new THREE.Mesh(new THREE.PlaneGeometry(32, 3000), new THREE.MeshLambertMaterial({ color: 0x1e293b }));
-      road.rotation.x = -Math.PI / 2; road.position.y = 0.05; road.position.z = -1200; scene.add(road);
+      roadMesh = new THREE.Mesh(new THREE.PlaneGeometry(32, 3000), new THREE.MeshLambertMaterial({ color: 0x334155 }));
+      roadMesh.rotation.x = -Math.PI / 2; roadMesh.position.y = 0.05; roadMesh.position.z = -1200; scene.add(roadMesh);
 
       carGroup = new THREE.Group();
-      const body = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.8, 4.4), new THREE.MeshLambertMaterial({ color: 0x00a2ff }));
+      const body = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.8, 4.4), new THREE.MeshLambertMaterial({ color: 0x38bdf8 }));
       body.position.y = 0.6; carGroup.add(body);
       scene.add(carGroup);
 
       waypoints.forEach((wp) => {
         const cpGroup = new THREE.Group();
-        cpGroup.position.set(wp.x, 0, wp.z);
+        cpGroup.position.set(0, 0, wp.z);
         const bar = new THREE.Mesh(new THREE.BoxGeometry(28, 0.8, 0.8), new THREE.MeshBasicMaterial({ color: 0xef4444 }));
         bar.position.set(0, 4, 0); cpGroup.add(bar);
         scene.add(cpGroup);
@@ -695,32 +626,29 @@
       isModalOpen = true;
       carPhysics.speed = 0;
 
-      let q = questionsPool.find(item => item.stage === stageNum) || questionsPool[0];
-      currentActiveQuestion = q;
+      let ch = chapterData[stageNum - 1];
+      currentActiveQuestion = ch;
+
+      // เปลี่ยนธีมสนามตามด่านที่ขับไปถึง
+      applyThemeColors(ch.theme);
 
       document.getElementById("cp-badge").innerText = `CHECKPOINT ${stageNum}`;
-      document.getElementById("cp-q").innerText = q.q;
+      document.getElementById("cert-code-disp").innerText = `รหัสผ่านด่าน: WRD-0${stageNum}`;
+      document.getElementById("cp-q").innerText = ch.q;
 
-      const area = document.getElementById("cp-minigame-area");
+      const area = document.getElementById("cp-options-area");
       area.innerHTML = "";
 
-      if (q.mode === "choice" || q.mode === "align") {
-        const opts = q.opts || ["left", "center", "right", "justify"];
-        opts.forEach(opt => {
-          const btn = document.createElement("button");
-          btn.className = "ribbon-btn";
-          btn.innerText = opt;
-          btn.onclick = () => checkAnswer(opt, q.target);
-          area.appendChild(btn);
-        });
-      } else if (q.mode === "ribbon") {
-        ["Home", "Insert", "Design", "Layout"].forEach(tab => {
-          const btn = document.createElement("button");
-          btn.className = "ribbon-btn"; btn.innerText = tab;
-          btn.onclick = () => checkAnswer(tab, q.target);
-          area.appendChild(btn);
-        });
-      }
+      ch.opts.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.className = "rbx-green-btn";
+        btn.style.background = "#1e293b";
+        btn.style.border = "2px solid #334155";
+        btn.style.boxShadow = "none";
+        btn.innerText = opt;
+        btn.onclick = () => checkAnswer(opt, ch.target);
+        area.appendChild(btn);
+      });
 
       document.getElementById("checkpoint-modal").style.display = "flex";
     }
@@ -728,11 +656,11 @@
     function checkAnswer(userAns, targetAns) {
       if (userAns === targetAns) {
         playSuccessSound();
-        score = Math.max(score, currentActiveQuestion.stage);
-        solvedQuestionsCount = Math.max(solvedQuestionsCount, currentActiveQuestion.stage);
+        score = Math.max(score, currentActiveQuestion.id);
+        solvedQuestionsCount = Math.max(solvedQuestionsCount, currentActiveQuestion.id);
 
-        if(currentActiveQuestion.stage >= currentUserData.data.maxUnlockedStage) {
-          currentUserData.data.maxUnlockedStage = Math.min(12, currentActiveQuestion.stage + 1);
+        if(currentActiveQuestion.id >= currentUserData.data.maxUnlockedStage) {
+          currentUserData.data.maxUnlockedStage = Math.min(12, currentActiveQuestion.id + 1);
           saveUserProgress();
         }
 
@@ -749,7 +677,7 @@
 
     function retryMission() {
       document.getElementById("knowledge-modal").style.display = "none";
-      triggerCheckpoint(currentActiveQuestion.stage);
+      triggerCheckpoint(currentActiveQuestion.id);
     }
 
     function animate() {
@@ -762,12 +690,10 @@
         if (keys.left) carPhysics.x -= carPhysics.turnSpeed;
         if (keys.right) carPhysics.x += carPhysics.turnSpeed;
 
-        carPhysics.x = Math.max(-15, Math.min(15, carPhysics.x));
+        carPhysics.x = Math.max(-14, Math.min(14, carPhysics.x));
         carPhysics.z -= carPhysics.speed;
 
-        if (carGroup) {
-          carGroup.position.set(carPhysics.x, 0.6, carPhysics.z);
-        }
+        if (carGroup) { carGroup.position.set(carPhysics.x, 0.6, carPhysics.z); }
         if (camera && carGroup) {
           camera.position.set(carGroup.position.x * 0.3, carGroup.position.y + 7.5, carGroup.position.z + 14);
           camera.lookAt(carGroup.position.x, carGroup.position.y + 1.2, carGroup.position.z - 4);
