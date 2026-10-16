@@ -257,7 +257,6 @@ function getUserRecord() {
   } catch (e) { return null; }
 }
 
-// สีรถตามที่ซื้อ/เลือกใช้ในหน้าตกแต่งรถ (Custom Garage)
 function getCarColor() {
   const def = stageId > 5 ? 0xfacc15 : (stageId >= 3 ? 0xef4444 : 0xf8fafc);
   const rec = getUserRecord();
@@ -266,7 +265,7 @@ function getCarColor() {
   return SKIN_COLORS[id] != null ? SKIN_COLORS[id] : def;
 }
 
-/* ---------- WEB AUDIO SYSTEM ---------- */
+/* ---------- WEB AUDIO SYSTEM & BGM ---------- */
 let audioCtx = null;
 function getAudioContext() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -274,6 +273,51 @@ function getAudioContext() {
   return audioCtx;
 }
 function unlockAudioManual() { try { getAudioContext(); } catch (e) {} }
+
+// เพิ่มระบบเสียง Background Music (BGM) แบบสนุกและเบาสบาย
+let bgmInterval = null;
+let bgmStep = 0;
+const bgmMelody = [
+  523.25, 659.25, 783.99, 1046.50, // C5, E5, G5, C6
+  587.33, 698.46, 880.00, 1046.50  // D5, F5, A5, C6
+];
+
+function startBGM() {
+  if (bgmInterval) return;
+  bgmInterval = setInterval(() => {
+    if (isCountingDown || bonus || isCleared) return;
+    try {
+      const ctx = getAudioContext();
+      if (!ctx || ctx.state !== 'running') return;
+      
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.type = "triangle"; // เสียงนุ่ม เบาสบาย ไม่หนวกหู
+      const freq = bgmMelody[bgmStep % bgmMelody.length];
+      osc.frequency.setValueAtTime(freq, now);
+      
+      gain.gain.setValueAtTime(0.03, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      
+      osc.start(now);
+      osc.stop(now + 0.25);
+      
+      bgmStep++;
+    } catch (e) {}
+  }, 180);
+}
+
+function stopBGM() {
+  if (bgmInterval) {
+    clearInterval(bgmInterval);
+    bgmInterval = null;
+  }
+}
 
 function playBeepLow() {
   try {
@@ -340,7 +384,6 @@ function init() {
 
   buildSky(); buildTrack(); buildScenery(); buildItems(); buildStartArch();
 
-  // รถผู้เล่นใช้สีที่ซื้อ/เลือกไว้ในหน้า Custom Garage
   car = makeKart(getCarColor(), 0xdc2626, true);
   scene.add(car);
   [[50,-6,0x8b5cf6,0x1e1b4b,0,"Rider"],[32,6,0x10b981,0x065f46,1,"Dino"],[16,-9,0xf97316,0x7c2d12,0,"Bolt"],
@@ -386,6 +429,8 @@ function startCountdown() {
       $("cd-text").innerText = "GO! 🏁"; $("cd-text").style.color = "#4ade80";
       $("lamp-1").className = "cd-lamp green"; $("lamp-2").className = "cd-lamp green"; $("lamp-3").className = "cd-lamp green";
       isCountingDown = false; playBeepHigh(); showToast("START RACE! 🏁", "#facc15");
+      
+      startBGM(); // เริ่มเล่นเพลงประกอบฉากหลังเมื่อออกสตาร์ท
     } else { clearInterval(cdInterval); $("countdown-screen").style.display = "none"; }
   }, 1000);
 }
@@ -646,7 +691,6 @@ function update() {
     }
   });
 
-  // ตอบคำถามทุกรอบที่เข้าเส้นชัย (รอบที่ 1, 2, 3, 4)
   if (P.lap > lastBonusLap && P.lap < TOTAL_LAPS) {
     lastBonusLap = P.lap;
     startBonus();
@@ -701,11 +745,11 @@ function stepAI(a) {
 
 function finishRace() {
   isCleared = true; P.fin = raceF / 60; showToast("FINISH! 🏁", "#facc15");
+  stopBGM(); // หยุดเพลงประกอบทันทีเมื่อเข้าเส้นชัย
   let g = 0; while (ais.some(a => a.fin == null) && g++ < 400000) { raceF++; ais.forEach(stepAI); }
   setTimeout(showResult, 1300);
 }
 
-/* ---------- บันทึกด่าน เหรียญ สถิติเวลา และปลดล็อกด่านถัดไป ---------- */
 function saveProgress(reward) {
   const info = { unlockedNext: 0, unlock13: false, saved: false };
   try {
@@ -716,14 +760,12 @@ function saveProgress(reward) {
     d.coins = (d.coins || 0) + reward;
 
     if (stageId < 13) {
-      // ผ่านด่านนี้ → ปลดล็อกด่านถัดไป (ผ่านด่าน 12 → ปลดล็อกเกมพิเศษที่ 13)
       if (before <= stageId) { d.stage = stageId + 1; info.unlockedNext = stageId + 1; }
       if (stageId === 12 && before <= 12) info.unlock13 = true;
     } else if (before >= 13) {
       d.cleared13 = true;
     }
 
-    // สถิติเวลาดีที่สุด
     if (!d.bestSec || P.fin < d.bestSec) { d.bestSec = P.fin; d.bestTime = fmt(P.fin); }
 
     db[user] = d;
@@ -748,7 +790,6 @@ function showResult() {
   $("victory-modal").style.display = "flex";
 }
 
-/* ---------- คลังคำถามตามบทเรียน (st = บทที่เกี่ยวข้อง) ---------- */
 const shuf = a => a.slice().sort(() => Math.random() - .5);
 const PC = (st, q, opts, target, know) => ({ mode: "pic_choice", st, q, opts, target, know });
 const IQ = (st, pic, q, opts, target, know) => ({ mode: "img_q", st, pic, q, opts, target, know });
@@ -760,70 +801,47 @@ const TBL32 = '<table style="margin:0 auto;border-collapse:collapse;font-size:1.
 const CENTER_PIC = '<div style="max-width:260px;margin:0 auto 6px;border:2px solid #94a3b8;border-radius:8px;padding:8px;text-align:center;font-size:1.1rem;letter-spacing:2px">▬▬▬<br>▬▬▬▬▬▬▬<br>▬▬▬▬</div>';
 
 const MISSIONS = [
-  // ===== บท 1: ส่วนประกอบ Word =====
   PC(1, "Microsoft Word มีสีประจำโปรแกรมเป็นสีน้ำเงิน ไอคอนสมุดเล่มไหนตรงกัน?", ["📘","📗","📙","📕"], "📘", "Word คือโปรแกรมสีน้ำเงิน (Excel สีเขียว, PowerPoint สีส้มแดง)"),
   IQ(1, "📄", "พื้นที่กระดาษว่างสำหรับพิมพ์งานใน Word เรียกว่าอะไร?", ["Ribbon","เอกสาร (Document)","Status Bar","แท็บ File"], "เอกสาร (Document)", "พื้นที่สีขาวตรงกลางคือหน้าเอกสาร ใช้พิมพ์เนื้อหา"),
   DR(1, "ลากชื่อส่วนประกอบไปวางในช่องว่าง", "แถบคำสั่งที่รวมแท็บ Home, Insert ฯลฯ เรียกว่า", ["Ribbon","Status Bar","Cursor"], "Ribbon", "Ribbon คือแถบเครื่องมือด้านบน แบ่งเป็นแท็บและกลุ่มคำสั่ง"),
   { mode: "action_ribbon", st: 1, q: "หากต้องการ 'แทรกรูปภาพ ตาราง หรือรูปร่าง' ต้องเปิดแท็บ Ribbon ใด?", target: "Insert", opts: ["Home (หน้าแรก)", "Insert (แทรก)", "Layout (เค้าโครง)", "View (มุมมอง)"], know: "แท็บ Insert (แทรก) เป็นศูนย์รวมคำสั่งใส่วัตถุภายนอก เช่น ตาราง รูปภาพ และแผนภูมิ" },
-
-  // ===== บท 2: จัดการไฟล์ & คีย์ลัด =====
   PC(2, "ปุ่มไหนคือคำสั่ง 'บันทึกไฟล์ (Save)'?", ["🖨️","💾","📋","✂️"], "💾", "ไอคอนแผ่นดิสก์ 💾 คือ Save (Ctrl + S)"),
   IQ(2, "↩️", "ไอคอนลูกศรย้อนกลับนี้คือคำสั่งอะไร?", ["ทำซ้ำ (Redo)","ยกเลิกการกระทำ (Undo)","ลบไฟล์","พิมพ์เอกสาร"], "ยกเลิกการกระทำ (Undo)", "ลูกศรย้อนกลับคือ Undo (Ctrl + Z)"),
   DR(2, "ลากคีย์ลัดไปวางในช่องว่าง", "คีย์ลัด 'บันทึกไฟล์' คือ", ["Ctrl + P","Ctrl + S","Ctrl + Z"], "Ctrl + S", "Ctrl + S = Save, Ctrl + P = Print, Ctrl + Z = Undo"),
-
-  // ===== บท 3: พิมพ์และเลือกข้อความ =====
   PC(3, "ไอคอนไหนใช้ 'ตัดข้อความ (Cut)'?", ["✂️","🖼️","🔍","↩️"], "✂️", "กรรไกรคือ Cut (Ctrl + X) ใช้ย้ายข้อความออกจากที่เดิม"),
   IQ(3, "📋", "ไอคอนคลิปบอร์ดนี้คือคำสั่งอะไร?", ["วาง (Paste)","ตัด (Cut)","พิมพ์ (Print)","แทรกตาราง"], "วาง (Paste)", "คลิปบอร์ดคือ Paste (Ctrl + V) ใช้วางสิ่งที่คัดลอกหรือตัดไว้"),
   DR(3, "ลากคีย์ลัดไปวางในช่องว่าง", "คีย์ลัด 'เลือกข้อความทั้งหมด (Select All)' คือ", ["Ctrl + A","Ctrl + D","Ctrl + K"], "Ctrl + A", "Ctrl + A = เลือกทั้งหมดในเอกสาร"),
-
-  // ===== บท 4: ตกแต่งฟอนต์ =====
   IQ(4, '<b style="font-size:4rem">B</b>', "ปุ่มตัวอักษรนี้ทำให้ข้อความเป็นอย่างไร?", ["ตัวหนา","ตัวเอียง","ขีดเส้นใต้","ตัวยก"], "ตัวหนา", "ปุ่ม B (Bold) ทำตัวหนา คีย์ลัด Ctrl + B"),
   IQ(4, '<i style="font-size:4rem">I</i>', "ปุ่มตัวอักษรนี้ทำให้ข้อความเป็นอย่างไร?", ["ตัวหนา","ตัวเอียง","ขีดเส้นใต้","ตัวห้อย"], "ตัวเอียง", "ปุ่ม I (Italic) ทำตัวเอียง คีย์ลัด Ctrl + I"),
   DR(4, "ลากคีย์ลัดไปวางในช่องว่าง", "คีย์ลัด 'ขีดเส้นใต้ (Underline)' คือ", ["Ctrl + B","Ctrl + U","Ctrl + I"], "Ctrl + U", "Ctrl + B = หนา, Ctrl + I = เอียง, Ctrl + U = ขีดเส้นใต้"),
   { mode: "action_style", st: 4, q: "คลิกปุ่มสไตล์ข้อความ เพื่อแปลงหัวข้อให้เป็น 'ตัวหนา (Bold)'", target: "B", know: "ปุ่ม B (Bold) ใช้เน้นคำสำคัญให้หนาเด่นชัด หรือกดคีย์ลัด Ctrl + B" },
-
-  // ===== บท 5: จัดแนวย่อหน้า =====
   PC(5, "ไอคอนลูกศรไหนสื่อถึงการ 'จัดชิดซ้าย'?", ["⬅️","➡️","↔️","⬆️"], "⬅️", "จัดชิดซ้าย (Align Left) คีย์ลัด Ctrl + L"),
   IQ(5, CENTER_PIC, "ข้อความในกรอบนี้ถูกจัดแนวแบบใด?", ["ชิดซ้าย","กึ่งกลาง","ชิดขวา","กระจายแบบ Justify"], "กึ่งกลาง", "ข้อความที่อยู่กลางหน้ากระดาษคือจัดกึ่งกลาง (Center) คีย์ลัด Ctrl + E"),
   DR(5, "ลากคีย์ลัดไปวางในช่องว่าง", "คีย์ลัด 'จัดกึ่งกลาง (Center)' คือ", ["Ctrl + E","Ctrl + L","Ctrl + R"], "Ctrl + E", "Ctrl + L = ซ้าย, Ctrl + E = กลาง, Ctrl + R = ขวา"),
   { mode: "action_align", st: 5, q: "จัดวางหัวข้อเอกสารให้อยู่ 'กึ่งกลางหน้ากระดาษ (Center)'", target: "center", know: "ปุ่ม Center จัดกึ่งกลางหน้ากระดาษ นิยมใช้กับชื่อเรื่องรายงาน หรือกดคีย์ลัด Ctrl + E" },
-
-  // ===== บท 6: ลำดับเลข & Bullets =====
   IQ(6, "• รายการ<br>• รายการ<br>• รายการ", "การนำหน้ารายการด้วยจุดแบบนี้เรียกว่าอะไร?", ["Bullets","Numbering","Table","Heading"], "Bullets", "Bullets คือสัญลักษณ์จุดนำหน้า ใช้กับรายการที่ไม่ต้องเรียงลำดับ"),
   IQ(6, "1. รายการ<br>2. รายการ<br>3. รายการ", "การนำหน้ารายการด้วยตัวเลขแบบนี้เรียกว่าอะไร?", ["Bullets","Numbering","Border","Shading"], "Numbering", "Numbering คือเลขลำดับ ใช้กับขั้นตอนที่ต้องเรียงก่อนหลัง"),
   DR(6, "ลากคำตอบไปวางในช่องว่าง", "รายการที่ไม่ต้องเรียงลำดับ ควรใช้", ["Bullets","Numbering","Table"], "Bullets", "ไม่ต้องเรียงลำดับ → Bullets / ต้องเรียงลำดับ → Numbering"),
-
-  // ===== บท 7: แทรกรูปภาพ & Wrap Text =====
   PC(7, "ไอคอนไหนคือการ 'แทรกรูปภาพ'?", ["🔤","🖼️","📏","🖨️"], "🖼️", "รูปภาพอยู่ในแท็บ Insert > Pictures"),
   DR(7, "ลากคำสั่งไปวางในช่องว่าง", "คำสั่ง Wrap Text ที่ส่งรูปไปไว้หลังข้อความคือ", ["Behind Text","Square","In Line with Text"], "Behind Text", "Behind Text ส่งรูปเป็นฉากหลัง พิมพ์ข้อความทับได้"),
   { mode: "action_wraptext", st: 7, q: "เลือกคำสั่ง Wrap Text เพื่อส่งรูปภาพไปอยู่ 'ข้างหลังข้อความ (Behind Text)'", target: "Behind Text", opts: ["In Front of Text", "Behind Text", "Square"], know: "Behind Text ส่งรูปภาพลงไปเป็นฉากหลัง ทำให้พิมพ์ข้อความลอยทับบนภาพได้" },
   { mode: "action_wraptext", st: 7, q: "เลือกคำสั่ง Wrap Text เพื่อให้ข้อความ 'ล้อมรอบรูปภาพเป็นสี่เหลี่ยม (Square)'", target: "Square", opts: ["Square", "In Line with Text", "Behind Text"], know: "Square ทำให้ข้อความไหลล้อมรอบกรอบรูปภาพเป็นทรงสี่เหลี่ยมอย่างมีระเบียบ" },
-
-  // ===== บท 8: ตาราง =====
   PC(8, "ไอคอนไหนสื่อถึง 'ตาราง (Table)'?", ["🖼️","▦","✂️","💾"], "▦", "ตารางคือช่องสี่เหลี่ยมเรียงเป็นแถวและคอลัมน์ ใช้คำสั่ง Insert > Table"),
   IQ(8, TBL32, "ตารางในรูปมีกี่คอลัมน์ × กี่แถว?", ["3 คอลัมน์ × 2 แถว","2 คอลัมน์ × 3 แถว","3 คอลัมน์ × 3 แถว","2 คอลัมน์ × 2 แถว"], "3 คอลัมน์ × 2 แถว", "คอลัมน์นับแนวตั้ง (3 ช่อง) แถวนับแนวนอน (2 ช่อง)"),
   DR(8, "ลากคำสั่งไปวางในช่องว่าง", "คำสั่งที่รวมหลายช่องในตารางให้เป็นช่องเดียวคือ", ["Merge Cells","Split Cells","Delete Table"], "Merge Cells", "Merge Cells = ผสานเซลล์, Split Cells = แบ่งเซลล์"),
   { mode: "action_table", st: 8, q: "แตะช่องตารางเพื่อกำหนดขนาด '3 คอลัมน์ x 2 แถว'", targetCols: 3, targetRows: 2, know: "คอลัมน์คือนับตามแนวตั้ง (3 ช่อง) และแถวคือนับตามแนวนอน (2 ช่อง)" },
   { mode: "action_table", st: 8, q: "แตะช่องตารางเพื่อกำหนดขนาด '2 คอลัมน์ x 3 แถว'", targetCols: 2, targetRows: 3, know: "ตารางขนาด 2 x 3 จะมี 2 คอลัมน์แนวตั้ง และ 3 แถวแนวนอน" },
-
-  // ===== บท 9: ตั้งค่าหน้ากระดาษ A4 =====
   IQ(9, "📄", "กระดาษขนาดมาตรฐานของเอกสารทั่วไปในประเทศไทยคือขนาดใด?", ["A4","A0","A8","B9"], "A4", "A4 ขนาด 21 × 29.7 ซม. เป็นขนาดมาตรฐานของงานเอกสาร"),
   DR(9, "ลากแท็บไปวางในช่องว่าง", "การตั้งค่าหน้ากระดาษ (ขนาด ขอบ แนวกระดาษ) อยู่ในแท็บ", ["Layout","Home","Review"], "Layout", "แท็บ Layout (เค้าโครง) มีคำสั่ง Size, Margins, Orientation"),
   PC(9, "กระดาษ 'แนวตั้ง (Portrait)' มีรูปทรงคล้ายอุปกรณ์ใด?", ["📱","🖥️","🍔","🎞️"], "📱", "Portrait = แนวตั้ง, Landscape = แนวนอน"),
-
-  // ===== บท 10: ตรวจสะกดคำผิด =====
   IQ(10, '<span style="text-decoration:underline wavy #ef4444">สะกดผิด</span>', "เส้นหยักสีแดงใต้คำหมายถึงอะไร?", ["สะกดคำผิด","ไวยากรณ์ผิด","ตัวหนา","เป็นลิงก์"], "สะกดคำผิด", "เส้นหยักสีแดง = สะกดผิด คลิกขวาเพื่อเลือกคำที่ถูกต้อง"),
   IQ(10, '<span style="text-decoration:underline wavy #2563eb">ประโยคนี้</span>', "เส้นหยักสีน้ำเงินใต้ข้อความมักหมายถึงอะไร?", ["ไวยากรณ์/รูปแบบน่าสงสัย","ตัวเอียง","คำสะกดถูกต้องแล้ว","ลบข้อความ"], "ไวยากรณ์/รูปแบบน่าสงสัย", "เส้นสีน้ำเงินเตือนเรื่องไวยากรณ์หรือรูปแบบที่ควรตรวจสอบ"),
   DR(10, "ลากปุ่มไปวางในช่องว่าง", "ปุ่มลัดเปิดตรวจการสะกดคำและไวยากรณ์ใน Word คือ", ["F5","F7","F12"], "F7", "กด F7 เพื่อเปิดตัวตรวจการสะกดและไวยากรณ์"),
   { mode: "action_spellcheck", st: 10, q: "แตะที่คำที่มีเส้นหยักสีแดง เพื่อแก้ไขคำสะกดผิดให้ถูกต้อง", wrongWord: "ไมโครชอฟต์", correctWord: "ไมโครซอฟต์", know: "เส้นหยักสีแดงใต้คำแปลว่าสะกดผิด ให้คลิกขวาเพื่อเลือกคำสะกดที่ถูกต้องในพจนานุกรม" },
   { mode: "action_spellcheck", st: 10, q: "แตะที่คำสะกดผิด เพื่อแก้ชื่อโปรแกรมประมวลผลคำให้ถูกต้อง", wrongWord: "เวิด", correctWord: "เวิร์ด", know: "การสะกดคำทับศัพท์ภาษาอังกฤษ Microsoft Word ในภาษาไทยต้องมีไม้ทัณฑฆาตกำกับ" },
-
-  // ===== บท 11: สไตล์ & สารบัญอัตโนมัติ =====
   IQ(11, '<div style="font-size:1.8rem;font-weight:900;color:#1e3a8a">หัวเรื่อง 1</div>', "การกำหนดข้อความเป็น Heading 1 ช่วยให้ทำสิ่งใดได้?", ["สร้างสารบัญอัตโนมัติ","เปลี่ยนสีกระดาษ","พิมพ์เร็วขึ้น","ลบตาราง"], "สร้างสารบัญอัตโนมัติ", "Word ใช้ Heading Styles สร้างสารบัญอัตโนมัติ"),
   DR(11, "ลากแท็บไปวางในช่องว่าง", "คำสั่ง Table of Contents (สารบัญ) อยู่ในแท็บ", ["References","Home","View"], "References", "แท็บ References (การอ้างอิง) มี Table of Contents"),
   PC(11, "ไอคอนไหนสื่อถึง 'สารบัญ / รายการหัวข้อ'?", ["📑","🖼️","💾","✂️"], "📑", "สารบัญแสดงหัวข้อพร้อมเลขหน้า สร้างจาก Heading Styles"),
-
-  // ===== บท 12: ส่งออกไฟล์ PDF =====
   IQ(12, "📕", "ไฟล์นามสกุล .pdf ย่อมาจากอะไร?", ["Portable Document Format","Print Direct File","Personal Data Folder","Page Design Form"], "Portable Document Format", "PDF = Portable Document Format เปิดดูได้เหมือนกันทุกอุปกรณ์"),
   DR(12, "ลากคำสั่งไปวางในช่องว่าง", "การบันทึกเอกสารเป็น PDF ใช้เมนู File >", ["Save As","New","Options"], "Save As", "File > Save As แล้วเลือกชนิดไฟล์เป็น PDF"),
   PC(12, "ไอคอนไหนสื่อถึงการ 'ส่งออก (Export)' ไฟล์?", ["📥","📤","🗑️","🔒"], "📤", "Export ใช้ส่งไฟล์ออกเป็นรูปแบบอื่น เช่น PDF")
@@ -918,17 +936,14 @@ function renderBonusUI() {
         </div>
         <div class="doc-sheet" id="sample-text" style="text-align:left; display:block;">หัวข้อรายงาน ม.1</div>`;
     }
-    // คำถามข้อความ → ตอบเป็นรูป
     else if (m.mode === "pic_choice") {
       work.innerHTML = `<div class="pic-grid">${shuf(m.opts).map(o => `<button class="pic-btn" data-v="${o}">${o}</button>`).join("")}</div>`;
       work.querySelectorAll(".pic-btn").forEach(btn => btn.onclick = () => btn.dataset.v === m.target ? handleBonusSuccess() : handleBonusFail());
     }
-    // คำถามเป็นรูป → ตอบเป็นข้อความ
     else if (m.mode === "img_q") {
       work.innerHTML = `<div class="big-pic">${m.pic}</div><div class="txt-grid">${shuf(m.opts).map(o => `<button class="tool-btn" data-v="${o}">${o}</button>`).join("")}</div>`;
       work.querySelectorAll(".tool-btn").forEach(btn => btn.onclick = () => btn.dataset.v === m.target ? handleBonusSuccess() : handleBonusFail());
     }
-    // ลากคำตอบมาวาง (Drag & Drop)
     else if (m.mode === "drag") {
       work.innerHTML = `
         <div class="doc-sheet" style="font-size:1.1rem;flex-wrap:wrap;">${m.pre}<span class="drag-slot" id="dslot">?</span></div>
@@ -942,7 +957,6 @@ function renderBonusUI() {
   if (st === "done") $("b-wait").innerHTML = "🎉 ภารกิจสำเร็จ! ได้รับ N2O ไนโตรบูสต์เต็มหลอด ⚡<br>กดปุ่มด้านล่างเพื่อออกตัวลุยรอบต่อไปพร้อมกัน!";
 }
 
-/* ---------- ระบบลากวาง รองรับเมาส์ / ทัชสกรีน / แท็บเล็ต ---------- */
 function setupDrag(root, m) {
   const slot = root.querySelector("#dslot");
   let selected = null, locked = false;
@@ -1009,7 +1023,6 @@ function applyInteractiveAlign(align) {
   align === bonus.m.target ? handleBonusSuccess() : handleBonusFail();
 }
 
-// ตอบถูก: ไปข้อถัดไป / ถ้าครบ 2 ข้อ รับ N2O เต็มหลอด
 function handleBonusSuccess() {
   if (!bonus || bonus.state !== "play") return;
   if (bonus.qi < bonus.qs.length - 1) {
