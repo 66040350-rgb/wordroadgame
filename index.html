@@ -140,77 +140,108 @@
      display: flex; align-items: center; justify-content: center; gap: 14px;
     }
  
-    /* STAGE SELECT MODAL */
+    /* =========================================================================
+       STAGE SELECT MODAL (ดีไซน์พาสเทลตามแบบที่ต้องการ)
+       ========================================================================= */
     #stage-modal {
-     position: fixed; inset: 0; background: rgba(10, 15, 29, 0.88); backdrop-filter: blur(14px);
-     display: none; justify-content: center; align-items: center; z-index: 300; padding: 20px;
+     position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px);
+     display: none; justify-content: center; align-items: center; z-index: 300; padding: 16px;
     }
     .stage-container {
-     background: linear-gradient(145deg, #0284c7 0%, #0369a1 40%, #0f172a 100%);
-     border: 5px solid #38bdf8; border-radius: 32px;
-     padding: 26px 28px; max-width: 980px; width: 100%; max-height: 90vh; overflow-y: auto;
-     box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8), 0 0 35px rgba(14, 165, 233, 0.5);
+     background: #f0f9ff;
+     border: 4px solid #38bdf8; border-radius: 28px;
+     padding: 24px; max-width: 1020px; width: 100%; max-height: 92vh; overflow-y: auto;
+     box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5), inset 0 0 40px rgba(186, 230, 253, 0.5);
     }
-    .stage-header {
-     display: flex; justify-content: space-between; align-items: center;
-     border-bottom: 2px solid rgba(255, 255, 255, 0.2); padding-bottom: 14px; margin-bottom: 20px;
+    .stage-top-banner {
+     background: #ffffff; border: 3px solid #bae6fd; border-radius: 20px;
+     padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
+     margin-bottom: 20px; box-shadow: 0 6px 0 #e0f2fe;
     }
     .btn-close-modal {
-     padding: 8px 20px; border-radius: 14px; border: none;
+     padding: 8px 18px; border-radius: 12px; border: none;
      background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
-     color: #fff; font-family: 'Chakra Petch'; font-size: 1rem; font-weight: 900;
+     color: #fff; font-family: 'Chakra Petch'; font-size: 0.95rem; font-weight: 900;
      cursor: pointer; box-shadow: 0 4px 0 #991b1b; transition: all 0.1s;
     }
     .btn-close-modal:active { transform: translateY(2px); box-shadow: 0 1px 0 #991b1b; }
  
     .stage-grid {
-     display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: 16px;
+     display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 16px;
     }
+    
     .stage-btn-card {
      background: #ffffff; border: 3px solid #bae6fd; border-radius: 20px;
-     padding: 16px 14px; display: flex; flex-direction: column; justify-content: space-between;
-     gap: 12px; transition: all 0.15s; position: relative; box-shadow: 0 6px 0 #0284c7;
+     padding: 16px; display: flex; flex-direction: column; justify-content: space-between;
+     gap: 12px; transition: all 0.15s; position: relative; box-shadow: 0 6px 0 #e2e8f0;
      color: #0f172a;
     }
     .stage-btn-card:hover {
-     border-color: #facc15; transform: translateY(-3px); box-shadow: 0 8px 0 #ca8a04;
+     border-color: #38bdf8; transform: translateY(-2px); box-shadow: 0 8px 0 #cbd5e1;
+    }
+    .stage-btn-card.active-stage {
+     border-color: #2563eb; box-shadow: 0 6px 0 #1d4ed8;
+     background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
     }
     .stage-btn-card.completed {
-     background: #f0fdf4; border-color: #86efac; box-shadow: 0 6px 0 #059669;
+     border-color: #86efac; box-shadow: 0 6px 0 #bbf7d0;
     }
     .stage-btn-card.locked {
-     background: #f1f5f9; border-color: #cbd5e1; box-shadow: 0 6px 0 #94a3b8;
-     opacity: 0.65; cursor: not-allowed;
+     background: #f8fafc; border-color: #e2e8f0; box-shadow: 0 6px 0 #cbd5e1;
+     opacity: 0.75;
     }
- 
+
+    .stage-card-top-row {
+     display: flex; justify-content: space-between; align-items: center;
+    }
     .stage-card-tag {
-     font-family: 'Chakra Petch'; font-size: 0.88rem; font-weight: 900;
-     padding: 3px 10px; border-radius: 8px; display: inline-block;
-     background: #e0f2fe; color: #0284c7;
+     font-family: 'Chakra Petch'; font-size: 0.82rem; font-weight: 900;
+     padding: 3px 10px; border-radius: 8px; background: #e0f2fe; color: #0284c7;
     }
     .stage-btn-card.completed .stage-card-tag { background: #dcfce7; color: #15803d; }
-    .stage-btn-card.locked .stage-card-tag { background: #e2e8f0; color: #64748b; }
- 
+    .stage-btn-card.active-stage .stage-card-tag { background: #dbeafe; color: #1d4ed8; }
+    .stage-btn-card.locked .stage-card-tag { background: #f1f5f9; color: #64748b; }
+
+    .stage-lock-status {
+     font-size: 0.78rem; font-weight: 800; color: #64748b; display: flex; align-items: center; gap: 4px;
+    }
+
+    /* ปุ่มคู่ด้านล่างการ์ด: ปุ่มอ่านสรุป + ปุ่มเล่นเกม */
+    .stage-actions-row {
+     display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px;
+    }
     .btn-stage-action {
-     width: 100%; padding: 10px; border-radius: 14px; border: none;
-     font-family: 'Chakra Petch'; font-size: 1.05rem; font-weight: 900;
+     padding: 10px 8px; border-radius: 12px; border: none;
+     font-family: 'Kanit'; font-size: 0.9rem; font-weight: 700;
      cursor: pointer; transition: all 0.1s; display: flex; justify-content: center; align-items: center; gap: 6px;
     }
-    .btn-action-play {
-     background: linear-gradient(180deg, #0284c7 0%, #0369a1 100%);
-     color: #fff; box-shadow: 0 4px 0 #075985;
+    
+    .btn-read-summary {
+     background: #f1f5f9; color: #475569; border: 2px solid #cbd5e1;
+     box-shadow: 0 4px 0 #cbd5e1;
+     text-decoration: none;
     }
-    .btn-action-play:active { transform: translateY(2px); box-shadow: 0 1px 0 #075985; }
+    .btn-read-summary:hover { background: #e2e8f0; color: #1e293b; }
+    .btn-read-summary:active { transform: translateY(2px); box-shadow: 0 1px 0 #cbd5e1; }
+
+    .btn-action-play {
+     background: linear-gradient(180deg, #3b82f6 0%, #1d4ed8 100%);
+     color: #fff; box-shadow: 0 4px 0 #1e40af; font-family: 'Chakra Petch'; font-weight: 900;
+    }
+    .btn-action-play:active { transform: translateY(2px); box-shadow: 0 1px 0 #1e40af; }
+    
     .btn-action-replay {
      background: linear-gradient(180deg, #10b981 0%, #059669 100%);
-     color: #fff; box-shadow: 0 4px 0 #047857;
+     color: #fff; box-shadow: 0 4px 0 #047857; font-family: 'Chakra Petch'; font-weight: 900;
     }
     .btn-action-replay:active { transform: translateY(2px); box-shadow: 0 1px 0 #047857; }
+
     .btn-action-locked {
-     background: #cbd5e1; color: #64748b; box-shadow: 0 4px 0 #94a3b8; cursor: not-allowed;
+     background: #e2e8f0; color: #94a3b8; box-shadow: 0 4px 0 #cbd5e1; cursor: not-allowed;
+     font-family: 'Chakra Petch'; font-weight: 900;
     }
  
-    /* AUTH MODAL (ปรับตามสไตล์ใหม่ที่คุณต้องการ) */
+    /* AUTH MODAL */
     #auth-modal {
      position: fixed; inset: 0; background: rgba(10, 15, 29, 0.92);
      backdrop-filter: blur(12px); display: flex; justify-content: center; align-items: center; z-index: 400; padding: 18px;
@@ -281,6 +312,7 @@
      .modes-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
      .card-story { grid-column: span 2; min-height: 200px; }
      .bottom-quick-bar { grid-column: span 2; }
+     .stage-grid { grid-template-columns: 1fr; }
     }
  </style>
 </head>
@@ -448,12 +480,15 @@
  <!-- STAGE SELECT MODAL -->
  <div id="stage-modal">
    <div class="stage-container">
-     <div class="stage-header">
-       <div style="font-family:'Chakra Petch'; font-size:1.6rem; font-weight:900; color:#ffffff; display:flex; align-items:center; gap:10px; text-shadow:0 0 12px rgba(255,255,255,0.4);">
-         <svg class="svg-icon" style="fill:#facc15; width:30px; height:30px;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-         <span>STORY MODE: ด่านความรู้ Microsoft Word (1 - 12)</span>
+     <div class="stage-top-banner">
+       <div style="display:flex; align-items:center; gap:12px;">
+         <div style="width:44px; height:44px; background:#2563eb; border-radius:12px; display:flex; justify-content:center; align-items:center; color:#fff; font-family:'Chakra Petch'; font-size:1.5rem; font-weight:900;">W</div>
+         <div>
+           <div style="font-family:'Chakra Petch'; font-size:1.3rem; font-weight:900; color:#0f172a;">MICROSOFT WORD KART LAB 3D</div>
+           <div style="font-size:0.82rem; color:#64748b; font-weight:700;">เลือกบทเรียนเพื่ออ่านสรุปความรู้ หรือกดเข้าสนามแข่งเพื่อซิ่งทำคะแนน!</div>
+         </div>
        </div>
-       <button class="btn-close-modal" onclick="closeStageSelect()">✕ปิดหน้าต่าง</button>
+       <button class="btn-close-modal" onclick="closeStageSelect()">✕ ปิดหน้าต่าง</button>
      </div>
      <div class="stage-grid" id="stage-grid-box"></div>
    </div>
@@ -461,18 +496,18 @@
  
  <script>
    const stagesInfo = [
-     { id: 1, title: "ด่าน1: ส่วนประกอบ Word", vName: "จักรยานเสือหมอบ" },
-     { id: 2, title: "ด่าน2: จัดการไฟล์ & คีย์ลัด", vName: "มอเตอร์ไซค์สกู๊ตเตอร์" },
-     { id: 3, title: "ด่าน3: พิมพ์และเลือกข้อความ", vName: "สปอร์ตโกคาร์ต" },
-     { id: 4, title: "ด่าน4: ตกแต่งฟอนต์ตัวหนา/เอียง", vName: "รถกระบะเทอร์โบ" },
-     { id: 5, title: "ด่าน5: จัดแนวย่อหน้ากึ่งกลาง", vName: "รถสปอร์ตเปิดประทุน" },
-     { id: 6, title: "ด่าน6: ลำดับเลข & Bullets", vName: "ซูเปอร์คาร์โกลด์" },
-     { id: 7, title: "ด่าน7: แทรกรูปภาพ & Wrap Text", vName: "ซูเปอร์คาร์โกลด์" },
-     { id: 8, title: "ด่าน8: สร้างและผสานตาราง", vName: "ซูเปอร์คาร์โกลด์" },
-     { id: 9, title: "ด่าน9: ตั้งค่าหน้ากระดาษ A4", vName: "ซูเปอร์คาร์โกลด์" },
-     { id: 10, title: "ด่าน10: ตรวจสะกดคำผิดสีแดง", vName: "ซูเปอร์คาร์โกลด์" },
-     { id: 11, title: "ด่าน11: สไตล์ & สารบัญอัตโนมัติ", vName: "ซูเปอร์คาร์โกลด์" },
-     { id: 12, title: "ด่าน12: ส่งออกไฟล์ PDF", vName: "ซูเปอร์คาร์โกลด์" }
+     { id: 1, title: "บทที่ 1: รู้จักหน้าตาและส่วนประกอบของ Microsoft Word", vName: "จักรยานเสือหมอบ" },
+     { id: 2, title: "บทที่ 2: การจัดการไฟล์เอกสารและคีย์ลัดพื้นฐาน", vName: "มอเตอร์ไซค์สกู๊ตเตอร์" },
+     { id: 3, title: "บทที่ 3: การพิมพ์และการจัดการข้อความภาษาไทย/อังกฤษ", vName: "สปอร์ตโกคาร์ต" },
+     { id: 4, title: "บทที่ 4: การตกแต่งฟอนต์และรูปแบบตัวอักษร", vName: "รถกระบะเทอร์โบ" },
+     { id: 5, title: "บทที่ 5: การจัดแนวย่อหน้าและการเว้นระยะบรรทัด", vName: "รถสปอร์ตเปิดประทุน" },
+     { id: 6, title: "บทที่ 6: การสร้างรายการหัวข้อย่อยและลำดับเลข", vName: "ซูเปอร์คาร์โกลด์" },
+     { id: 7, title: "บทที่ 7: การแทรกรูปภาพและการจัดตัดข้อความ (Wrap Text)", vName: "ซูเปอร์คาร์โกลด์" },
+     { id: 8, title: "บทที่ 8: การสร้างและตกแต่งตารางข้อมูล", vName: "ซูเปอร์คาร์โกลด์" },
+     { id: 9, title: "บทที่ 9: การตั้งค่าหน้ากระดาษและระยะขอบ (Page Setup)", vName: "ซูเปอร์คาร์โกลด์" },
+     { id: 10, title: "บทที่ 10: การตรวจคำผิดและการค้นหา/แทนที่คำ", vName: "ซูเปอร์คาร์โกลด์" },
+     { id: 11, title: "บทที่ 11: การใช้งาน Style และการสร้างสารบัญอัตโนมัติ", vName: "ซูเปอร์คาร์โกลด์" },
+     { id: 12, title: "บทที่ 12: การส่งออกไฟล์และการพิมพ์เอกสาร (Print & Export)", vName: "ซูเปอร์คาร์โกลด์" }
    ];
  
    let player = { name: "Racer 01", coins: 0, stage: 1 };
@@ -544,9 +579,15 @@
      stagesInfo.forEach(s => {
        const isUnlocked = s.id <= (player.stage || 1);
        const isCompleted = s.id < (player.stage || 1);
+       const isActive = s.id === (player.stage || 1);
  
        const card = document.createElement("div");
-       card.className = `stage-btn-card ${isCompleted ? 'completed' : (isUnlocked ? '' : 'locked')}`;
+       let cardClass = "";
+       if (isCompleted) cardClass = "completed";
+       else if (isActive) cardClass = "active-stage";
+       else cardClass = "locked";
+
+       card.className = `stage-btn-card ${cardClass}`;
  
        let btnClass = "btn-stage-action btn-action-locked";
        let btnText = "🔒 ล็อกอยู่";
@@ -560,13 +601,23 @@
  
        card.innerHTML = `
          <div>
-           <div class="stage-card-tag">STAGE ${s.id.toString().padStart(2, '0')}</div>
-           <div style="font-weight:800; font-size:1.05rem; margin:8px 0 4px; color:#0f172a; line-height:1.3;">${s.title}</div>
-           <div style="font-size:0.78rem; color:#0284c7; font-weight:700;">🏎️ พาหนะ: ${s.vName}</div>
+           <div class="stage-card-top-row">
+             <div class="stage-card-tag">UNIT ${s.id.toString().padStart(2, '0')}</div>
+             <div class="stage-lock-status">
+               ${isUnlocked ? '<span style="color:#16a34a;">🟢 เปิดใช้งาน</span>' : '<span>🔒 ล็อกอยู่</span>'}
+             </div>
+           </div>
+           <div style="font-weight:700; font-size:0.95rem; margin:10px 0 6px; color:#0f172a; line-height:1.35;">${s.title}</div>
+           <div style="font-size:0.75rem; color:#0284c7; font-weight:700;">🏎️ พาหนะ: ${s.vName}</div>
          </div>
-         <button class="${btnClass}" ${isUnlocked ? `onclick="launchGame(${s.id})"` : 'disabled'}>
-           ${btnText}
-         </button>
+         <div class="stage-actions-row">
+           <a href="study.html?unit=${s.id}" class="btn-stage-action btn-read-summary">
+             📖 อ่านสรุป
+           </a>
+           <button class="${btnClass}" ${isUnlocked ? `onclick="launchGame(${s.id})"` : 'disabled'}>
+             ${btnText}
+           </button>
+         </div>
        `;
        grid.appendChild(card);
      });
